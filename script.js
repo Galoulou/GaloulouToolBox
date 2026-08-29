@@ -1,44 +1,53 @@
-// ================================
-// GALOULOU TOOLBOX - SCRIPT.JS
-// ================================
+// =========================================
+// GALOULOU TOOLBOX
+// MAIN SCRIPT
+// =========================================
 
 
-// ================================
+// =========================================
 // SELECT ELEMENTS
-// ================================
+// =========================================
 
 const searchInput = document.getElementById("searchInput");
+
 const toolCards = document.querySelectorAll(".tool-card");
+
 const noResults = document.getElementById("noResults");
+
+const toolsCount = document.getElementById("toolsCount");
 
 const themeToggle = document.getElementById("themeToggle");
 
 const favoriteButtons = document.querySelectorAll(".favorite");
-const favoritesButton = document.getElementById("favoritesButton");
 
 
-// ================================
+// =========================================
 // SEARCH TOOLS
-// ================================
+// =========================================
 
 function searchTools() {
 
-    const searchValue = searchInput.value.toLowerCase().trim();
+    const searchValue =
+        searchInput.value
+        .toLowerCase()
+        .trim();
+
 
     let visibleTools = 0;
 
+
     toolCards.forEach((tool) => {
 
-        // Ignore Coming Soon tools for search
-        if (tool.classList.contains("coming-soon")) {
-            return;
-        }
+        const toolName =
+            tool.dataset.name || "";
 
-        const toolName = tool.dataset.name || "";
+
+        // Check if the search matches
 
         if (toolName.includes(searchValue)) {
 
             tool.style.display = "";
+
             visibleTools++;
 
         } else {
@@ -50,8 +59,24 @@ function searchTools() {
     });
 
 
-    // Show / hide "No results"
-    if (searchValue !== "" && visibleTools === 0) {
+    // Update tools counter
+
+    if (searchValue === "") {
+
+        toolsCount.textContent =
+            `${toolCards.length} tools`;
+
+    } else {
+
+        toolsCount.textContent =
+            `${visibleTools} found`;
+
+    }
+
+
+    // Show "No results"
+
+    if (visibleTools === 0) {
 
         noResults.style.display = "block";
 
@@ -64,65 +89,86 @@ function searchTools() {
 }
 
 
-searchInput.addEventListener("input", searchTools);
+// Listen for search
 
+if (searchInput) {
 
-// ================================
-// CTRL + K SEARCH SHORTCUT
-// ================================
-
-document.addEventListener("keydown", (event) => {
-
-    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
-
-        event.preventDefault();
-
-        searchInput.focus();
-
-    }
-
-});
-
-
-// ================================
-// THEME SYSTEM
-// ================================
-
-// Get saved theme
-const savedTheme = localStorage.getItem("theme");
-
-
-// Apply saved theme
-if (savedTheme === "light") {
-
-    document.body.classList.add("light-mode");
-
-    themeToggle.innerHTML = `
-        <i class="fa-solid fa-sun"></i>
-    `;
-
-} else {
-
-    themeToggle.innerHTML = `
-        <i class="fa-solid fa-moon"></i>
-    `;
+    searchInput.addEventListener(
+        "input",
+        searchTools
+    );
 
 }
 
 
-// Toggle theme
-themeToggle.addEventListener("click", () => {
+// =========================================
+// CTRL + K
+// SEARCH SHORTCUT
+// =========================================
 
-    document.body.classList.toggle("light-mode");
+document.addEventListener(
+    "keydown",
+    (event) => {
+
+        if (
+            (event.ctrlKey || event.metaKey) &&
+            event.key.toLowerCase() === "k"
+        ) {
+
+            event.preventDefault();
+
+            searchInput.focus();
+
+        }
+
+    }
+);
 
 
-    // Check current theme
-    const isLightMode = document.body.classList.contains("light-mode");
+// =========================================
+// ESCAPE
+// CLEAR SEARCH
+// =========================================
+
+document.addEventListener(
+    "keydown",
+    (event) => {
+
+        if (
+            event.key === "Escape" &&
+            document.activeElement === searchInput
+        ) {
+
+            searchInput.value = "";
+
+            searchTools();
+
+            searchInput.blur();
+
+        }
+
+    }
+);
 
 
-    if (isLightMode) {
+// =========================================
+// THEME SYSTEM
+// =========================================
 
-        localStorage.setItem("theme", "light");
+
+// Get saved theme
+
+const savedTheme =
+    localStorage.getItem("theme");
+
+
+// Apply theme
+
+function applyTheme(theme) {
+
+    if (theme === "light") {
+
+        document.body.classList.add("light-mode");
 
         themeToggle.innerHTML = `
             <i class="fa-solid fa-sun"></i>
@@ -130,7 +176,7 @@ themeToggle.addEventListener("click", () => {
 
     } else {
 
-        localStorage.setItem("theme", "dark");
+        document.body.classList.remove("light-mode");
 
         themeToggle.innerHTML = `
             <i class="fa-solid fa-moon"></i>
@@ -138,40 +184,116 @@ themeToggle.addEventListener("click", () => {
 
     }
 
-});
+}
 
 
-// ================================
+// Load saved theme
+
+if (savedTheme === "light") {
+
+    applyTheme("light");
+
+} else {
+
+    applyTheme("dark");
+
+}
+
+
+// Toggle theme
+
+if (themeToggle) {
+
+    themeToggle.addEventListener(
+        "click",
+        () => {
+
+            const isLightMode =
+                document.body.classList.contains(
+                    "light-mode"
+                );
+
+
+            if (isLightMode) {
+
+                applyTheme("dark");
+
+                localStorage.setItem(
+                    "theme",
+                    "dark"
+                );
+
+            } else {
+
+                applyTheme("light");
+
+                localStorage.setItem(
+                    "theme",
+                    "light"
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+// =========================================
 // FAVORITES SYSTEM
-// ================================
+// =========================================
+
 
 // Get favorites from localStorage
-let favorites = JSON.parse(
-    localStorage.getItem("favorites")
-) || [];
+
+let favorites;
+
+try {
+
+    favorites = JSON.parse(
+        localStorage.getItem("favorites")
+    ) || [];
+
+} catch {
+
+    favorites = [];
+
+}
 
 
-// Update favorite buttons
+// =========================================
+// UPDATE FAVORITE BUTTONS
+// =========================================
+
 function updateFavoriteButtons() {
 
     favoriteButtons.forEach((button) => {
 
-        const toolName = button.dataset.tool;
+        const toolName =
+            button.dataset.tool;
 
-        const icon = button.querySelector("i");
+
+        const icon =
+            button.querySelector("i");
 
 
-        if (favorites.includes(toolName)) {
+        if (
+            favorites.includes(toolName)
+        ) {
 
             button.classList.add("active");
 
-            icon.className = "fa-solid fa-heart";
+            icon.className =
+                "fa-solid fa-heart";
+
 
         } else {
 
             button.classList.remove("active");
 
-            icon.className = "fa-regular fa-heart";
+            icon.className =
+                "fa-regular fa-heart";
 
         }
 
@@ -180,136 +302,213 @@ function updateFavoriteButtons() {
 }
 
 
-// Add / remove favorites
+// =========================================
+// SAVE FAVORITES
+// =========================================
+
+function saveFavorites() {
+
+    localStorage.setItem(
+        "favorites",
+        JSON.stringify(favorites)
+    );
+
+}
+
+
+// =========================================
+// TOGGLE FAVORITE
+// =========================================
+
 favoriteButtons.forEach((button) => {
 
-    button.addEventListener("click", (event) => {
+    button.addEventListener(
+        "click",
+        (event) => {
 
-        // Prevent opening the tool link
-        event.preventDefault();
+            // Prevent opening the tool
 
-        event.stopPropagation();
+            event.preventDefault();
 
-
-        const toolName = button.dataset.tool;
+            event.stopPropagation();
 
 
-        if (favorites.includes(toolName)) {
+            const toolName =
+                button.dataset.tool;
+
 
             // Remove favorite
-            favorites = favorites.filter(
-                (favorite) => favorite !== toolName
-            );
 
-        } else {
+            if (
+                favorites.includes(toolName)
+            ) {
+
+                favorites =
+                    favorites.filter(
+                        (favorite) =>
+                            favorite !== toolName
+                    );
+
 
             // Add favorite
-            favorites.push(toolName);
-
-        }
-
-
-        // Save favorites
-        localStorage.setItem(
-            "favorites",
-            JSON.stringify(favorites)
-        );
-
-
-        // Update icons
-        updateFavoriteButtons();
-
-    });
-
-});
-
-
-// Load favorites on startup
-updateFavoriteButtons();
-
-
-// ================================
-// SHOW FAVORITES
-// ================================
-
-let showingFavorites = false;
-
-
-favoritesButton.addEventListener("click", () => {
-
-    showingFavorites = !showingFavorites;
-
-
-    toolCards.forEach((tool) => {
-
-        // Ignore Coming Soon tools
-        if (tool.classList.contains("coming-soon")) {
-            return;
-        }
-
-
-        const favoriteButton = tool.querySelector(".favorite");
-
-
-        if (!favoriteButton) {
-            return;
-        }
-
-
-        const toolName = favoriteButton.dataset.tool;
-
-
-        if (showingFavorites) {
-
-            if (favorites.includes(toolName)) {
-
-                tool.style.display = "";
 
             } else {
 
-                tool.style.display = "none";
+                favorites.push(toolName);
 
             }
 
-        } else {
 
-            tool.style.display = "";
+            // Save
+
+            saveFavorites();
+
+
+            // Update UI
+
+            updateFavoriteButtons();
 
         }
-
-    });
-
-
-    // Change button text
-    if (showingFavorites) {
-
-        favoritesButton.innerHTML = `
-            <i class="fa-solid fa-heart"></i>
-            Showing Favorites
-        `;
-
-    } else {
-
-        favoritesButton.innerHTML = `
-            <i class="fa-regular fa-heart"></i>
-            Favorites
-        `;
-
-    }
+    );
 
 });
 
 
-// ================================
+// Load favorites
+
+updateFavoriteButtons();
+
+
+// =========================================
+// FAVORITE ANIMATION
+// =========================================
+
+favoriteButtons.forEach((button) => {
+
+    button.addEventListener(
+        "click",
+        () => {
+
+            button.animate(
+
+                [
+
+                    {
+                        transform: "scale(1)"
+                    },
+
+                    {
+                        transform: "scale(1.25)"
+                    },
+
+                    {
+                        transform: "scale(1)"
+                    }
+
+                ],
+
+                {
+
+                    duration: 250,
+
+                    easing: "ease-out"
+
+                }
+
+            );
+
+        }
+    );
+
+});
+
+
+// =========================================
+// CARD KEYBOARD ACCESSIBILITY
+// =========================================
+
+toolCards.forEach((tool) => {
+
+    tool.addEventListener(
+        "keydown",
+        (event) => {
+
+            if (
+                event.key === "Enter"
+            ) {
+
+                tool.click();
+
+            }
+
+        }
+    );
+
+});
+
+
+// =========================================
+// SMOOTH NAVIGATION
+// =========================================
+
+document
+    .querySelectorAll(
+        'a[href^="#"]'
+    )
+    .forEach((link) => {
+
+        link.addEventListener(
+            "click",
+            (event) => {
+
+                const targetId =
+                    link.getAttribute("href");
+
+
+                const target =
+                    document.querySelector(
+                        targetId
+                    );
+
+
+                if (target) {
+
+                    event.preventDefault();
+
+
+                    target.scrollIntoView({
+
+                        behavior: "smooth",
+
+                        block: "start"
+
+                    });
+
+                }
+
+            }
+        );
+
+    });
+
+
+// =========================================
 // CONSOLE MESSAGE 😎
-// ================================
+// =========================================
 
 console.log(
     "%c🧰 Welcome to Galoulou Toolbox!",
     "font-size: 20px; font-weight: bold;"
 );
 
+
 console.log(
     "%cSimple tools. One place.",
     "font-size: 14px;"
+);
+
+
+console.log(
+    "%cMade with HTML, CSS & JavaScript.",
+    "font-size: 12px;"
 );
