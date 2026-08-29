@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Text Counter — Galoulou Toolbox</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0b0d12;
+            --card: #151922;
+            --card2: #1b202b;
+            --text: #ffffff;
+            --muted: #9299a8;
+            --border: rgba(255,255,255,0.09);
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            padding: 25px;
+            background:
+                radial-gradient(circle at 50% -10%, #242b3c 0%, #0b0d12 48%);
+            color: var(--text);
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 850px;
+            margin: auto;
+        }
+
+        .top {
+            margin-bottom: 25px;
+        }
+
+        .back {
+            color: var(--muted);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back:hover {
+            color: white;
+        }
+
+        .card {
+            background: rgba(21,25,34,0.95);
+            border: 1px solid var(--border);
+            border-radius: 25px;
+            padding: 35px;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.3);
+        }
+
+        .icon {
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 42px;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            color: var(--muted);
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 300px;
+            resize: vertical;
+
+            padding: 20px;
+
+            background: var(--card2);
+            color: white;
+
+            border: 1px solid var(--border);
+            border-radius: 16px;
+
+            outline: none;
+
+            font-size: 16px;
+            line-height: 1.6;
+
+            font-family: Arial, sans-serif;
+        }
+
+        textarea:focus {
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        button {
+            border: 1px solid var(--border);
+            background: var(--card2);
+            color: white;
+
+            padding: 12px 17px;
+
+            border-radius: 11px;
+
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+        }
+
+        button.primary {
+            background: white;
+            color: #0b0d12;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .stat {
+            background: var(--card2);
+            border: 1px solid var(--border);
+
+            border-radius: 15px;
+
+            padding: 20px 10px;
+
+            text-align: center;
+        }
+
+        .number {
+            font-size: 28px;
+            font-weight: 900;
+
+            margin-bottom: 5px;
+        }
+
+        .label {
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .reading {
+            margin-top: 20px;
+
+            padding: 18px;
+
+            border: 1px solid var(--border);
+            background: var(--card2);
+
+            border-radius: 15px;
+
+            color: var(--muted);
+
+            text-align: center;
+        }
+
+        .reading strong {
+            color: white;
+        }
+
+        .copied {
+            opacity: 0.7;
+        }
+
+        @media (max-width: 700px) {
+
+            body {
+                padding: 15px;
+            }
+
+            .card {
+                padding: 22px;
+            }
+
+            h1 {
+                font-size: 34px;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stat:last-child {
+                grid-column: span 2;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="top">
+
+        <a
+            class="back"
+            href="../index.html"
+        >
+            ← Galoulou Toolbox
+        </a>
+
+    </div>
+
+    <div class="card">
+
+        <div class="icon">
+            🔤
+        </div>
+
+        <h1>
+            Text Counter
+        </h1>
+
+        <p class="subtitle">
+            Compte tes mots, caractères, lignes et temps de lecture instantanément.
+        </p>
+
+        <textarea
+            id="text"
+            placeholder="Écris ou colle ton texte ici..."
+        ></textarea>
+
+        <div class="actions">
+
+            <button
+                class="primary"
+                id="copy"
+            >
+                📋 Copier
+            </button>
+
+            <button id="clear">
+                🗑️ Effacer
+            </button>
+
+        </div>
+
+        <div class="stats">
+
+            <div class="stat">
+
+                <div
+                    class="number"
+                    id="words"
+                >
+                    0
+                </div>
+
+                <div class="label">
+                    Mots
+                </div>
+
+            </div>
+
+            <div class="stat">
+
+                <div
+                    class="number"
+                    id="characters"
+                >
+                    0
+                </div>
+
+                <div class="label">
+                    Caractères
+                </div>
+
+            </div>
+
+            <div class="stat">
+
+                <div
+                    class="number"
+                    id="noSpaces"
+                >
+                    0
+                </div>
+
+                <div class="label">
+                    Sans espaces
+                </div>
+
+            </div>
+
+            <div class="stat">
+
+                <div
+                    class="number"
+                    id="lines"
+                >
+                    0
+                </div>
+
+                <div class="label">
+                    Lignes
+                </div>
+
+            </div>
+
+            <div class="stat">
+
+                <div
+                    class="number"
+                    id="sentences"
+                >
+                    0
+                </div>
+
+                <div class="label">
+                    Phrases
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="reading">
+
+            ⏱️ Temps de lecture estimé :
+            <strong id="readingTime">
+                0 seconde
+            </strong>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+const text = document.getElementById("text");
+
+const words = document.getElementById("words");
+const characters = document.getElementById("characters");
+const noSpaces = document.getElementById("noSpaces");
+const lines = document.getElementById("lines");
+const sentences = document.getElementById("sentences");
+
+const readingTime =
+    document.getElementById("readingTime");
+
+const copyButton =
+    document.getElementById("copy");
+
+const clearButton =
+    document.getElementById("clear");
+
+
+function updateStats() {
+
+    const value = text.value;
+
+    /*
+        CARACTÈRES
+    */
+
+    characters.textContent =
+        value.length;
+
+
+    /*
+        CARACTÈRES SANS ESPACES
+    */
+
+    noSpaces.textContent =
+        value.replace(/\s/g, "").length;
+
+
+    /*
+        MOTS
+    */
+
+    const trimmed =
+        value.trim();
+
+    const wordCount =
+        trimmed === ""
+            ? 0
+            : trimmed.split(/\s+/).length;
+
+    words.textContent =
+        wordCount;
+
+
+    /*
+        LIGNES
+    */
+
+    const lineCount =
+        value === ""
+            ? 0
+            : value.split(/\r?\n/).length;
+
+    lines.textContent =
+        lineCount;
+
+
+    /*
+        PHRASES
+    */
+
+    const sentenceCount =
+        trimmed === ""
+            ? 0
+            : trimmed
+                .split(/[.!?]+/)
+                .filter(sentence =>
+                    sentence.trim().length > 0
+                )
+                .length;
+
+    sentences.textContent =
+        sentenceCount;
+
+
+    /*
+        TEMPS DE LECTURE
+
+        Moyenne :
+        environ 200 mots/minute
+    */
+
+    if (wordCount === 0) {
+
+        readingTime.textContent =
+            "0 seconde";
+
+        return;
+
+    }
+
+    const minutes =
+        wordCount / 200;
+
+    const totalSeconds =
+        Math.ceil(minutes * 60);
+
+
+    if (totalSeconds < 60) {
+
+        readingTime.textContent =
+            `${totalSeconds} seconde${totalSeconds > 1 ? "s" : ""}`;
+
+    } else {
+
+        const m =
+            Math.floor(totalSeconds / 60);
+
+        const s =
+            totalSeconds % 60;
+
+        if (s === 0) {
+
+            readingTime.textContent =
+                `${m} minute${m > 1 ? "s" : ""}`;
+
+        } else {
+
+            readingTime.textContent =
+                `${m} min ${s} s`;
+
+        }
+
+    }
+
+}
+
+
+/*
+    COPIER
+*/
+
+copyButton.addEventListener(
+    "click",
+    async () => {
+
+        if (!text.value) {
+            return;
+        }
+
+        try {
+
+            await navigator.clipboard.writeText(
+                text.value
+            );
+
+            copyButton.textContent =
+                "✅ Copié !";
+
+            copyButton.classList.add(
+                "copied"
+            );
+
+            setTimeout(() => {
+
+                copyButton.textContent =
+                    "📋 Copier";
+
+                copyButton.classList.remove(
+                    "copied"
+                );
+
+            }, 1500);
+
+        } catch {
+
+            text.select();
+
+            document.execCommand(
+                "copy"
+            );
+
+        }
+
+    }
+);
+
+
+/*
+    EFFACER
+*/
+
+clearButton.addEventListener(
+    "click",
+    () => {
+
+        text.value = "";
+
+        updateStats();
+
+        text.focus();
+
+    }
+);
+
+
+/*
+    COMPTEUR EN DIRECT
+*/
+
+text.addEventListener(
+    "input",
+    updateStats
+);
+
+
+/*
+    INITIALISATION
+*/
+
+updateStats();
+
+</script>
+
+</body>
+</html>
