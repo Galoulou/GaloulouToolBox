@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Base64 Encoder - GaloulouToolBox</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+<main class="tool-page">
+  <a href="../index.html" class="back-btn">← Retour</a>
+
+  <div class="tool-container">
+
+    <h1>💻 Base64 Encoder</h1>
+    <p>Encode ou décode du texte en Base64.</p>
+
+    <div class="tool-box">
+
+      <textarea
+        id="input"
+        rows="8"
+        placeholder="Écris ton texte ici..."
+      ></textarea>
+
+      <br><br>
+
+      <button onclick="encodeBase64()">
+        🔒 Encoder
+      </button>
+
+      <button onclick="decodeBase64()">
+        🔓 Décoder
+      </button>
+
+      <button onclick="clearText()">
+        🗑️ Effacer
+      </button>
+
+      <br><br>
+
+      <textarea
+        id="output"
+        rows="8"
+        readonly
+        placeholder="Résultat..."
+      ></textarea>
+
+      <br><br>
+
+      <button onclick="copyResult()">
+        📋 Copier
+      </button>
+
+      <p id="status"></p>
+
+    </div>
+
+  </div>
+</main>
+
+<script>
+function encodeBase64() {
+
+  const input = document.getElementById("input").value;
+
+  try {
+
+    const bytes = new TextEncoder().encode(input);
+
+    let binary = "";
+
+    bytes.forEach(byte => {
+      binary += String.fromCharCode(byte);
+    });
+
+    document.getElementById("output").value =
+      btoa(binary);
+
+    document.getElementById("status").textContent =
+      "✅ Texte encodé !";
+
+  } catch (error) {
+
+    document.getElementById("status").textContent =
+      "❌ Impossible d'encoder.";
+  }
+}
+
+function decodeBase64() {
+
+  const input = document.getElementById("input").value;
+
+  try {
+
+    const binary = atob(input);
+
+    const bytes = Uint8Array.from(binary, c => c.charCodeAt(0));
+
+    document.getElementById("output").value =
+      new TextDecoder().decode(bytes);
+
+    document.getElementById("status").textContent =
+      "✅ Base64 décodé !";
+
+  } catch (error) {
+
+    document.getElementById("status").textContent =
+      "❌ Base64 invalide.";
+  }
+}
+
+function copyResult() {
+
+  const output = document.getElementById("output");
+
+  if (!output.value) return;
+
+  navigator.clipboard.writeText(output.value);
+
+  document.getElementById("status").textContent =
+    "✅ Copié !";
+}
+
+function clearText() {
+
+  document.getElementById("input").value = "";
+  document.getElementById("output").value = "";
+  document.getElementById("status").textContent = "";
+}
+</script>
+
+</body>
+</html>
