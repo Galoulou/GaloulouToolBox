@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Case Converter — Galoulou Toolbox</title>
+
+<style>
+*{box-sizing:border-box}
+
+:root{
+    --bg:#0b0d12;
+    --card:#151922;
+    --card2:#1b202b;
+    --text:#fff;
+    --muted:#9299a8;
+    --border:rgba(255,255,255,.09);
+}
+
+body{
+    margin:0;
+    min-height:100vh;
+    padding:25px;
+    background:
+        radial-gradient(circle at 50% -10%,#242b3c 0%,#0b0d12 48%);
+    color:var(--text);
+    font-family:Arial,sans-serif;
+}
+
+.container{
+    width:100%;
+    max-width:850px;
+    margin:auto;
+}
+
+.top{
+    margin-bottom:25px;
+}
+
+.back{
+    color:var(--muted);
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.back:hover{
+    color:white;
+}
+
+.card{
+    background:rgba(21,25,34,.95);
+    border:1px solid var(--border);
+    border-radius:25px;
+    padding:35px;
+    box-shadow:0 25px 80px rgba(0,0,0,.3);
+}
+
+.icon{
+    font-size:50px;
+    margin-bottom:10px;
+}
+
+h1{
+    margin:0;
+    font-size:42px;
+    letter-spacing:-1px;
+}
+
+.subtitle{
+    color:var(--muted);
+    line-height:1.5;
+    margin-bottom:30px;
+}
+
+textarea{
+    width:100%;
+    min-height:320px;
+    resize:vertical;
+    padding:20px;
+
+    background:var(--card2);
+    color:white;
+
+    border:1px solid var(--border);
+    border-radius:16px;
+
+    outline:none;
+
+    font-family:Arial,sans-serif;
+    font-size:16px;
+    line-height:1.6;
+}
+
+textarea:focus{
+    border-color:rgba(255,255,255,.3);
+}
+
+.buttons{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-top:15px;
+}
+
+button{
+    border:1px solid var(--border);
+    background:var(--card2);
+    color:white;
+
+    padding:13px 12px;
+
+    border-radius:11px;
+
+    cursor:pointer;
+    font-weight:bold;
+}
+
+button:hover{
+    transform:translateY(-1px);
+}
+
+button.primary{
+    background:white;
+    color:#0b0d12;
+}
+
+.extra{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+    margin-top:10px;
+}
+
+.info{
+    margin-top:25px;
+    padding:18px;
+
+    border:1px solid var(--border);
+    background:var(--card2);
+
+    border-radius:15px;
+
+    color:var(--muted);
+    text-align:center;
+    font-size:13px;
+}
+
+.count{
+    display:flex;
+    justify-content:space-between;
+
+    color:var(--muted);
+
+    font-size:12px;
+
+    margin-top:10px;
+}
+
+@media(max-width:650px){
+
+    body{
+        padding:15px;
+    }
+
+    .card{
+        padding:22px;
+    }
+
+    h1{
+        font-size:34px;
+    }
+
+    .buttons{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .extra{
+        grid-template-columns:1fr;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="top">
+
+        <a
+            class="back"
+            href="../index.html"
+        >
+            ← Galoulou Toolbox
+        </a>
+
+    </div>
+
+    <div class="card">
+
+        <div class="icon">
+            🔠
+        </div>
+
+        <h1>
+            Case Converter
+        </h1>
+
+        <p class="subtitle">
+            Transforme ton texte en majuscules, minuscules,
+            titre ou phrase en un clic.
+        </p>
+
+        <textarea
+            id="text"
+            placeholder="Écris ou colle ton texte ici..."
+        ></textarea>
+
+        <div class="count">
+
+            <span id="characters">
+                0 caractères
+            </span>
+
+            <span id="words">
+                0 mots
+            </span>
+
+        </div>
+
+        <div class="buttons">
+
+            <button
+                class="primary"
+                onclick="upperCase()"
+            >
+                🔠 MAJUSCULES
+            </button>
+
+            <button
+                onclick="lowerCase()"
+            >
+                🔡 minuscules
+            </button>
+
+            <button
+                onclick="titleCase()"
+            >
+                📝 Chaque Mot
+            </button>
+
+            <button
+                onclick="sentenceCase()"
+            >
+                ✏️ Phrase
+            </button>
+
+            <button
+                onclick="toggleCase()"
+            >
+                🔄 Inverser
+            </button>
+
+            <button
+                onclick="removeExtraSpaces()"
+            >
+                ✨ Nettoyer
+            </button>
+
+        </div>
+
+        <div class="extra">
+
+            <button
+                onclick="copyText()"
+            >
+                📋 Copier
+            </button>
+
+            <button
+                onclick="clearText()"
+            >
+                🗑️ Effacer
+            </button>
+
+        </div>
+
+        <div class="info">
+
+            ⚡ Toutes les transformations se font
+            directement dans ton navigateur.
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+const text =
+    document.getElementById("text");
+
+const characters =
+    document.getElementById("characters");
+
+const words =
+    document.getElementById("words");
+
+
+/* =========================
+   COMPTEUR
+========================= */
+
+function updateCount(){
+
+    const value = text.value;
+
+    characters.textContent =
+        `${value.length} caractère${value.length > 1 ? "s" : ""}`;
+
+    const trimmed =
+        value.trim();
+
+    const count =
+        trimmed === ""
+        ? 0
+        : trimmed.split(/\s+/).length;
+
+    words.textContent =
+        `${count} mot${count > 1 ? "s" : ""}`;
+
+}
+
+
+/* =========================
+   MAJUSCULES
+========================= */
+
+function upperCase(){
+
+    text.value =
+        text.value.toUpperCase();
+
+    updateCount();
+
+}
+
+
+/* =========================
+   MINUSCULES
+========================= */
+
+function lowerCase(){
+
+    text.value =
+        text.value.toLowerCase();
+
+    updateCount();
+
+}
+
+
+/* =========================
+   CHAQUE MOT EN MAJUSCULE
+========================= */
+
+function titleCase(){
+
+    text.value =
+        text.value
+        .toLowerCase()
+        .replace(
+            /(^|\s)([a-zà-ÿ])/gi,
+            (match, space, letter) =>
+                space + letter.toUpperCase()
+        );
+
+    updateCount();
+
+}
+
+
+/* =========================
+   PREMIÈRE LETTRE DES PHRASES
+========================= */
+
+function sentenceCase(){
+
+    let value =
+        text.value.toLowerCase();
+
+    value =
+        value.replace(
+            /(^\s*[a-zà-ÿ])|([.!?]\s*[a-zà-ÿ])/gi,
+            match =>
+                match.toUpperCase()
+        );
+
+    text.value =
+        value;
+
+    updateCount();
+
+}
+
+
+/* =========================
+   INVERSER LA CASSE
+========================= */
+
+function toggleCase(){
+
+    let value =
+        text.value;
+
+    let result = "";
+
+    for(
+        let i = 0;
+        i < value.length;
+        i++
+    ){
+
+        const char =
+            value[i];
+
+        if(
+            char === char.toUpperCase() &&
+            char !== char.toLowerCase()
+        ){
+
+            result +=
+                char.toLowerCase();
+
+        }else{
+
+            result +=
+                char.toUpperCase();
+
+        }
+
+    }
+
+    text.value =
+        result;
+
+    updateCount();
+
+}
+
+
+/* =========================
+   NETTOYER LES ESPACES
+========================= */
+
+function removeExtraSpaces(){
+
+    text.value =
+        text.value
+        .replace(/[ \t]+/g," ")
+        .replace(/\n{3,}/g,"\n\n")
+        .trim();
+
+    updateCount();
+
+}
+
+
+/* =========================
+   COPIER
+========================= */
+
+async function copyText(){
+
+    if(!text.value)
+        return;
+
+    try{
+
+        await navigator.clipboard.writeText(
+            text.value
+        );
+
+    }catch{
+
+        text.select();
+
+        document.execCommand("copy");
+
+    }
+
+}
+
+
+/* =========================
+   EFFACER
+========================= */
+
+function clearText(){
+
+    text.value = "";
+
+    updateCount();
+
+    text.focus();
+
+}
+
+
+/* =========================
+   COMPTEUR EN DIRECT
+========================= */
+
+text.addEventListener(
+    "input",
+    updateCount
+);
+
+
+/* =========================
+   INITIALISATION
+========================= */
+
+updateCount();
+
+</script>
+
+</body>
+</html>
