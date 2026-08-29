@@ -11,6 +11,201 @@
 
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+
+        .tool-page {
+            min-height: 100vh;
+            padding: 80px 20px;
+        }
+
+        .tool-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            color: var(--text-secondary);
+
+            margin-bottom: 50px;
+
+            transition: color .2s ease;
+        }
+
+        .back-button:hover {
+            color: var(--text);
+        }
+
+        .tool-header {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .tool-header h1 {
+            font-size: clamp(40px, 7vw, 70px);
+            letter-spacing: -3px;
+            margin-bottom: 12px;
+        }
+
+        .tool-header p {
+            color: var(--text-secondary);
+            font-size: 17px;
+        }
+
+        .random-card {
+            background: var(--card);
+
+            border: 1px solid var(--border);
+
+            border-radius: 20px;
+
+            padding: 35px;
+        }
+
+        .section-title {
+            font-size: 13px;
+            font-weight: 700;
+
+            color: var(--text-secondary);
+
+            letter-spacing: 1px;
+
+            margin-bottom: 18px;
+        }
+
+        .number-inputs {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 12px;
+
+            margin-bottom: 15px;
+        }
+
+        .number-inputs input,
+        .choices-input {
+            width: 100%;
+
+            background: var(--bg-secondary);
+
+            color: var(--text);
+
+            border: 1px solid var(--border);
+
+            border-radius: 11px;
+
+            outline: none;
+
+            transition: border-color .2s ease;
+        }
+
+        .number-inputs input {
+            padding: 15px;
+        }
+
+        .number-inputs input:focus,
+        .choices-input:focus {
+            border-color: var(--border-hover);
+        }
+
+        .generate-button {
+            width: 100%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 9px;
+
+            padding: 16px;
+
+            background: var(--button);
+
+            color: var(--button-text);
+
+            border: none;
+
+            border-radius: 11px;
+
+            font-size: 15px;
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition:
+                transform .2s ease,
+                opacity .2s ease;
+        }
+
+        .generate-button:hover {
+            transform: translateY(-2px);
+            opacity: .9;
+        }
+
+        .result {
+            margin-top: 15px;
+
+            min-height: 70px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: var(--bg-secondary);
+
+            border: 1px solid var(--border);
+
+            border-radius: 14px;
+
+            font-size: 24px;
+            font-weight: 800;
+
+            text-align: center;
+        }
+
+        .separator {
+            height: 1px;
+
+            background: var(--border);
+
+            margin: 30px 0;
+        }
+
+        .choices-input {
+            min-height: 150px;
+
+            resize: vertical;
+
+            padding: 15px;
+
+            font-size: 15px;
+
+            font-family: inherit;
+
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 600px) {
+
+            .tool-page {
+                padding: 55px 16px;
+            }
+
+            .random-card {
+                padding: 22px;
+            }
+
+            .number-inputs {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
 </head>
 
 <body>
@@ -18,15 +213,21 @@
 <header class="navbar">
 
     <a href="../index.html" class="logo">
+
         <img src="../assets/galouloutoolbox.png"
              alt="Galoulou Toolbox Logo">
 
-        <span>Galoulou Toolbox</span>
+        <span>Boîte à outils Galoulou</span>
+
     </a>
 
-    <a href="../index.html#tools" class="discord-button">
+    <a href="../index.html#tools"
+       class="discord-button">
+
         <i class="fa-solid fa-arrow-left"></i>
+
         Tous les outils
+
     </a>
 
 </header>
@@ -34,107 +235,112 @@
 
 <main class="tool-page">
 
-    <div class="tool-container">
+<div class="tool-container">
 
-        <a href="../index.html" class="back-button">
-            <i class="fa-solid fa-arrow-left"></i>
-            Retour à la boîte à outils
-        </a>
+    <a href="../index.html"
+       class="back-button">
+
+        <i class="fa-solid fa-arrow-left"></i>
+
+        Retour à la boîte à outils
+
+    </a>
 
 
-        <div class="tool-header">
+    <div class="tool-header">
 
-            <h1>🎲 Random Generator</h1>
+        <h1>🎲 Random Generator</h1>
 
-            <p>
-                Générez des nombres et des choix aléatoires instantanément.
-            </p>
+        <p>
+            Générez des nombres et des choix aléatoires instantanément.
+        </p>
+
+    </div>
+
+
+    <div class="random-card">
+
+        <p class="section-title">
+            NOMBRE ALÉATOIRE
+        </p>
+
+
+        <div class="number-inputs">
+
+            <input
+                type="number"
+                id="min"
+                value="1"
+                placeholder="Minimum">
+
+            <input
+                type="number"
+                id="max"
+                value="100"
+                placeholder="Maximum">
 
         </div>
 
 
-        <div class="tool-card">
+        <button class="generate-button"
+                onclick="generateNumber()">
 
-            <div class="tool-section">
+            <i class="fa-solid fa-dice"></i>
 
-                <h2>🔢 Nombre aléatoire</h2>
+            Générer un nombre
 
-                <div class="tool-button-row">
-
-                    <input
-                        type="number"
-                        id="min"
-                        value="1"
-                        placeholder="Minimum">
-
-                    <input
-                        type="number"
-                        id="max"
-                        value="100"
-                        placeholder="Maximum">
-
-                </div>
-
-            </div>
+        </button>
 
 
-            <button class="tool-button"
-                    onclick="randomNumber()">
+        <div class="result"
+             id="numberResult">
 
-                <i class="fa-solid fa-dice"></i>
+            —
 
-                Générer un nombre
-
-            </button>
+        </div>
 
 
-            <div id="numberResult"
-                 class="result-box">
-
-                Résultat : —
-
-            </div>
+        <div class="separator"></div>
 
 
-            <div class="tool-section"
-                 style="margin-top:35px;">
-
-                <h2>📝 Choix aléatoire</h2>
-
-                <textarea
-                    id="choices"
-                    placeholder="Un choix par ligne&#10;&#10;Pizza&#10;Burger&#10;Tacos"></textarea>
-
-            </div>
+        <p class="section-title">
+            CHOIX ALÉATOIRE
+        </p>
 
 
-            <button class="tool-button"
-                    onclick="randomChoice()">
-
-                <i class="fa-solid fa-shuffle"></i>
-
-                Choisir aléatoirement
-
-            </button>
+        <textarea
+            class="choices-input"
+            id="choices"
+            placeholder="Écrivez un choix par ligne...&#10;&#10;Pizza&#10;Burger&#10;Tacos"></textarea>
 
 
-            <div id="choiceResult"
-                 class="result-box">
+        <button class="generate-button"
+                onclick="generateChoice()">
 
-                Résultat : —
+            <i class="fa-solid fa-shuffle"></i>
 
-            </div>
+            Choisir aléatoirement
+
+        </button>
+
+
+        <div class="result"
+             id="choiceResult">
+
+            —
 
         </div>
 
     </div>
+
+</div>
 
 </main>
 
 
 <script>
 
-function randomNumber() {
+function generateNumber() {
 
     const min =
         Number(document.getElementById("min").value);
@@ -142,43 +348,62 @@ function randomNumber() {
     const max =
         Number(document.getElementById("max").value);
 
+    const result =
+        document.getElementById("numberResult");
+
+
     if (min > max) {
 
-        document.getElementById("numberResult").textContent =
-            "❌ Le minimum doit être inférieur au maximum.";
+        result.textContent = "Erreur";
 
         return;
     }
 
-    const result =
-        Math.floor(Math.random() * (max - min + 1)) + min;
 
-    document.getElementById("numberResult").textContent =
-        "🎲 Résultat : " + result;
+    const number =
+        Math.floor(
+            Math.random() * (max - min + 1)
+        ) + min;
+
+
+    result.textContent = number;
 }
 
 
-function randomChoice() {
+function generateChoice() {
+
+    const text =
+        document.getElementById("choices").value;
+
 
     const choices =
-        document.getElementById("choices").value
-        .split("\n")
-        .map(x => x.trim())
-        .filter(x => x !== "");
+        text
+            .split("\n")
+            .map(choice => choice.trim())
+            .filter(choice => choice.length > 0);
+
+
+    const result =
+        document.getElementById("choiceResult");
+
 
     if (choices.length === 0) {
 
-        document.getElementById("choiceResult").textContent =
-            "❌ Ajoute au moins un choix.";
+        result.textContent = "Ajoutez un choix";
 
         return;
     }
 
-    const result =
-        choices[Math.floor(Math.random() * choices.length)];
 
-    document.getElementById("choiceResult").textContent =
-        "🎉 Résultat : " + result;
+    const choice =
+        choices[
+            Math.floor(
+                Math.random() * choices.length
+            )
+        ];
+
+
+    result.textContent = choice;
 }
 
 </script>
