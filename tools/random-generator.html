@@ -1,90 +1,186 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Random Generator - GaloulouToolBox</title>
-  <link rel="stylesheet" href="../style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Random Generator - Galoulou Toolbox</title>
+
+    <link rel="stylesheet" href="../style.css">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 
 <body>
 
-  <main class="tool-page">
-    <a href="../index.html" class="back-btn">← Retour</a>
+<header class="navbar">
+
+    <a href="../index.html" class="logo">
+        <img src="../assets/galouloutoolbox.png"
+             alt="Galoulou Toolbox Logo">
+
+        <span>Galoulou Toolbox</span>
+    </a>
+
+    <a href="../index.html#tools" class="discord-button">
+        <i class="fa-solid fa-arrow-left"></i>
+        Tous les outils
+    </a>
+
+</header>
+
+
+<main class="tool-page">
 
     <div class="tool-container">
-      <h1>🎲 Random Generator</h1>
-      <p>Génère un nombre ou un choix aléatoire.</p>
 
-      <div class="tool-box">
+        <a href="../index.html" class="back-button">
+            <i class="fa-solid fa-arrow-left"></i>
+            Retour à la boîte à outils
+        </a>
 
-        <h2>🔢 Nombre aléatoire</h2>
 
-        <input type="number" id="min" placeholder="Minimum" value="1">
-        <input type="number" id="max" placeholder="Maximum" value="100">
+        <div class="tool-header">
 
-        <button onclick="randomNumber()">🎲 Générer</button>
+            <h1>🎲 Random Generator</h1>
 
-        <div id="numberResult" class="result">
-          Résultat : —
+            <p>
+                Générez des nombres et des choix aléatoires instantanément.
+            </p>
+
         </div>
 
-      </div>
 
-      <div class="tool-box">
+        <div class="tool-card">
 
-        <h2>📝 Choix aléatoire</h2>
+            <div class="tool-section">
 
-        <textarea id="choices" rows="6"
-          placeholder="Un choix par ligne&#10;Pizza&#10;Burger&#10;Tacos"></textarea>
+                <h2>🔢 Nombre aléatoire</h2>
 
-        <button onclick="randomChoice()">🎲 Choisir</button>
+                <div class="tool-button-row">
 
-        <div id="choiceResult" class="result">
-          Résultat : —
+                    <input
+                        type="number"
+                        id="min"
+                        value="1"
+                        placeholder="Minimum">
+
+                    <input
+                        type="number"
+                        id="max"
+                        value="100"
+                        placeholder="Maximum">
+
+                </div>
+
+            </div>
+
+
+            <button class="tool-button"
+                    onclick="randomNumber()">
+
+                <i class="fa-solid fa-dice"></i>
+
+                Générer un nombre
+
+            </button>
+
+
+            <div id="numberResult"
+                 class="result-box">
+
+                Résultat : —
+
+            </div>
+
+
+            <div class="tool-section"
+                 style="margin-top:35px;">
+
+                <h2>📝 Choix aléatoire</h2>
+
+                <textarea
+                    id="choices"
+                    placeholder="Un choix par ligne&#10;&#10;Pizza&#10;Burger&#10;Tacos"></textarea>
+
+            </div>
+
+
+            <button class="tool-button"
+                    onclick="randomChoice()">
+
+                <i class="fa-solid fa-shuffle"></i>
+
+                Choisir aléatoirement
+
+            </button>
+
+
+            <div id="choiceResult"
+                 class="result-box">
+
+                Résultat : —
+
+            </div>
+
         </div>
-
-      </div>
 
     </div>
-  </main>
+
+</main>
+
 
 <script>
+
 function randomNumber() {
-  const min = Number(document.getElementById("min").value);
-  const max = Number(document.getElementById("max").value);
 
-  if (isNaN(min) || isNaN(max) || min > max) {
+    const min =
+        Number(document.getElementById("min").value);
+
+    const max =
+        Number(document.getElementById("max").value);
+
+    if (min > max) {
+
+        document.getElementById("numberResult").textContent =
+            "❌ Le minimum doit être inférieur au maximum.";
+
+        return;
+    }
+
+    const result =
+        Math.floor(Math.random() * (max - min + 1)) + min;
+
     document.getElementById("numberResult").textContent =
-      "❌ Vérifie les valeurs.";
-    return;
-  }
-
-  const result = Math.floor(Math.random() * (max - min + 1)) + min;
-
-  document.getElementById("numberResult").textContent =
-    "Résultat : " + result;
+        "🎲 Résultat : " + result;
 }
+
 
 function randomChoice() {
-  const text = document.getElementById("choices").value;
 
-  const choices = text
-    .split("\n")
-    .map(x => x.trim())
-    .filter(x => x !== "");
+    const choices =
+        document.getElementById("choices").value
+        .split("\n")
+        .map(x => x.trim())
+        .filter(x => x !== "");
 
-  if (choices.length === 0) {
+    if (choices.length === 0) {
+
+        document.getElementById("choiceResult").textContent =
+            "❌ Ajoute au moins un choix.";
+
+        return;
+    }
+
+    const result =
+        choices[Math.floor(Math.random() * choices.length)];
+
     document.getElementById("choiceResult").textContent =
-      "❌ Ajoute au moins un choix.";
-    return;
-  }
-
-  const result = choices[Math.floor(Math.random() * choices.length)];
-
-  document.getElementById("choiceResult").textContent =
-    "🎉 " + result;
+        "🎉 Résultat : " + result;
 }
+
 </script>
 
 </body>
