@@ -14,7 +14,7 @@
 
     <meta
         name="description"
-        content="Ask Galoulou AI for shopping advice, product comparisons and recommendations."
+        content="Galoulou AI helps you make smarter shopping decisions."
     >
 
 
@@ -43,7 +43,6 @@
         .tool-page {
 
             min-height: 100vh;
-
             padding: 80px 20px;
 
         }
@@ -52,7 +51,6 @@
         .tool-container {
 
             max-width: 950px;
-
             margin: 0 auto;
 
         }
@@ -65,15 +63,12 @@
         .back-button {
 
             display: inline-flex;
-
             align-items: center;
-
             gap: 8px;
-
-            color: var(--text-secondary);
 
             margin-bottom: 45px;
 
+            color: var(--text-secondary);
             text-decoration: none;
 
             transition: 0.2s ease;
@@ -84,7 +79,6 @@
         .back-button:hover {
 
             color: var(--text);
-
             transform: translateX(-3px);
 
         }
@@ -97,7 +91,6 @@
         .ai-header {
 
             text-align: center;
-
             margin-bottom: 45px;
 
         }
@@ -106,37 +99,31 @@
         .ai-icon {
 
             width: 78px;
-
             height: 78px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
             margin: 0 auto 22px;
 
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            background: var(--button);
-
-            color: var(--button-text);
-
             border-radius: 22px;
 
-            font-size: 30px;
+            background: var(--button);
+            color: var(--button-text);
 
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            font-size: 30px;
 
         }
 
 
         .ai-header h1 {
 
+            margin: 0 0 12px;
+
             font-size: clamp(42px, 8vw, 75px);
 
             letter-spacing: -4px;
-
-            margin: 0 0 12px;
 
         }
 
@@ -150,11 +137,11 @@
 
         .ai-header p {
 
+            margin: 0;
+
             color: var(--text-secondary);
 
             font-size: 17px;
-
-            margin: 0;
 
         }
 
@@ -165,13 +152,13 @@
 
         .ai-card {
 
+            padding: 30px;
+
             background: var(--card);
 
             border: 1px solid var(--border);
 
             border-radius: 24px;
-
-            padding: 30px;
 
         }
 
@@ -183,10 +170,9 @@
         .search-box {
 
             display: flex;
+            align-items: center;
 
             gap: 12px;
-
-            align-items: center;
 
             padding: 10px;
 
@@ -196,7 +182,7 @@
 
             border-radius: 18px;
 
-            transition: border-color 0.2s ease;
+            transition: 0.2s ease;
 
         }
 
@@ -213,18 +199,16 @@
             flex: 1;
 
             min-height: 55px;
-
-            max-height: 150px;
-
-            resize: none;
+            max-height: 160px;
 
             padding: 14px;
 
-            background: transparent;
+            resize: none;
 
             border: none;
-
             outline: none;
+
+            background: transparent;
 
             color: var(--text);
 
@@ -240,13 +224,10 @@
         .ask-button {
 
             width: 55px;
-
             height: 55px;
 
             display: flex;
-
             align-items: center;
-
             justify-content: center;
 
             flex-shrink: 0;
@@ -277,9 +258,9 @@
 
         .ask-button:disabled {
 
-            cursor: not-allowed;
+            opacity: 0.6;
 
-            opacity: 0.7;
+            cursor: not-allowed;
 
         }
 
@@ -297,6 +278,8 @@
 
         .suggestions-title {
 
+            margin-bottom: 12px;
+
             color: var(--text-secondary);
 
             font-size: 11px;
@@ -304,8 +287,6 @@
             font-weight: 700;
 
             letter-spacing: 1px;
-
-            margin-bottom: 12px;
 
         }
 
@@ -325,19 +306,19 @@
 
             padding: 10px 14px;
 
-            background: transparent;
-
-            color: var(--text-secondary);
-
             border: 1px solid var(--border);
 
             border-radius: 100px;
 
-            cursor: pointer;
+            background: transparent;
+
+            color: var(--text-secondary);
 
             font-family: inherit;
 
             font-size: 13px;
+
+            cursor: pointer;
 
             transition: 0.2s ease;
 
@@ -363,9 +344,9 @@
 
             display: none;
 
-            text-align: center;
-
             padding: 45px 20px;
+
+            text-align: center;
 
         }
 
@@ -379,31 +360,18 @@
 
         .loading i {
 
-            font-size: 28px;
-
-            animation: spin 1s linear infinite;
-
             margin-bottom: 15px;
+
+            font-size: 28px;
 
         }
 
 
         .loading p {
 
-            color: var(--text-secondary);
-
             margin: 0;
 
-        }
-
-
-        @keyframes spin {
-
-            to {
-
-                transform: rotate(360deg);
-
-            }
+            color: var(--text-secondary);
 
         }
 
@@ -435,7 +403,6 @@
             from {
 
                 opacity: 0;
-
                 transform: translateY(10px);
 
             }
@@ -443,7 +410,6 @@
             to {
 
                 opacity: 1;
-
                 transform: translateY(0);
 
             }
@@ -459,13 +425,13 @@
 
             padding: 24px;
 
+            margin-bottom: 18px;
+
             background: var(--bg-secondary);
 
             border: 1px solid var(--border);
 
             border-radius: 18px;
-
-            margin-bottom: 18px;
 
         }
 
@@ -486,7 +452,6 @@
         .message-avatar {
 
             width: 38px;
-
             height: 38px;
 
             display: flex;
@@ -513,19 +478,19 @@
 
         .message-text {
 
+            margin: 0;
+
             color: var(--text-secondary);
 
             line-height: 1.7;
 
             white-space: pre-wrap;
 
-            margin: 0;
-
         }
 
 
         /* =========================================
-           RECOMMENDATIONS
+           RECOMMENDATION CARDS
         ========================================= */
 
         .recommendations {
@@ -566,7 +531,6 @@
         .recommendation-icon {
 
             width: 44px;
-
             height: 44px;
 
             display: flex;
@@ -588,22 +552,22 @@
 
         .recommendation h3 {
 
-            font-size: 15px;
-
             margin: 0 0 8px;
+
+            font-size: 15px;
 
         }
 
 
         .recommendation p {
 
+            margin: 0;
+
             color: var(--text-secondary);
 
             font-size: 13px;
 
             line-height: 1.5;
-
-            margin: 0;
 
         }
 
@@ -616,9 +580,9 @@
 
             display: flex;
 
-            justify-content: center;
-
             align-items: center;
+
+            justify-content: center;
 
             gap: 8px;
 
@@ -634,14 +598,11 @@
         .status-dot {
 
             width: 8px;
-
             height: 8px;
-
-            background: #4caf50;
 
             border-radius: 50%;
 
-            box-shadow: 0 0 10px #4caf50;
+            background: #4caf50;
 
         }
 
@@ -760,7 +721,7 @@
         <div class="tool-container">
 
 
-            <!-- BACK -->
+            <!-- BACK BUTTON -->
 
             <a
                 href="../index.html"
@@ -804,7 +765,7 @@
             </section>
 
 
-            <!-- AI -->
+            <!-- AI CARD -->
 
             <section class="ai-card">
 
@@ -846,6 +807,7 @@
 
                     <div class="suggestion-buttons">
 
+
                         <button class="suggestion">
 
                             Where can I buy a Wooting 60HE?
@@ -866,6 +828,7 @@
 
                         </button>
 
+
                     </div>
 
                 </div>
@@ -878,7 +841,7 @@
                     id="loading"
                 >
 
-                    <i class="fa-solid fa-spinner"></i>
+                    <i class="fa-solid fa-spinner fa-spin"></i>
 
                     <p>
 
@@ -897,11 +860,13 @@
                 >
 
 
-                    <!-- AI MESSAGE -->
+                    <!-- MAIN RESPONSE -->
 
                     <div class="ai-message">
 
+
                         <div class="message-top">
+
 
                             <div class="message-avatar">
 
@@ -916,6 +881,7 @@
 
                             </span>
 
+
                         </div>
 
 
@@ -924,15 +890,16 @@
                             id="responseText"
                         ></p>
 
+
                     </div>
 
 
-                    <!-- RECOMMENDATIONS -->
+                    <!-- SMART CARDS -->
 
                     <div class="recommendations">
 
 
-                        <!-- BEST -->
+                        <!-- BEST CHOICE -->
 
                         <div class="recommendation">
 
@@ -950,16 +917,19 @@
                             </h3>
 
 
-                            <p id="bestChoice">
+                            <p
+                                id="bestChoice"
+                            >
 
                                 Waiting for your question...
 
                             </p>
 
+
                         </div>
 
 
-                        <!-- PRICE -->
+                        <!-- BEST PRICE -->
 
                         <div class="recommendation">
 
@@ -977,16 +947,19 @@
                             </h3>
 
 
-                            <p id="bestPrice">
+                            <p
+                                id="bestPrice"
+                            >
 
                                 Waiting for your question...
 
                             </p>
 
+
                         </div>
 
 
-                        <!-- SAFETY -->
+                        <!-- SAFEST OPTION -->
 
                         <div class="recommendation">
 
@@ -1004,11 +977,14 @@
                             </h3>
 
 
-                            <p id="safeChoice">
+                            <p
+                                id="safeChoice"
+                            >
 
                                 Waiting for your question...
 
                             </p>
+
 
                         </div>
 
@@ -1031,6 +1007,7 @@
 
 
             </section>
+
 
         </div>
 
@@ -1058,30 +1035,37 @@
         const aiInput =
             document.getElementById("aiInput");
 
+
         const askButton =
             document.getElementById("askButton");
+
 
         const loading =
             document.getElementById("loading");
 
+
         const aiResponse =
             document.getElementById("aiResponse");
+
 
         const responseText =
             document.getElementById("responseText");
 
+
         const bestChoice =
             document.getElementById("bestChoice");
 
+
         const bestPrice =
             document.getElementById("bestPrice");
+
 
         const safeChoice =
             document.getElementById("safeChoice");
 
 
         // =========================================
-        // ASK AI
+        // ASK GALOU LOU AI
         // =========================================
 
         async function askAI() {
@@ -1101,14 +1085,14 @@
             }
 
 
-            // Prevent multiple requests
+            // Disable while AI is thinking
 
             askButton.disabled = true;
 
             aiInput.disabled = true;
 
 
-            // Hide previous response
+            // Hide old answer
 
             aiResponse.classList.remove("show");
 
@@ -1118,7 +1102,7 @@
             loading.classList.add("show");
 
 
-            // Change button icon
+            // Change button
 
             askButton.innerHTML =
                 `<i class="fa-solid fa-spinner fa-spin"></i>`;
@@ -1128,7 +1112,7 @@
 
 
                 // =========================================
-                // SEND TO CLOUDFLARE WORKER
+                // SEND QUESTION TO CLOUDFLARE
                 // =========================================
 
                 const response = await fetch(
@@ -1157,14 +1141,16 @@
                 );
 
 
-                // Convert to JSON
+                // =========================================
+                // GET DATA
+                // =========================================
 
                 const data =
                     await response.json();
 
 
                 // =========================================
-                // HANDLE SERVER ERROR
+                // ERROR CHECK
                 // =========================================
 
                 if (!response.ok) {
@@ -1173,7 +1159,7 @@
 
                         data.error ||
 
-                        "The server returned an error."
+                        "Server error."
 
                     );
 
@@ -1186,7 +1172,7 @@
 
                         data.error ||
 
-                        "Galoulou AI couldn't answer."
+                        "Galoulou AI couldn't respond."
 
                     );
 
@@ -1194,34 +1180,41 @@
 
 
                 // =========================================
-                // DISPLAY RESPONSE
+                // DISPLAY MAIN RESPONSE
                 // =========================================
 
                 responseText.textContent =
-                    data.response;
+                    data.response ||
+                    "No response received.";
 
 
-                // Current Worker only returns one answer.
-                // These cards are honest placeholders.
+                // =========================================
+                // DISPLAY SMART CARDS 🧠
+                // =========================================
 
                 bestChoice.textContent =
-                    "Ask Galoulou AI which option best fits your needs.";
+                    data.bestChoice ||
+                    "No recommendation available.";
 
 
                 bestPrice.textContent =
-                    "Live price comparison is not available yet.";
+                    data.bestPrice ||
+                    "No price advice available.";
 
 
                 safeChoice.textContent =
-                    "Official stores and authorized sellers are usually the safest option.";
+                    data.safeChoice ||
+                    "No safety advice available.";
 
 
-                // Show response
+                // =========================================
+                // SHOW RESPONSE
+                // =========================================
 
                 aiResponse.classList.add("show");
 
 
-                // Clear input
+                // Clear question
 
                 aiInput.value = "";
 
@@ -1250,15 +1243,15 @@
             } catch (error) {
 
 
+                // =========================================
+                // ERROR
+                // =========================================
+
                 console.error(
                     "Galoulou AI Error:",
                     error
                 );
 
-
-                // =========================================
-                // DISPLAY ERROR
-                // =========================================
 
                 responseText.textContent =
 
@@ -1274,7 +1267,7 @@
 
 
                 safeChoice.textContent =
-                    "Check your connection";
+                    "Check your internet connection";
 
 
                 aiResponse.classList.add("show");
@@ -1283,26 +1276,22 @@
             } finally {
 
 
-                // Hide loading
+                // =========================================
+                // RESET UI
+                // =========================================
 
                 loading.classList.remove("show");
 
-
-                // Enable input
 
                 askButton.disabled = false;
 
                 aiInput.disabled = false;
 
 
-                // Reset button
-
                 askButton.innerHTML =
 
                     `<i class="fa-solid fa-arrow-up"></i>`;
 
-
-                // Focus again
 
                 aiInput.focus();
 
@@ -1325,30 +1314,34 @@
 
 
         // =========================================
-        // SUGGESTION BUTTONS
+        // SUGGESTIONS
         // =========================================
 
         document
             .querySelectorAll(".suggestion")
-            .forEach(button => {
+            .forEach(
 
-                button.addEventListener(
+                button => {
 
-                    "click",
+                    button.addEventListener(
 
-                    () => {
+                        "click",
 
-                        aiInput.value =
-                            button.textContent.trim();
+                        () => {
+
+                            aiInput.value =
+                                button.textContent.trim();
 
 
-                        askAI();
+                            askAI();
 
-                    }
+                        }
 
-                );
+                    );
 
-            });
+                }
+
+            );
 
 
         // =========================================
@@ -1381,7 +1374,7 @@
 
 
         // =========================================
-        // AUTO RESIZE TEXTAREA
+        // AUTO RESIZE
         // =========================================
 
         aiInput.addEventListener(
@@ -1390,10 +1383,15 @@
 
             () => {
 
-                aiInput.style.height = "auto";
+                aiInput.style.height =
+                    "auto";
+
 
                 aiInput.style.height =
-                    aiInput.scrollHeight + "px";
+                    Math.min(
+                        aiInput.scrollHeight,
+                        160
+                    ) + "px";
 
             }
 
@@ -1413,7 +1411,7 @@
 
         console.log(
 
-            "%c🤖 Galoulou AI connected!",
+            "%c🤖 Galoulou AI is connected!",
 
             "font-size: 16px; font-weight: bold;"
 
