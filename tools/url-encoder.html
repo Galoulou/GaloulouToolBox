@@ -1,133 +1,252 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>URL Encoder - GaloulouToolBox</title>
-  <link rel="stylesheet" href="../style.css">
+
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>URL Encoder - Galoulou Toolbox</title>
+
+<link rel="stylesheet" href="../style.css">
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 </head>
 
 <body>
 
+<header class="navbar">
+
+<a href="../index.html" class="logo">
+
+<img src="../assets/galouloutoolbox.png"
+     alt="Galoulou Toolbox Logo">
+
+<span>Galoulou Toolbox</span>
+
+</a>
+
+<a href="../index.html#tools"
+   class="discord-button">
+
+<i class="fa-solid fa-arrow-left"></i>
+
+Tous les outils
+
+</a>
+
+</header>
+
+
 <main class="tool-page">
-  <a href="../index.html" class="back-btn">← Retour</a>
 
-  <div class="tool-container">
+<div class="tool-container">
 
-    <h1>🔗 URL Encoder</h1>
-    <p>Encode ou décode facilement une URL.</p>
+<a href="../index.html"
+   class="back-button">
 
-    <div class="tool-box">
+<i class="fa-solid fa-arrow-left"></i>
 
-      <textarea
-        id="input"
-        rows="8"
-        placeholder="https://example.com/hello world?test=oui"
-      ></textarea>
+Retour à la boîte à outils
 
-      <br><br>
+</a>
 
-      <button onclick="encodeURL()">
-        🔒 Encoder
-      </button>
 
-      <button onclick="decodeURL()">
-        🔓 Décoder
-      </button>
+<div class="tool-header">
 
-      <button onclick="copyResult()">
-        📋 Copier
-      </button>
+<h1>🔗 URL Encoder</h1>
 
-      <button onclick="clearAll()">
-        🗑️ Effacer
-      </button>
+<p>
+Encodez et décodez vos URLs rapidement.
+</p>
 
-      <br><br>
+</div>
 
-      <textarea
-        id="output"
-        rows="8"
-        readonly
-        placeholder="Résultat..."
-      ></textarea>
 
-      <p id="status"></p>
+<div class="tool-card">
 
-    </div>
+<div class="tool-section">
 
-  </div>
+<h2>🔗 URL</h2>
+
+<textarea
+id="input"
+placeholder="https://example.com/hello world?test=oui"></textarea>
+
+</div>
+
+
+<div class="tool-button-row three">
+
+<button class="tool-button"
+        onclick="encodeURL()">
+
+🔒 Encoder
+
+</button>
+
+
+<button class="tool-button"
+        onclick="decodeURL()">
+
+🔓 Décoder
+
+</button>
+
+
+<button class="tool-button secondary"
+        onclick="clearAll()">
+
+🗑️ Effacer
+
+</button>
+
+</div>
+
+
+<div class="tool-section"
+     style="margin-top:25px;">
+
+<h2>📤 Résultat</h2>
+
+<textarea
+id="output"
+readonly
+placeholder="Résultat..."></textarea>
+
+</div>
+
+
+<button class="tool-button secondary"
+        onclick="copyResult()">
+
+📋 Copier le résultat
+
+</button>
+
+
+<p id="status"
+   class="status"></p>
+
+</div>
+
+</div>
+
 </main>
 
+
 <script>
+
 function encodeURL() {
 
-  const input = document.getElementById("input").value;
+const input =
+document.getElementById("input").value;
 
-  if (!input) {
-    document.getElementById("status").textContent =
-      "❌ Écris quelque chose.";
-    return;
-  }
 
-  try {
+if (!input) {
 
-    document.getElementById("output").value =
-      encodeURIComponent(input);
+document.getElementById("status")
+.textContent =
+"❌ Écris quelque chose.";
 
-    document.getElementById("status").textContent =
-      "✅ URL encodée !";
+return;
 
-  } catch (error) {
-
-    document.getElementById("status").textContent =
-      "❌ Erreur.";
-  }
 }
+
+
+try {
+
+document.getElementById("output")
+.value =
+encodeURIComponent(input);
+
+
+document.getElementById("status")
+.textContent =
+"✅ URL encodée !";
+
+} catch {
+
+document.getElementById("status")
+.textContent =
+"❌ Erreur.";
+
+}
+
+}
+
 
 function decodeURL() {
 
-  const input = document.getElementById("input").value;
+const input =
+document.getElementById("input").value;
 
-  if (!input) {
-    document.getElementById("status").textContent =
-      "❌ Écris quelque chose.";
-    return;
-  }
 
-  try {
+if (!input) {
 
-    document.getElementById("output").value =
-      decodeURIComponent(input);
+document.getElementById("status")
+.textContent =
+"❌ Écris quelque chose.";
 
-    document.getElementById("status").textContent =
-      "✅ URL décodée !";
+return;
 
-  } catch (error) {
-
-    document.getElementById("status").textContent =
-      "❌ URL invalide.";
-  }
 }
+
+
+try {
+
+document.getElementById("output")
+.value =
+decodeURIComponent(input);
+
+
+document.getElementById("status")
+.textContent =
+"✅ URL décodée !";
+
+} catch {
+
+document.getElementById("status")
+.textContent =
+"❌ URL invalide.";
+
+}
+
+}
+
 
 function copyResult() {
 
-  const result = document.getElementById("output").value;
+const result =
+document.getElementById("output").value;
 
-  if (!result) return;
 
-  navigator.clipboard.writeText(result);
+if (!result) return;
 
-  document.getElementById("status").textContent =
-    "✅ Copié !";
+
+navigator.clipboard.writeText(result);
+
+
+document.getElementById("status")
+.textContent =
+"✅ Copié !";
+
 }
+
 
 function clearAll() {
 
-  document.getElementById("input").value = "";
-  document.getElementById("output").value = "";
-  document.getElementById("status").textContent = "";
+document.getElementById("input").value = "";
+
+document.getElementById("output").value = "";
+
+document.getElementById("status").textContent = "";
+
 }
+
 </script>
 
 </body>
