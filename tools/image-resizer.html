@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Resizer - GaloulouToolBox</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+<main class="tool-page">
+  <a href="../index.html" class="back-btn">← Retour</a>
+
+  <div class="tool-container">
+
+    <h1>🖼️ Image Resizer</h1>
+    <p>Redimensionne une image directement dans ton navigateur.</p>
+
+    <div class="tool-box">
+
+      <input type="file" id="imageInput" accept="image/*">
+
+      <br><br>
+
+      <label>
+        Largeur :
+        <input type="number" id="width" placeholder="Largeur">
+      </label>
+
+      <br><br>
+
+      <label>
+        Hauteur :
+        <input type="number" id="height" placeholder="Hauteur">
+      </label>
+
+      <br><br>
+
+      <label>
+        <input type="checkbox" id="keepRatio" checked>
+        Garder les proportions
+      </label>
+
+      <br><br>
+
+      <button onclick="resizeImage()">🖼️ Redimensionner</button>
+
+      <canvas id="canvas" style="display:none;"></canvas>
+
+      <br>
+
+      <a id="download" style="display:none;" class="button">
+        ⬇️ Télécharger l'image
+      </a>
+
+      <p id="status"></p>
+
+    </div>
+
+  </div>
+</main>
+
+<script>
+let originalImage = null;
+
+document.getElementById("imageInput").addEventListener("change", function(e) {
+
+  const file = e.target.files[0];
+
+  if (!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = function(event) {
+
+    originalImage = new Image();
+
+    originalImage.onload = function() {
+      document.getElementById("width").value = originalImage.width;
+      document.getElementById("height").value = originalImage.height;
+    };
+
+    originalImage.src = event.target.result;
+  };
+
+  reader.readAsDataURL(file);
+});
+
+document.getElementById("width").addEventListener("input", function() {
+
+  if (
+    document.getElementById("keepRatio").checked &&
+    originalImage
+  ) {
+
+    const ratio = originalImage.height / originalImage.width;
+
+    document.getElementById("height").value =
+      Math.round(this.value * ratio);
+  }
+});
+
+document.getElementById("height").addEventListener("input", function() {
+
+  if (
+    document.getElementById("keepRatio").checked &&
+    originalImage
+  ) {
+
+    const ratio = originalImage.width / originalImage.height;
+
+    document.getElementById("width").value =
+      Math.round(this.value * ratio);
+  }
+});
+
+function resizeImage() {
+
+  if (!originalImage) {
+    document.getElementById("status").textContent =
+      "❌ Choisis d'abord une image.";
+    return;
+  }
+
+  const width = Number(document.getElementById("width").value);
+  const height = Number(document.getElementById("height").value);
+
+  if (width <= 0 || height <= 0) {
+    document.getElementById("status").textContent =
+      "❌ Dimensions invalides.";
+    return;
+  }
+
+  const canvas = document.getElementById("canvas");
+
+  canvas.width = width;
+  canvas.height = height;
+
+  const ctx = canvas.getContext("2d");
+
+  ctx.drawImage(originalImage, 0, 0, width, height);
+
+  canvas.toBlob(function(blob) {
+
+    const url = URL.createObjectURL(blob);
+
+    const download = document.getElementById("download");
+
+    download.href = url;
+    download.download = "galoulou-resized.png";
+    download.style.display = "inline-block";
+
+    document.getElementById("status").textContent =
+      "✅ Image redimensionnée !";
+
+  }, "image/png");
+}
+</script>
+
+</body>
+</html>
