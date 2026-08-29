@@ -1,28 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Galoulou Toolbox - Everyday Tools Made Simple</title>
+    <title>Galoulou Toolbox - Everyday Tools</title>
 
-    <meta name="description" content="Galoulou Toolbox gives you simple and useful everyday tools in one place.">
+    <meta
+        name="description"
+        content="A collection of useful everyday tools. Fast, simple and free."
+    >
+
+
+    <!-- MAIN CSS -->
 
     <link rel="stylesheet" href="style.css">
 
-    <!-- Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- FONT AWESOME -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
 </head>
+
 
 <body>
 
-    <!-- ==================== NAVBAR ==================== -->
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
 
     <header class="navbar">
 
         <a href="index.html" class="logo">
 
-            <img src="assets/galouloutoolbox.png" alt="Galoulou Toolbox Logo">
+            <img
+                src="assets/galouloutoolbox.png"
+                alt="Galoulou Toolbox Logo"
+            >
 
             <span>Galoulou Toolbox</span>
 
@@ -31,372 +53,765 @@
 
         <nav class="nav-links">
 
-            <a href="#tools">Tools</a>
-            <a href="#about">About</a>
+            <a href="#tools">
+                Tools
+            </a>
 
-            <a 
-                href="https://discord.gg/M738CRfkPt"
-                target="_blank"
-                class="discord-button"
-            >
-                <i class="fa-brands fa-discord"></i>
-                Discord
+            <a href="#about">
+                About
             </a>
 
         </nav>
 
 
-        <button class="theme-toggle" id="themeToggle" aria-label="Change theme">
+        <button
+            class="theme-toggle"
+            id="themeToggle"
+            aria-label="Toggle theme"
+        >
 
             <i class="fa-solid fa-moon"></i>
 
         </button>
 
+
     </header>
 
 
-    <!-- ==================== HERO ==================== -->
+
+    <!-- =========================
+         HERO
+    ========================== -->
 
     <main>
 
+
         <section class="hero">
+
 
             <div class="hero-content">
 
-                <div class="badge">
+
+                <div class="hero-badge">
+
                     <i class="fa-solid fa-toolbox"></i>
-                    Simple. Useful. Free.
+
+                    Free everyday tools
+
                 </div>
 
 
                 <h1>
-                    Everyday tools.<br>
-                    <span>Made simple.</span>
+
+                    Useful tools.
+
+                    <br>
+
+                    <span>One toolbox.</span>
+
                 </h1>
 
 
                 <p>
-                    Everything you need for everyday tasks,
-                    all in one simple place.
+
+                    Simple, fast and free tools for everyday life.
+                    No complicated setup. Just open a tool and get things done.
+
                 </p>
 
 
-                <!-- SEARCH -->
+                <div class="hero-buttons">
 
-                <div class="search-container">
 
-                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
-
-                    <input
-                        type="text"
-                        id="searchInput"
-                        placeholder="Search for a tool..."
-                        autocomplete="off"
+                    <a
+                        href="#tools"
+                        class="primary-button"
                     >
 
-                    <kbd>Ctrl K</kbd>
+                        Explore Tools
+
+                        <i class="fa-solid fa-arrow-down"></i>
+
+                    </a>
+
+
+                    <a
+                        href="tools/galoulou-ai.html"
+                        class="secondary-button"
+                    >
+
+                        <i class="fa-solid fa-sparkles"></i>
+
+                        Try Galoulou AI
+
+                    </a>
+
 
                 </div>
 
 
-                <p class="search-info">
-                    Try searching for "password", "QR code" or "timer"
-                </p>
+            </div>
+
+
+            <!-- HERO VISUAL -->
+
+            <div class="hero-visual">
+
+
+                <div class="floating-card card-1">
+
+                    <i class="fa-solid fa-key"></i>
+
+                    <span>Password</span>
+
+                </div>
+
+
+                <div class="floating-card card-2">
+
+                    <i class="fa-solid fa-qrcode"></i>
+
+                    <span>QR Code</span>
+
+                </div>
+
+
+                <div class="floating-card card-3">
+
+                    <i class="fa-solid fa-sparkles"></i>
+
+                    <span>AI</span>
+
+                </div>
+
+
+                <div class="toolbox-icon">
+
+                    <img
+                        src="assets/galouloutoolbox.png"
+                        alt="Galoulou Toolbox"
+                    >
+
+                </div>
 
 
             </div>
+
 
         </section>
 
 
-        <!-- ==================== POPULAR TOOLS ==================== -->
 
-        <section class="tools-section" id="tools">
+        <!-- =========================
+             SEARCH
+        ========================== -->
+
+        <section class="search-section">
+
+
+            <div class="search-container">
+
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search for a tool..."
+                    autocomplete="off"
+                >
+
+
+                <kbd>Ctrl K</kbd>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =========================
+             TOOLS
+        ========================== -->
+
+        <section
+            class="tools-section"
+            id="tools"
+        >
+
 
             <div class="section-header">
+
 
                 <div>
 
                     <p class="section-label">
+
                         TOOLBOX
+
                     </p>
 
-                    <h2>Popular Tools</h2>
+
+                    <h2>
+
+                        All Tools
+
+                    </h2>
+
 
                     <p>
-                        Quick and useful tools for everyday life.
+
+                        Everything you need, in one place.
+
                     </p>
 
                 </div>
 
 
-                <button class="favorites-button" id="favoritesButton">
+                <span
+                    class="tools-count"
+                    id="toolsCount"
+                >
 
-                    <i class="fa-regular fa-heart"></i>
+                    6 tools
 
-                    Favorites
+                </span>
 
-                </button>
 
             </div>
 
 
+
             <!-- TOOLS GRID -->
 
-            <div class="tools-grid" id="toolsGrid">
+            <div
+                class="tools-grid"
+                id="toolsGrid"
+            >
 
 
-                <!-- PASSWORD GENERATOR -->
 
-                <a href="tools/password.html" class="tool-card" data-name="password generator security">
+                <!-- =========================
+                     GALOULOU AI
+                ========================== -->
 
-                    <div class="tool-icon">
+                <a
+                    href="tools/galoulou-ai.html"
+                    class="tool-card featured-tool"
+                    data-name="galoulou ai smart shopping assistant shopping buy price deals"
+                >
 
-                        <i class="fa-solid fa-key"></i>
+
+                    <div class="tool-card-top">
+
+
+                        <div class="tool-icon ai-tool-icon">
+
+                            <i class="fa-solid fa-sparkles"></i>
+
+                        </div>
+
+
+                        <button
+                            class="favorite"
+                            data-tool="galoulou-ai"
+                            aria-label="Add Galoulou AI to favorites"
+                        >
+
+                            <i class="fa-regular fa-heart"></i>
+
+                        </button>
+
 
                     </div>
+
 
 
                     <div class="tool-content">
 
-                        <h3>Password Generator</h3>
+
+                        <h3>
+
+                            Galoulou AI
+
+                        </h3>
+
 
                         <p>
-                            Create strong and secure passwords instantly.
+
+                            Your smart shopping assistant.
+                            Find the best place to buy anything.
+
                         </p>
+
 
                     </div>
 
 
+
                     <div class="tool-footer">
 
+
                         <span class="tool-category">
-                            Security
+
+                            <i class="fa-solid fa-sparkles"></i>
+
+                            AI
+
                         </span>
+
+
+                        <span class="open-tool">
+
+                            Open
+
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                        </span>
+
+
+                    </div>
+
+
+                </a>
+
+
+
+                <!-- =========================
+                     PASSWORD GENERATOR
+                ========================== -->
+
+                <a
+                    href="tools/password.html"
+                    class="tool-card"
+                    data-name="password generator security strong secure password"
+                >
+
+
+                    <div class="tool-card-top">
+
+
+                        <div class="tool-icon">
+
+                            <i class="fa-solid fa-key"></i>
+
+                        </div>
+
 
                         <button
                             class="favorite"
                             data-tool="password"
                             aria-label="Add Password Generator to favorites"
                         >
+
                             <i class="fa-regular fa-heart"></i>
+
                         </button>
 
-                    </div>
-
-                </a>
-
-
-                <!-- QR CODE -->
-
-                <a href="tools/qr-code.html" class="tool-card" data-name="qr code generator qrcode link">
-
-                    <div class="tool-icon">
-
-                        <i class="fa-solid fa-qrcode"></i>
 
                     </div>
 
 
                     <div class="tool-content">
 
-                        <h3>QR Code Generator</h3>
+
+                        <h3>
+
+                            Password Generator
+
+                        </h3>
+
 
                         <p>
-                            Create a QR code from any link or text.
+
+                            Create strong and secure passwords instantly.
+
                         </p>
+
 
                     </div>
 
 
                     <div class="tool-footer">
 
+
                         <span class="tool-category">
-                            Everyday
+
+                            Security
+
                         </span>
+
+
+                        <span class="open-tool">
+
+                            Open
+
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                        </span>
+
+
+                    </div>
+
+
+                </a>
+
+
+
+                <!-- =========================
+                     QR CODE GENERATOR
+                ========================== -->
+
+                <a
+                    href="tools/qr-code.html"
+                    class="tool-card"
+                    data-name="qr code generator qrcode link text"
+                >
+
+
+                    <div class="tool-card-top">
+
+
+                        <div class="tool-icon">
+
+                            <i class="fa-solid fa-qrcode"></i>
+
+                        </div>
+
 
                         <button
                             class="favorite"
                             data-tool="qr-code"
                             aria-label="Add QR Code Generator to favorites"
                         >
+
                             <i class="fa-regular fa-heart"></i>
+
                         </button>
 
-                    </div>
-
-                </a>
-
-
-                <!-- TIMER -->
-
-                <a href="tools/timer.html" class="tool-card" data-name="timer countdown stopwatch time">
-
-                    <div class="tool-icon">
-
-                        <i class="fa-solid fa-clock"></i>
 
                     </div>
 
 
                     <div class="tool-content">
 
-                        <h3>Timer</h3>
+
+                        <h3>
+
+                            QR Code Generator
+
+                        </h3>
+
 
                         <p>
-                            Set a timer and stay focused on your tasks.
+
+                            Create a QR code from any link or text.
+
                         </p>
+
 
                     </div>
 
 
                     <div class="tool-footer">
 
+
                         <span class="tool-category">
+
                             Everyday
+
                         </span>
+
+
+                        <span class="open-tool">
+
+                            Open
+
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                        </span>
+
+
+                    </div>
+
+
+                </a>
+
+
+
+                <!-- =========================
+                     TIMER
+                ========================== -->
+
+                <a
+                    href="tools/timer.html"
+                    class="tool-card"
+                    data-name="timer stopwatch countdown clock time"
+                >
+
+
+                    <div class="tool-card-top">
+
+
+                        <div class="tool-icon">
+
+                            <i class="fa-solid fa-clock"></i>
+
+                        </div>
+
 
                         <button
                             class="favorite"
                             data-tool="timer"
                             aria-label="Add Timer to favorites"
                         >
+
                             <i class="fa-regular fa-heart"></i>
+
                         </button>
 
+
                     </div>
+
+
+                    <div class="tool-content">
+
+
+                        <h3>
+
+                            Timer
+
+                        </h3>
+
+
+                        <p>
+
+                            Set a timer or use a stopwatch to track your time.
+
+                        </p>
+
+
+                    </div>
+
+
+                    <div class="tool-footer">
+
+
+                        <span class="tool-category">
+
+                            Everyday
+
+                        </span>
+
+
+                        <span class="open-tool">
+
+                            Open
+
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                        </span>
+
+
+                    </div>
+
 
                 </a>
 
 
-                <!-- QUICK NOTES - COMING SOON -->
 
-                <div class="tool-card coming-soon">
+                <!-- =========================
+                     QUICK NOTES
+                ========================== -->
 
-                    <div class="coming-soon-badge">
-                        Coming Soon
-                    </div>
+                <a
+                    href="tools/quick-notes.html"
+                    class="tool-card"
+                    data-name="quick notes productivity write save notes"
+                >
 
 
-                    <div class="tool-icon">
+                    <div class="tool-card-top">
 
-                        <i class="fa-solid fa-note-sticky"></i>
+
+                        <div class="tool-icon">
+
+                            <i class="fa-solid fa-note-sticky"></i>
+
+                        </div>
+
+
+                        <button
+                            class="favorite"
+                            data-tool="quick-notes"
+                            aria-label="Add Quick Notes to favorites"
+                        >
+
+                            <i class="fa-regular fa-heart"></i>
+
+                        </button>
+
 
                     </div>
 
 
                     <div class="tool-content">
 
-                        <h3>Quick Notes</h3>
+
+                        <h3>
+
+                            Quick Notes
+
+                        </h3>
+
 
                         <p>
-                            Write and save quick notes directly in your browser.
+
+                            Write and save your notes directly in your browser.
+
                         </p>
+
 
                     </div>
 
 
                     <div class="tool-footer">
 
+
                         <span class="tool-category">
+
                             Productivity
+
                         </span>
 
+
+                        <span class="open-tool">
+
+                            Open
+
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                        </span>
+
+
                     </div>
 
-                </div>
+
+                </a>
 
 
-                <!-- COLOR PICKER - COMING SOON -->
 
-                <div class="tool-card coming-soon">
+                <!-- =========================
+                     COLOR PICKER
+                ========================== -->
 
-                    <div class="coming-soon-badge">
-                        Coming Soon
-                    </div>
+                <a
+                    href="tools/color-picker.html"
+                    class="tool-card"
+                    data-name="color picker hex rgb colors design creative palette"
+                >
 
 
-                    <div class="tool-icon">
+                    <div class="tool-card-top">
 
-                        <i class="fa-solid fa-palette"></i>
+
+                        <div class="tool-icon">
+
+                            <i class="fa-solid fa-palette"></i>
+
+                        </div>
+
+
+                        <button
+                            class="favorite"
+                            data-tool="color-picker"
+                            aria-label="Add Color Picker to favorites"
+                        >
+
+                            <i class="fa-regular fa-heart"></i>
+
+                        </button>
+
 
                     </div>
 
 
                     <div class="tool-content">
 
-                        <h3>Color Picker</h3>
+
+                        <h3>
+
+                            Color Picker
+
+                        </h3>
+
 
                         <p>
-                            Find and explore colors for your next project.
+
+                            Pick colors and get HEX and RGB codes instantly.
+
                         </p>
+
 
                     </div>
 
 
                     <div class="tool-footer">
 
+
                         <span class="tool-category">
+
                             Creative
+
                         </span>
 
-                    </div>
 
-                </div>
+                        <span class="open-tool">
 
+                            Open
 
-                <!-- RANDOM PICKER - COMING SOON -->
+                            <i class="fa-solid fa-arrow-right"></i>
 
-                <div class="tool-card coming-soon">
-
-                    <div class="coming-soon-badge">
-                        Coming Soon
-                    </div>
-
-
-                    <div class="tool-icon">
-
-                        <i class="fa-solid fa-dice"></i>
-
-                    </div>
-
-
-                    <div class="tool-content">
-
-                        <h3>Random Picker</h3>
-
-                        <p>
-                            Let the computer randomly choose for you.
-                        </p>
-
-                    </div>
-
-
-                    <div class="tool-footer">
-
-                        <span class="tool-category">
-                            Everyday
                         </span>
 
+
                     </div>
 
-                </div>
+
+                </a>
 
 
             </div>
 
 
+
             <!-- NO RESULTS -->
 
-            <div class="no-results" id="noResults">
+            <div
+                class="no-results"
+                id="noResults"
+            >
+
 
                 <i class="fa-solid fa-magnifying-glass"></i>
 
-                <h3>No tools found</h3>
+
+                <h3>
+
+                    No tools found
+
+                </h3>
+
 
                 <p>
+
                     Try searching for something else.
+
                 </p>
+
 
             </div>
 
@@ -404,75 +819,57 @@
         </section>
 
 
-        <!-- ==================== WHY TOOLBOX ==================== -->
 
-        <section class="about-section" id="about">
+        <!-- =========================
+             ABOUT
+        ========================== -->
+
+        <section
+            class="about-section"
+            id="about"
+        >
+
 
             <div class="about-content">
 
-                <p class="section-label">
-                    WHY GALOULOU TOOLBOX?
-                </p>
 
-                <h2>
-                    Simple tools.<br>
-                    No unnecessary stuff.
-                </h2>
+                <div class="about-icon">
+
+                    <i class="fa-solid fa-toolbox"></i>
+
+                </div>
 
 
-                <p class="about-description">
-
-                    Galoulou Toolbox brings useful everyday tools
-                    together in one clean and simple place.
-
-                </p>
+                <div>
 
 
-                <div class="features-grid">
+                    <p class="section-label">
+
+                        ABOUT
+
+                    </p>
 
 
-                    <div class="feature">
+                    <h2>
 
-                        <i class="fa-solid fa-bolt"></i>
+                        Built to make things easier.
 
-                        <h3>Fast</h3>
-
-                        <p>
-                            Tools that work instantly.
-                        </p>
-
-                    </div>
+                    </h2>
 
 
-                    <div class="feature">
+                    <p>
 
-                        <i class="fa-solid fa-lock"></i>
+                        Galoulou Toolbox is a collection of simple and useful
+                        tools designed for everyday life. Fast, free and easy to use.
 
-                        <h3>Private</h3>
-
-                        <p>
-                            Your data stays in your browser whenever possible.
-                        </p>
-
-                    </div>
-
-
-                    <div class="feature">
-
-                        <i class="fa-solid fa-dollar-sign"></i>
-
-                        <h3>Free</h3>
-
-                        <p>
-                            Useful tools without unnecessary costs.
-                        </p>
-
-                    </div>
+                    </p>
 
 
                 </div>
 
+
             </div>
+
 
         </section>
 
@@ -480,43 +877,55 @@
     </main>
 
 
-    <!-- ==================== FOOTER ==================== -->
 
-    <footer>
+    <!-- =========================
+         FOOTER
+    ========================== -->
 
-        <div class="footer-logo">
-
-            <img src="assets/galouloutoolbox.png" alt="Galoulou Toolbox">
-
-            <span>Galoulou Toolbox</span>
-
-        </div>
+    <footer class="footer">
 
 
-        <p>
-            © 2026 Galoulou Toolbox. Simple tools, one place.
-        </p>
+        <div class="footer-content">
 
 
-        <div class="footer-links">
-
-            <a href="#tools">Tools</a>
-
-            <a 
-                href="https://discord.gg/M738CRfkPt"
-                target="_blank"
+            <a
+                href="index.html"
+                class="footer-logo"
             >
-                Discord
+
+                <img
+                    src="assets/galouloutoolbox.png"
+                    alt="Galoulou Toolbox Logo"
+                >
+
+                <span>
+
+                    Galoulou Toolbox
+
+                </span>
+
             </a>
 
+
+            <p>
+
+                © 2026 Galoulou Toolbox.
+
+            </p>
+
+
         </div>
+
 
     </footer>
 
 
-    <!-- ==================== JAVASCRIPT ==================== -->
+
+    <!-- MAIN JAVASCRIPT -->
 
     <script src="script.js"></script>
 
+
 </body>
+
 </html>
