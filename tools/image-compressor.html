@@ -1,131 +1,269 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Image Compressor - GaloulouToolBox</title>
-  <link rel="stylesheet" href="../style.css">
+
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Image Compressor - Galoulou Toolbox</title>
+
+<link rel="stylesheet" href="../style.css">
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 </head>
 
 <body>
 
+<header class="navbar">
+
+<a href="../index.html" class="logo">
+
+<img src="../assets/galouloutoolbox.png"
+     alt="Galoulou Toolbox Logo">
+
+<span>Galoulou Toolbox</span>
+
+</a>
+
+<a href="../index.html#tools"
+   class="discord-button">
+
+<i class="fa-solid fa-arrow-left"></i>
+
+Tous les outils
+
+</a>
+
+</header>
+
+
 <main class="tool-page">
-  <a href="../index.html" class="back-btn">← Retour</a>
 
-  <div class="tool-container">
+<div class="tool-container">
 
-    <h1>🗜️ Image Compressor</h1>
-    <p>Réduis le poids de tes images directement dans ton navigateur.</p>
+<a href="../index.html"
+   class="back-button">
 
-    <div class="tool-box">
+<i class="fa-solid fa-arrow-left"></i>
 
-      <input type="file" id="imageInput" accept="image/*">
+Retour à la boîte à outils
 
-      <br><br>
+</a>
 
-      <label>
-        Qualité :
-        <strong id="qualityValue">70%</strong>
-      </label>
 
-      <br>
+<div class="tool-header">
 
-      <input
-        type="range"
-        id="quality"
-        min="10"
-        max="100"
-        value="70"
-      >
+<h1>🗜️ Image Compressor</h1>
 
-      <br><br>
+<p>
+Réduisez le poids de vos images sans serveur.
+</p>
 
-      <button onclick="compressImage()">
-        🗜️ Compresser
-      </button>
+</div>
 
-      <p id="info"></p>
 
-      <a
-        id="download"
-        style="display:none;"
-        class="button">
-        ⬇️ Télécharger
-      </a>
+<div class="tool-card">
 
-    </div>
+<div class="tool-section">
 
-  </div>
+<h2>📁 Image</h2>
+
+<input
+type="file"
+id="imageInput"
+accept="image/*"
+class="file-input">
+
+</div>
+
+
+<div class="tool-section">
+
+<div class="tool-label">
+
+<span>Qualité</span>
+
+<strong id="qualityValue">
+70%
+</strong>
+
+</div>
+
+
+<input
+type="range"
+id="quality"
+min="10"
+max="100"
+value="70">
+
+</div>
+
+
+<button class="tool-button"
+        onclick="compressImage()">
+
+<i class="fa-solid fa-compress"></i>
+
+Compresser l'image
+
+</button>
+
+
+<div id="info"
+     class="result-box">
+
+En attente d'une image...
+
+</div>
+
+
+<a id="download"
+   class="download-button"
+   style="display:none;">
+
+<i class="fa-solid fa-download"></i>
+&nbsp;
+Télécharger l'image
+
+</a>
+
+</div>
+
+</div>
+
 </main>
 
+
 <script>
-const quality = document.getElementById("quality");
+
+const quality =
+document.getElementById("quality");
+
 
 quality.addEventListener("input", function() {
-  document.getElementById("qualityValue").textContent =
-    this.value + "%";
+
+document.getElementById("qualityValue")
+.textContent =
+this.value + "%";
+
 });
+
 
 function compressImage() {
 
-  const input = document.getElementById("imageInput");
+const input =
+document.getElementById("imageInput");
 
-  if (!input.files.length) {
-    document.getElementById("info").textContent =
-      "❌ Choisis une image.";
-    return;
-  }
 
-  const file = input.files[0];
+if (!input.files.length) {
 
-  const reader = new FileReader();
+document.getElementById("info")
+.textContent =
+"❌ Choisis une image.";
 
-  reader.onload = function(e) {
+return;
 
-    const img = new Image();
-
-    img.onload = function() {
-
-      const canvas = document.createElement("canvas");
-
-      canvas.width = img.width;
-      canvas.height = img.height;
-
-      const ctx = canvas.getContext("2d");
-
-      ctx.drawImage(img, 0, 0);
-
-      canvas.toBlob(function(blob) {
-
-        const oldSize = file.size;
-        const newSize = blob.size;
-
-        const reduction =
-          ((oldSize - newSize) / oldSize) * 100;
-
-        const oldKB = (oldSize / 1024).toFixed(1);
-        const newKB = (newSize / 1024).toFixed(1);
-
-        document.getElementById("info").textContent =
-          `✅ ${oldKB} KB → ${newKB} KB (${reduction.toFixed(1)}% économisé)`;
-
-        const url = URL.createObjectURL(blob);
-
-        const download = document.getElementById("download");
-
-        download.href = url;
-        download.download = "galoulou-compressed.jpg";
-        download.style.display = "inline-block";
-
-      }, "image/jpeg", quality.value / 100);
-
-    };
-
-    img.src = e.target.result;
-  };
-
-  reader.readAsDataURL(file);
 }
+
+
+const file =
+input.files[0];
+
+
+const reader =
+new FileReader();
+
+
+reader.onload = function(e) {
+
+const img =
+new Image();
+
+
+img.onload = function() {
+
+const canvas =
+document.createElement("canvas");
+
+
+canvas.width =
+img.width;
+
+canvas.height =
+img.height;
+
+
+const ctx =
+canvas.getContext("2d");
+
+
+ctx.drawImage(img, 0, 0);
+
+
+canvas.toBlob(function(blob) {
+
+const oldSize =
+file.size;
+
+const newSize =
+blob.size;
+
+
+const reduction =
+((oldSize - newSize) / oldSize) * 100;
+
+
+const oldKB =
+(oldSize / 1024).toFixed(1);
+
+const newKB =
+(newSize / 1024).toFixed(1);
+
+
+document.getElementById("info")
+.textContent =
+`✅ ${oldKB} KB → ${newKB} KB
+(${reduction.toFixed(1)}% économisé)`;
+
+
+const url =
+URL.createObjectURL(blob);
+
+
+const download =
+document.getElementById("download");
+
+
+download.href = url;
+
+download.download =
+"galoulou-compressed.jpg";
+
+download.style.display =
+"flex";
+
+
+}, "image/jpeg",
+quality.value / 100);
+
+};
+
+
+img.src =
+e.target.result;
+
+};
+
+
+reader.readAsDataURL(file);
+
+}
+
 </script>
 
 </body>
