@@ -4,17 +4,249 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Image Resizer - Galoulou Toolbox</title>
 
 <link rel="stylesheet" href="../style.css">
 
 <link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+.tool-page {
+    min-height: 100vh;
+    padding: 80px 20px;
+}
+
+.tool-container {
+    max-width: 800px;
+    margin: auto;
+}
+
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    color: var(--text-secondary);
+
+    margin-bottom: 50px;
+}
+
+.tool-header {
+    text-align: center;
+    margin-bottom: 45px;
+}
+
+.tool-header h1 {
+    font-size: clamp(40px, 7vw, 70px);
+    letter-spacing: -3px;
+    margin-bottom: 12px;
+}
+
+.tool-header p {
+    color: var(--text-secondary);
+    font-size: 17px;
+}
+
+.resize-card {
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    border-radius: 20px;
+
+    padding: 35px;
+}
+
+.section-title {
+    font-size: 13px;
+    font-weight: 700;
+
+    color: var(--text-secondary);
+
+    letter-spacing: 1px;
+
+    margin-bottom: 15px;
+}
+
+.file-zone {
+
+    border: 1px dashed var(--border-hover);
+
+    background: var(--bg-secondary);
+
+    border-radius: 14px;
+
+    padding: 30px;
+
+    text-align: center;
+
+    cursor: pointer;
+
+    margin-bottom: 25px;
+}
+
+.file-zone i {
+
+    font-size: 28px;
+
+    margin-bottom: 10px;
+}
+
+.file-zone p {
+
+    color: var(--text-secondary);
+
+    font-size: 13px;
+
+}
+
+.file-zone input {
+    display: none;
+}
+
+.dimensions {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 12px;
+
+    margin-bottom: 18px;
+}
+
+.dimension {
+
+    background: var(--bg-secondary);
+
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+
+    padding: 14px;
+}
+
+.dimension label {
+
+    display: block;
+
+    color: var(--text-secondary);
+
+    font-size: 12px;
+
+    margin-bottom: 8px;
+}
+
+.dimension input {
+
+    width: 100%;
+
+    background: transparent;
+
+    border: none;
+
+    outline: none;
+
+    color: var(--text);
+
+    font-size: 18px;
+
+    font-weight: 700;
+}
+
+.ratio {
+
+    color: var(--text-secondary);
+
+    font-size: 13px;
+
+    margin-bottom: 25px;
+}
+
+.button {
+
+    width: 100%;
+
+    padding: 16px;
+
+    background: var(--button);
+
+    color: var(--button-text);
+
+    border: none;
+
+    border-radius: 11px;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 9px;
+
+}
+
+.download {
+
+    display: none;
+
+    margin-top: 12px;
+
+    width: 100%;
+
+    padding: 15px;
+
+    justify-content: center;
+
+    border-radius: 11px;
+
+    background: var(--bg-secondary);
+
+    border: 1px solid var(--border);
+
+    font-weight: 700;
+}
+
+.status {
+
+    text-align: center;
+
+    color: var(--text-secondary);
+
+    font-size: 13px;
+
+    margin-top: 15px;
+}
+
+@media (max-width:600px) {
+
+    .tool-page {
+        padding: 55px 16px;
+    }
+
+    .resize-card {
+        padding: 22px;
+    }
+
+    .dimensions {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+</style>
 
 </head>
+
 
 <body>
 
@@ -22,15 +254,14 @@
 
 <a href="../index.html" class="logo">
 
-<img src="../assets/galouloutoolbox.png"
-     alt="Galoulou Toolbox Logo">
+<img src="../assets/galouloutoolbox.png">
 
-<span>Galoulou Toolbox</span>
+<span>Boîte à outils Galoulou</span>
 
 </a>
 
 <a href="../index.html#tools"
-   class="discord-button">
+class="discord-button">
 
 <i class="fa-solid fa-arrow-left"></i>
 
@@ -46,7 +277,7 @@ Tous les outils
 <div class="tool-container">
 
 <a href="../index.html"
-   class="back-button">
+class="back-button">
 
 <i class="fa-solid fa-arrow-left"></i>
 
@@ -60,104 +291,110 @@ Retour à la boîte à outils
 <h1>🖼️ Image Resizer</h1>
 
 <p>
-Redimensionnez une image directement dans votre navigateur.
+Redimensionnez vos images rapidement et simplement.
 </p>
 
 </div>
 
 
-<div class="tool-card">
+<div class="resize-card">
 
-<div class="tool-section">
+<p class="section-title">
+IMAGE
+</p>
 
-<h2>📁 Image</h2>
+
+<label class="file-zone">
+
+<i class="fa-regular fa-image"></i>
+
+<p>
+Cliquez ici pour choisir une image
+</p>
 
 <input
 type="file"
-id="imageInput"
-accept="image/*"
-class="file-input">
+id="file"
+accept="image/*">
 
-</div>
-
-
-<div class="tool-button-row">
-
-<div>
-
-<div class="tool-label">
-<span>Largeur</span>
-</div>
-
-<input
-type="number"
-id="width"
-placeholder="Largeur">
-
-</div>
+</label>
 
 
-<div>
+<p class="section-title">
+DIMENSIONS
+</p>
 
-<div class="tool-label">
-<span>Hauteur</span>
-</div>
+
+<div class="dimensions">
+
+<div class="dimension">
+
+<label>Largeur</label>
 
 <input
 type="number"
-id="height"
-placeholder="Hauteur">
+id="width">
+
+</div>
+
+
+<div class="dimension">
+
+<label>Hauteur</label>
+
+<input
+type="number"
+id="height">
 
 </div>
 
 </div>
+
+
+<label class="ratio">
+
+<input
+type="checkbox"
+id="ratio"
+checked>
+
+&nbsp; Conserver les proportions
+
+</label>
 
 
 <br>
 
 
-<label>
-
-<input
-type="checkbox"
-id="keepRatio"
-checked>
-
-&nbsp; Garder les proportions
-
-</label>
-
-
-<br><br>
-
-
-<button class="tool-button"
-        onclick="resizeImage()">
+<button
+class="button"
+onclick="resize()">
 
 <i class="fa-solid fa-expand"></i>
 
-Redimensionner l'image
+Redimensionner
 
 </button>
 
 
-<canvas id="canvas"
-        style="display:none;"></canvas>
-
-
-<a id="download"
-   class="download-button"
-   style="display:none;">
+<a
+id="download"
+class="download">
 
 <i class="fa-solid fa-download"></i>
-&nbsp;
-Télécharger l'image
+
+&nbsp; Télécharger l'image
 
 </a>
 
 
-<p id="status"
-   class="status"></p>
+<p
+id="status"
+class="status">
+
+Choisissez une image pour commencer.
+
+</p>
 
 </div>
 
@@ -168,10 +405,10 @@ Télécharger l'image
 
 <script>
 
-let originalImage = null;
+let image = null;
 
 
-document.getElementById("imageInput")
+document.getElementById("file")
 .addEventListener("change", function(e) {
 
 const file = e.target.files[0];
@@ -179,30 +416,34 @@ const file = e.target.files[0];
 if (!file) return;
 
 
-const reader = new FileReader();
+const reader =
+new FileReader();
 
 
 reader.onload = function(event) {
 
-originalImage = new Image();
+image = new Image();
 
 
-originalImage.onload = function() {
+image.onload = function() {
 
 document.getElementById("width").value =
-originalImage.width;
+image.width;
 
 document.getElementById("height").value =
-originalImage.height;
+image.height;
+
+document.getElementById("status").textContent =
+"Image chargée : " +
+image.width + " × " +
+image.height;
 
 };
 
-
-originalImage.src =
+image.src =
 event.target.result;
 
 };
-
 
 reader.readAsDataURL(file);
 
@@ -213,49 +454,29 @@ document.getElementById("width")
 .addEventListener("input", function() {
 
 if (
-document.getElementById("keepRatio").checked &&
-originalImage
+document.getElementById("ratio").checked &&
+image
 ) {
-
-const ratio =
-originalImage.height /
-originalImage.width;
 
 document.getElementById("height").value =
-Math.round(this.value * ratio);
+Math.round(
+this.value *
+image.height /
+image.width
+);
 
 }
 
 });
 
 
-document.getElementById("height")
-.addEventListener("input", function() {
+function resize() {
 
-if (
-document.getElementById("keepRatio").checked &&
-originalImage
-) {
-
-const ratio =
-originalImage.width /
-originalImage.height;
-
-document.getElementById("width").value =
-Math.round(this.value * ratio);
-
-}
-
-});
-
-
-function resizeImage() {
-
-if (!originalImage) {
+if (!image) {
 
 document.getElementById("status")
 .textContent =
-"❌ Choisis d'abord une image.";
+"❌ Choisissez une image.";
 
 return;
 
@@ -269,22 +490,15 @@ const height =
 Number(document.getElementById("height").value);
 
 
-if (width <= 0 || height <= 0) {
-
-document.getElementById("status")
-.textContent =
-"❌ Dimensions invalides.";
-
-return;
-
-}
+if (width <= 0 || height <= 0) return;
 
 
 const canvas =
-document.getElementById("canvas");
+document.createElement("canvas");
 
 
 canvas.width = width;
+
 canvas.height = height;
 
 
@@ -293,7 +507,7 @@ canvas.getContext("2d");
 
 
 ctx.drawImage(
-originalImage,
+image,
 0,
 0,
 width,
@@ -322,7 +536,7 @@ download.style.display =
 
 document.getElementById("status")
 .textContent =
-"✅ Image redimensionnée !";
+"✓ Image redimensionnée !";
 
 }, "image/png");
 
@@ -331,4 +545,5 @@ document.getElementById("status")
 </script>
 
 </body>
+
 </html>
