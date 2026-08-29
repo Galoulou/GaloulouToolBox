@@ -1,161 +1,333 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Image Resizer - GaloulouToolBox</title>
-  <link rel="stylesheet" href="../style.css">
+
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Image Resizer - Galoulou Toolbox</title>
+
+<link rel="stylesheet" href="../style.css">
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 </head>
 
 <body>
 
+<header class="navbar">
+
+<a href="../index.html" class="logo">
+
+<img src="../assets/galouloutoolbox.png"
+     alt="Galoulou Toolbox Logo">
+
+<span>Galoulou Toolbox</span>
+
+</a>
+
+<a href="../index.html#tools"
+   class="discord-button">
+
+<i class="fa-solid fa-arrow-left"></i>
+
+Tous les outils
+
+</a>
+
+</header>
+
+
 <main class="tool-page">
-  <a href="../index.html" class="back-btn">← Retour</a>
 
-  <div class="tool-container">
+<div class="tool-container">
 
-    <h1>🖼️ Image Resizer</h1>
-    <p>Redimensionne une image directement dans ton navigateur.</p>
+<a href="../index.html"
+   class="back-button">
 
-    <div class="tool-box">
+<i class="fa-solid fa-arrow-left"></i>
 
-      <input type="file" id="imageInput" accept="image/*">
+Retour à la boîte à outils
 
-      <br><br>
+</a>
 
-      <label>
-        Largeur :
-        <input type="number" id="width" placeholder="Largeur">
-      </label>
 
-      <br><br>
+<div class="tool-header">
 
-      <label>
-        Hauteur :
-        <input type="number" id="height" placeholder="Hauteur">
-      </label>
+<h1>🖼️ Image Resizer</h1>
 
-      <br><br>
+<p>
+Redimensionnez une image directement dans votre navigateur.
+</p>
 
-      <label>
-        <input type="checkbox" id="keepRatio" checked>
-        Garder les proportions
-      </label>
+</div>
 
-      <br><br>
 
-      <button onclick="resizeImage()">🖼️ Redimensionner</button>
+<div class="tool-card">
 
-      <canvas id="canvas" style="display:none;"></canvas>
+<div class="tool-section">
 
-      <br>
+<h2>📁 Image</h2>
 
-      <a id="download" style="display:none;" class="button">
-        ⬇️ Télécharger l'image
-      </a>
+<input
+type="file"
+id="imageInput"
+accept="image/*"
+class="file-input">
 
-      <p id="status"></p>
+</div>
 
-    </div>
 
-  </div>
+<div class="tool-button-row">
+
+<div>
+
+<div class="tool-label">
+<span>Largeur</span>
+</div>
+
+<input
+type="number"
+id="width"
+placeholder="Largeur">
+
+</div>
+
+
+<div>
+
+<div class="tool-label">
+<span>Hauteur</span>
+</div>
+
+<input
+type="number"
+id="height"
+placeholder="Hauteur">
+
+</div>
+
+</div>
+
+
+<br>
+
+
+<label>
+
+<input
+type="checkbox"
+id="keepRatio"
+checked>
+
+&nbsp; Garder les proportions
+
+</label>
+
+
+<br><br>
+
+
+<button class="tool-button"
+        onclick="resizeImage()">
+
+<i class="fa-solid fa-expand"></i>
+
+Redimensionner l'image
+
+</button>
+
+
+<canvas id="canvas"
+        style="display:none;"></canvas>
+
+
+<a id="download"
+   class="download-button"
+   style="display:none;">
+
+<i class="fa-solid fa-download"></i>
+&nbsp;
+Télécharger l'image
+
+</a>
+
+
+<p id="status"
+   class="status"></p>
+
+</div>
+
+</div>
+
 </main>
 
+
 <script>
+
 let originalImage = null;
 
-document.getElementById("imageInput").addEventListener("change", function(e) {
 
-  const file = e.target.files[0];
+document.getElementById("imageInput")
+.addEventListener("change", function(e) {
 
-  if (!file) return;
+const file = e.target.files[0];
 
-  const reader = new FileReader();
+if (!file) return;
 
-  reader.onload = function(event) {
 
-    originalImage = new Image();
+const reader = new FileReader();
 
-    originalImage.onload = function() {
-      document.getElementById("width").value = originalImage.width;
-      document.getElementById("height").value = originalImage.height;
-    };
 
-    originalImage.src = event.target.result;
-  };
+reader.onload = function(event) {
 
-  reader.readAsDataURL(file);
+originalImage = new Image();
+
+
+originalImage.onload = function() {
+
+document.getElementById("width").value =
+originalImage.width;
+
+document.getElementById("height").value =
+originalImage.height;
+
+};
+
+
+originalImage.src =
+event.target.result;
+
+};
+
+
+reader.readAsDataURL(file);
+
 });
 
-document.getElementById("width").addEventListener("input", function() {
 
-  if (
-    document.getElementById("keepRatio").checked &&
-    originalImage
-  ) {
+document.getElementById("width")
+.addEventListener("input", function() {
 
-    const ratio = originalImage.height / originalImage.width;
+if (
+document.getElementById("keepRatio").checked &&
+originalImage
+) {
 
-    document.getElementById("height").value =
-      Math.round(this.value * ratio);
-  }
+const ratio =
+originalImage.height /
+originalImage.width;
+
+document.getElementById("height").value =
+Math.round(this.value * ratio);
+
+}
+
 });
 
-document.getElementById("height").addEventListener("input", function() {
 
-  if (
-    document.getElementById("keepRatio").checked &&
-    originalImage
-  ) {
+document.getElementById("height")
+.addEventListener("input", function() {
 
-    const ratio = originalImage.width / originalImage.height;
+if (
+document.getElementById("keepRatio").checked &&
+originalImage
+) {
 
-    document.getElementById("width").value =
-      Math.round(this.value * ratio);
-  }
+const ratio =
+originalImage.width /
+originalImage.height;
+
+document.getElementById("width").value =
+Math.round(this.value * ratio);
+
+}
+
 });
+
 
 function resizeImage() {
 
-  if (!originalImage) {
-    document.getElementById("status").textContent =
-      "❌ Choisis d'abord une image.";
-    return;
-  }
+if (!originalImage) {
 
-  const width = Number(document.getElementById("width").value);
-  const height = Number(document.getElementById("height").value);
+document.getElementById("status")
+.textContent =
+"❌ Choisis d'abord une image.";
 
-  if (width <= 0 || height <= 0) {
-    document.getElementById("status").textContent =
-      "❌ Dimensions invalides.";
-    return;
-  }
+return;
 
-  const canvas = document.getElementById("canvas");
-
-  canvas.width = width;
-  canvas.height = height;
-
-  const ctx = canvas.getContext("2d");
-
-  ctx.drawImage(originalImage, 0, 0, width, height);
-
-  canvas.toBlob(function(blob) {
-
-    const url = URL.createObjectURL(blob);
-
-    const download = document.getElementById("download");
-
-    download.href = url;
-    download.download = "galoulou-resized.png";
-    download.style.display = "inline-block";
-
-    document.getElementById("status").textContent =
-      "✅ Image redimensionnée !";
-
-  }, "image/png");
 }
+
+
+const width =
+Number(document.getElementById("width").value);
+
+const height =
+Number(document.getElementById("height").value);
+
+
+if (width <= 0 || height <= 0) {
+
+document.getElementById("status")
+.textContent =
+"❌ Dimensions invalides.";
+
+return;
+
+}
+
+
+const canvas =
+document.getElementById("canvas");
+
+
+canvas.width = width;
+canvas.height = height;
+
+
+const ctx =
+canvas.getContext("2d");
+
+
+ctx.drawImage(
+originalImage,
+0,
+0,
+width,
+height
+);
+
+
+canvas.toBlob(function(blob) {
+
+const url =
+URL.createObjectURL(blob);
+
+
+const download =
+document.getElementById("download");
+
+
+download.href = url;
+
+download.download =
+"galoulou-resized.png";
+
+download.style.display =
+"flex";
+
+
+document.getElementById("status")
+.textContent =
+"✅ Image redimensionnée !";
+
+}, "image/png");
+
+}
+
 </script>
 
 </body>
