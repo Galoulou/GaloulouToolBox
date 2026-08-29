@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Unit Converter - Galoulou Toolbox</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#0f1117;
+    color:white;
+    font-family:Arial,sans-serif;
+    padding:20px;
+}
+
+.container{
+    width:100%;
+    max-width:600px;
+    background:#181b24;
+    padding:30px;
+    border-radius:22px;
+    box-shadow:0 20px 60px rgba(0,0,0,.4);
+}
+
+h1{
+    text-align:center;
+}
+
+select,input{
+    width:100%;
+    padding:14px;
+    margin:8px 0;
+    border:0;
+    border-radius:10px;
+    background:#252936;
+    color:white;
+    font-size:16px;
+}
+
+.row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+.result{
+    margin-top:20px;
+    padding:20px;
+    border-radius:12px;
+    background:#252936;
+    text-align:center;
+    font-size:25px;
+    font-weight:bold;
+}
+
+.swap{
+    display:block;
+    margin:15px auto;
+    border:0;
+    border-radius:10px;
+    padding:10px 20px;
+    background:#5865f2;
+    color:white;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🔄 Unit Converter</h1>
+
+<select id="category" onchange="changeCategory()">
+
+<option value="length">📏 Longueur</option>
+<option value="weight">⚖️ Poids</option>
+<option value="temperature">🌡️ Température</option>
+<option value="volume">🧪 Volume</option>
+<option value="time">⏰ Temps</option>
+
+</select>
+
+<div class="row">
+
+<div>
+
+<label>De</label>
+
+<select id="from" onchange="convert()"></select>
+
+<input
+id="value"
+type="number"
+value="1"
+oninput="convert()"
+>
+
+</div>
+
+<div>
+
+<label>Vers</label>
+
+<select id="to" onchange="convert()"></select>
+
+<div class="result" id="result">—</div>
+
+</div>
+
+</div>
+
+<button class="swap" onclick="swapUnits()">
+⇄ Inverser
+</button>
+
+</div>
+
+<script>
+
+const units = {
+
+length:{
+    "Mètres":"m",
+    "Kilomètres":"km",
+    "Centimètres":"cm",
+    "Millimètres":"mm",
+    "Miles":"mi",
+    "Yards":"yd",
+    "Pieds":"ft",
+    "Pouces":"in"
+},
+
+weight:{
+    "Kilogrammes":"kg",
+    "Grammes":"g",
+    "Milligrammes":"mg",
+    "Tonnes":"t",
+    "Livres":"lb",
+    "Onces":"oz"
+},
+
+temperature:{
+    "Celsius":"c",
+    "Fahrenheit":"f",
+    "Kelvin":"k"
+},
+
+volume:{
+    "Litres":"l",
+    "Millilitres":"ml",
+    "Gallons":"gal",
+    "Quarts":"qt",
+    "Pintes":"pt",
+    "Tasses":"cup"
+},
+
+time:{
+    "Secondes":"s",
+    "Minutes":"min",
+    "Heures":"h",
+    "Jours":"d"
+}
+
+};
+
+const factors = {
+
+length:{
+    m:1,
+    km:1000,
+    cm:.01,
+    mm:.001,
+    mi:1609.344,
+    yd:.9144,
+    ft:.3048,
+    in:.0254
+},
+
+weight:{
+    kg:1,
+    g:.001,
+    mg:.000001,
+    t:1000,
+    lb:.45359237,
+    oz:.0283495
+},
+
+volume:{
+    l:1,
+    ml:.001,
+    gal:3.785411784,
+    qt:.946352946,
+    pt:.473176473,
+    cup:.2365882365
+},
+
+time:{
+    s:1,
+    min:60,
+    h:3600,
+    d:86400
+}
+
+};
+
+function changeCategory(){
+
+    const category =
+        document.getElementById("category").value;
+
+    const from =
+        document.getElementById("from");
+
+    const to =
+        document.getElementById("to");
+
+    from.innerHTML = "";
+    to.innerHTML = "";
+
+    Object.entries(units[category])
+        .forEach(([name,value])=>{
+
+            from.innerHTML +=
+                `<option value="${value}">${name}</option>`;
+
+            to.innerHTML +=
+                `<option value="${value}">${name}</option>`;
+        });
+
+    if(to.options.length > 1){
+        to.selectedIndex = 1;
+    }
+
+    convert();
+}
+
+function convert(){
+
+    const category =
+        document.getElementById("category").value;
+
+    const from =
+        document.getElementById("from").value;
+
+    const to =
+        document.getElementById("to").value;
+
+    const value =
+        Number(document.getElementById("value").value);
+
+    let result;
+
+    if(category === "temperature"){
+
+        result = convertTemperature(
+            value,
+            from,
+            to
+        );
+
+    }else{
+
+        const base =
+            value * factors[category][from];
+
+        result =
+            base / factors[category][to];
+    }
+
+    document.getElementById("result")
+        .textContent = formatNumber(result);
+}
+
+function convertTemperature(value,from,to){
+
+    let celsius;
+
+    if(from === "c") celsius = value;
+
+    if(from === "f")
+        celsius = (value - 32) * 5/9;
+
+    if(from === "k")
+        celsius = value - 273.15;
+
+    if(to === "c") return celsius;
+
+    if(to === "f")
+        return celsius * 9/5 + 32;
+
+    if(to === "k")
+        return celsius + 273.15;
+}
+
+function formatNumber(number){
+
+    if(!Number.isFinite(number))
+        return "Erreur";
+
+    return Number(
+        number.toFixed(8)
+    ).toLocaleString("fr-FR");
+}
+
+function swapUnits(){
+
+    const from =
+        document.getElementById("from");
+
+    const to =
+        document.getElementById("to");
+
+    const temp = from.value;
+
+    from.value = to.value;
+    to.value = temp;
+
+    convert();
+}
+
+changeCategory();
+
+</script>
+
+</body>
+</html>
