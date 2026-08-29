@@ -726,3 +726,116 @@ console.log(
     "%c20 tools. One place.",
     "font-size:14px;"
 );
+/* =========================
+   COOKIE CONSENT
+========================= */
+
+const cookieBanner = document.getElementById("cookieBanner");
+const cookieModal = document.getElementById("cookieModal");
+
+const cookieAccept = document.getElementById("cookieAccept");
+const cookieReject = document.getElementById("cookieReject");
+
+const cookieSettings = document.getElementById("cookieSettings");
+const closeCookieModal = document.getElementById("closeCookieModal");
+const saveCookieSettings = document.getElementById("saveCookieSettings");
+
+const preferenceCookies = document.getElementById("preferenceCookies");
+const analyticsCookies = document.getElementById("analyticsCookies");
+
+
+/* Vérifier si l'utilisateur a déjà choisi */
+
+const savedConsent = localStorage.getItem("galoulouCookieConsent");
+
+if (savedConsent) {
+
+    cookieBanner.classList.add("hidden");
+
+}
+
+
+/* Accepter */
+
+cookieAccept.addEventListener("click", () => {
+
+    localStorage.setItem(
+        "galoulouCookieConsent",
+        JSON.stringify({
+            necessary: true,
+            preferences: true,
+            analytics: true
+        })
+    );
+
+    cookieBanner.classList.add("hidden");
+
+});
+
+
+/* Refuser */
+
+cookieReject.addEventListener("click", () => {
+
+    localStorage.setItem(
+        "galoulouCookieConsent",
+        JSON.stringify({
+            necessary: true,
+            preferences: false,
+            analytics: false
+        })
+    );
+
+    cookieBanner.classList.add("hidden");
+
+});
+
+
+/* Ouvrir personnalisation */
+
+cookieSettings.addEventListener("click", () => {
+
+    cookieModal.classList.remove("hidden");
+
+});
+
+
+/* Fermer */
+
+closeCookieModal.addEventListener("click", () => {
+
+    cookieModal.classList.add("hidden");
+
+});
+
+
+/* Enregistrer les préférences */
+
+saveCookieSettings.addEventListener("click", () => {
+
+    localStorage.setItem(
+        "galoulouCookieConsent",
+        JSON.stringify({
+            necessary: true,
+            preferences: preferenceCookies.checked,
+            analytics: analyticsCookies.checked
+        })
+    );
+
+    cookieModal.classList.add("hidden");
+    cookieBanner.classList.add("hidden");
+
+});
+
+
+/* Fermer en cliquant autour de la fenêtre */
+
+cookieModal.addEventListener("click", (event) => {
+
+    if (event.target === cookieModal) {
+
+        cookieModal.classList.add("hidden");
+
+    }
+
+});
