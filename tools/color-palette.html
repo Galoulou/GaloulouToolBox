@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Color Palette - GaloulouToolBox</title>
+  <link rel="stylesheet" href="../style.css">
+
+  <style>
+    .palette {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .color-card {
+      height: 150px;
+      border-radius: 15px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 10px;
+      cursor: pointer;
+      transition: transform .2s;
+      box-sizing: border-box;
+    }
+
+    .color-card:hover {
+      transform: scale(1.05);
+    }
+
+    .color-code {
+      background: rgba(0,0,0,.65);
+      color: white;
+      padding: 7px 10px;
+      border-radius: 8px;
+      font-family: monospace;
+    }
+  </style>
+</head>
+
+<body>
+
+<main class="tool-page">
+  <a href="../index.html" class="back-btn">← Retour</a>
+
+  <div class="tool-container">
+
+    <h1>🎨 Color Palette</h1>
+    <p>Crée une palette de couleurs aléatoire.</p>
+
+    <div class="tool-box">
+      <button onclick="generatePalette()">🎨 Générer une palette</button>
+
+      <div id="palette" class="palette"></div>
+
+      <p>💡 Clique sur une couleur pour copier son code.</p>
+    </div>
+
+  </div>
+</main>
+
+<script>
+function randomColor() {
+  return "#" + Math.floor(Math.random() * 16777215)
+    .toString(16)
+    .padStart(6, "0");
+}
+
+function generatePalette() {
+  const palette = document.getElementById("palette");
+  palette.innerHTML = "";
+
+  for (let i = 0; i < 5; i++) {
+    const color = randomColor();
+
+    const card = document.createElement("div");
+    card.className = "color-card";
+    card.style.background = color;
+
+    card.innerHTML = `
+      <span class="color-code">${color}</span>
+    `;
+
+    card.onclick = () => {
+      navigator.clipboard.writeText(color);
+      card.querySelector(".color-code").textContent = "✅ Copié !";
+
+      setTimeout(() => {
+        card.querySelector(".color-code").textContent = color;
+      }, 1000);
+    };
+
+    palette.appendChild(card);
+  }
+}
+
+generatePalette();
+</script>
+
+</body>
+</html>
