@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Percentage Calculator - Galoulou Toolbox</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            background: #0b0d12;
+            color: white;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 650px;
+
+            background: #151922;
+
+            border: 1px solid rgba(255,255,255,.09);
+
+            border-radius: 22px;
+
+            padding: 30px;
+
+            box-shadow:
+                0 20px 60px rgba(0,0,0,.4);
+        }
+
+        h1 {
+            text-align: center;
+
+            margin-top: 0;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+
+            color: #9299a8;
+
+            margin-bottom: 30px;
+        }
+
+        .calculator {
+            background: #12151c;
+
+            border: 1px solid rgba(255,255,255,.07);
+
+            border-radius: 16px;
+
+            padding: 20px;
+
+            margin-bottom: 15px;
+        }
+
+        .calculator h2 {
+            font-size: 17px;
+
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .inputs {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 12px;
+        }
+
+        input {
+            width: 100%;
+
+            padding: 13px;
+
+            border: 1px solid rgba(255,255,255,.08);
+
+            border-radius: 10px;
+
+            background: #252936;
+
+            color: white;
+
+            outline: none;
+        }
+
+        input:focus {
+            border-color:
+                rgba(255,255,255,.25);
+        }
+
+        .result {
+            margin-top: 15px;
+
+            padding: 15px;
+
+            border-radius: 10px;
+
+            background: #252936;
+
+            text-align: center;
+
+            font-size: 20px;
+
+            font-weight: bold;
+        }
+
+        .clear {
+            width: 100%;
+
+            padding: 13px;
+
+            border: 0;
+
+            border-radius: 10px;
+
+            background: white;
+
+            color: #0b0d12;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            margin-top: 5px;
+        }
+
+        .clear:hover {
+            opacity: .85;
+        }
+
+        @media(max-width:550px) {
+
+            .inputs {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <h1>💯 Percentage Calculator</h1>
+
+    <p class="subtitle">
+        Calculate percentages quickly and easily.
+    </p>
+
+
+    <!-- =========================
+         CALCULATOR 1
+    ========================== -->
+
+    <div class="calculator">
+
+        <h2>
+            Quel est X% de Y ?
+        </h2>
+
+        <div class="inputs">
+
+            <input
+                id="percent1"
+                type="number"
+                placeholder="Pourcentage (%)"
+                oninput="calculate1()"
+            >
+
+            <input
+                id="number1"
+                type="number"
+                placeholder="Nombre"
+                oninput="calculate1()"
+            >
+
+        </div>
+
+        <div
+            class="result"
+            id="result1"
+        >
+            Résultat : —
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         CALCULATOR 2
+    ========================== -->
+
+    <div class="calculator">
+
+        <h2>
+            X représente quel pourcentage de Y ?
+        </h2>
+
+        <div class="inputs">
+
+            <input
+                id="number2"
+                type="number"
+                placeholder="X"
+                oninput="calculate2()"
+            >
+
+            <input
+                id="total2"
+                type="number"
+                placeholder="Y"
+                oninput="calculate2()"
+            >
+
+        </div>
+
+        <div
+            class="result"
+            id="result2"
+        >
+            Résultat : —
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         CALCULATOR 3
+    ========================== -->
+
+    <div class="calculator">
+
+        <h2>
+            Augmentation / réduction en %
+        </h2>
+
+        <div class="inputs">
+
+            <input
+                id="number3"
+                type="number"
+                placeholder="Valeur"
+                oninput="calculate3()"
+            >
+
+            <input
+                id="percent3"
+                type="number"
+                placeholder="Pourcentage"
+                oninput="calculate3()"
+            >
+
+        </div>
+
+        <div
+            class="result"
+            id="result3"
+        >
+            Résultat : —
+        </div>
+
+    </div>
+
+
+    <button
+        class="clear"
+        onclick="clearAll()"
+    >
+        Effacer tout
+    </button>
+
+</div>
+
+
+<script>
+
+function calculate1() {
+
+    const percent =
+        Number(
+            document.getElementById("percent1").value
+        );
+
+    const number =
+        Number(
+            document.getElementById("number1").value
+        );
+
+    const result =
+        document.getElementById("result1");
+
+
+    if (
+        document.getElementById("percent1").value === "" ||
+        document.getElementById("number1").value === ""
+    ) {
+
+        result.textContent =
+            "Résultat : —";
+
+        return;
+    }
+
+
+    const answer =
+        (percent / 100) * number;
+
+
+    result.textContent =
+        "Résultat : " +
+        format(answer);
+}
+
+
+function calculate2() {
+
+    const number =
+        Number(
+            document.getElementById("number2").value
+        );
+
+    const total =
+        Number(
+            document.getElementById("total2").value
+        );
+
+    const result =
+        document.getElementById("result2");
+
+
+    if (
+        document.getElementById("number2").value === "" ||
+        document.getElementById("total2").value === ""
+    ) {
+
+        result.textContent =
+            "Résultat : —";
+
+        return;
+    }
+
+
+    if (total === 0) {
+
+        result.textContent =
+            "Impossible : division par 0";
+
+        return;
+    }
+
+
+    const answer =
+        (number / total) * 100;
+
+
+    result.textContent =
+        "Résultat : " +
+        format(answer) +
+        " %";
+}
+
+
+function calculate3() {
+
+    const number =
+        Number(
+            document.getElementById("number3").value
+        );
+
+    const percent =
+        Number(
+            document.getElementById("percent3").value
+        );
+
+    const result =
+        document.getElementById("result3");
+
+
+    if (
+        document.getElementById("number3").value === "" ||
+        document.getElementById("percent3").value === ""
+    ) {
+
+        result.textContent =
+            "Résultat : —";
+
+        return;
+    }
+
+
+    const increase =
+        number * (1 + percent / 100);
+
+    const decrease =
+        number * (1 - percent / 100);
+
+
+    result.innerHTML =
+        "Augmentation : " +
+        format(increase) +
+        "<br><br>" +
+        "Réduction : " +
+        format(decrease);
+}
+
+
+function format(number) {
+
+    return Number(
+        number.toFixed(8)
+    ).toLocaleString("fr-FR");
+
+}
+
+
+function clearAll() {
+
+    document
+        .querySelectorAll("input")
+        .forEach(input => {
+            input.value = "";
+        });
+
+
+    document
+        .querySelectorAll(".result")
+        .forEach(result => {
+            result.textContent =
+                "Résultat : —";
+        });
+
+}
+
+</script>
+
+</body>
+
+</html>
