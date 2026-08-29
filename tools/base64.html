@@ -4,17 +4,179 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Base64 Encoder - Galoulou Toolbox</title>
 
 <link rel="stylesheet" href="../style.css">
 
 <link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+.tool-page {
+    min-height: 100vh;
+    padding: 80px 20px;
+}
+
+.tool-container {
+    max-width: 800px;
+    margin: auto;
+}
+
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    color: var(--text-secondary);
+
+    margin-bottom: 50px;
+}
+
+.tool-header {
+    text-align: center;
+    margin-bottom: 45px;
+}
+
+.tool-header h1 {
+    font-size: clamp(40px, 7vw, 70px);
+    letter-spacing: -3px;
+    margin-bottom: 12px;
+}
+
+.tool-header p {
+    color: var(--text-secondary);
+    font-size: 17px;
+}
+
+.base-card {
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    border-radius: 20px;
+
+    padding: 35px;
+}
+
+.section-title {
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    color: var(--text-secondary);
+
+    letter-spacing: 1px;
+
+    margin-bottom: 12px;
+}
+
+.textarea {
+
+    width: 100%;
+
+    min-height: 170px;
+
+    resize: vertical;
+
+    padding: 15px;
+
+    background: var(--bg-secondary);
+
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+
+    color: var(--text);
+
+    outline: none;
+
+    font-family: monospace;
+
+    font-size: 14px;
+
+    margin-bottom: 15px;
+}
+
+.textarea:focus {
+
+    border-color: var(--border-hover);
+
+}
+
+.buttons {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr 1fr;
+
+    gap: 10px;
+
+    margin-bottom: 30px;
+}
+
+.button {
+
+    padding: 14px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: var(--button);
+
+    color: var(--button-text);
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.button.secondary {
+
+    background: var(--bg-secondary);
+
+    color: var(--text);
+
+    border: 1px solid var(--border);
+}
+
+.message {
+
+    text-align: center;
+
+    color: var(--text-secondary);
+
+    font-size: 13px;
+
+    min-height: 20px;
+}
+
+@media (max-width:600px) {
+
+    .tool-page {
+        padding: 55px 16px;
+    }
+
+    .base-card {
+        padding: 22px;
+    }
+
+    .buttons {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+</style>
 
 </head>
+
 
 <body>
 
@@ -22,15 +184,14 @@
 
 <a href="../index.html" class="logo">
 
-<img src="../assets/galouloutoolbox.png"
-     alt="Galoulou Toolbox Logo">
+<img src="../assets/galouloutoolbox.png">
 
-<span>Galoulou Toolbox</span>
+<span>Boîte à outils Galoulou</span>
 
 </a>
 
 <a href="../index.html#tools"
-   class="discord-button">
+class="discord-button">
 
 <i class="fa-solid fa-arrow-left"></i>
 
@@ -46,7 +207,7 @@ Tous les outils
 <div class="tool-container">
 
 <a href="../index.html"
-   class="back-button">
+class="back-button">
 
 <i class="fa-solid fa-arrow-left"></i>
 
@@ -60,76 +221,85 @@ Retour à la boîte à outils
 <h1>💻 Base64 Encoder</h1>
 
 <p>
-Encodez et décodez du texte en Base64 facilement.
+Encodez ou décodez du texte en Base64.
 </p>
 
 </div>
 
 
-<div class="tool-card">
+<div class="base-card">
 
-<div class="tool-section">
+<p class="section-title">
+TEXTE À TRAITER
+</p>
 
-<h2>📝 Texte</h2>
 
 <textarea
 id="input"
-placeholder="Écris ton texte ici..."></textarea>
+class="textarea"
+placeholder="Écrivez votre texte ici..."></textarea>
 
-</div>
 
+<div class="buttons">
 
-<div class="tool-button-row three">
-
-<button class="tool-button"
-        onclick="encodeBase64()">
+<button
+class="button"
+onclick="encode()">
 
 🔒 Encoder
 
 </button>
 
 
-<button class="tool-button"
-        onclick="decodeBase64()">
+<button
+class="button"
+onclick="decode()">
 
 🔓 Décoder
 
 </button>
 
 
-<button class="tool-button secondary"
-        onclick="clearText()">
+<button
+class="button secondary"
+onclick="clearAll()">
 
-🗑️ Effacer
+Effacer
 
 </button>
 
 </div>
 
 
-<div class="tool-section"
-     style="margin-top:25px;">
+<p class="section-title">
+RÉSULTAT
+</p>
 
-<h2>📤 Résultat</h2>
 
 <textarea
 id="output"
+class="textarea"
 readonly
-placeholder="Résultat..."></textarea>
-
-</div>
+placeholder="Le résultat apparaîtra ici..."></textarea>
 
 
-<button class="tool-button secondary"
-        onclick="copyResult()">
+<button
+class="button secondary"
+style="width:100%;"
+onclick="copyResult()">
 
-📋 Copier le résultat
+<i class="fa-regular fa-copy"></i>
+
+&nbsp; Copier le résultat
 
 </button>
 
 
-<p id="status"
-   class="status"></p>
+<p
+id="message"
+class="message">
+
+</p>
 
 </div>
 
@@ -140,27 +310,27 @@ placeholder="Résultat..."></textarea>
 
 <script>
 
-function encodeBase64() {
+function encode() {
 
-const input =
+const text =
 document.getElementById("input").value;
 
 
 try {
 
 const bytes =
-new TextEncoder().encode(input);
+new TextEncoder().encode(text);
 
 
 let binary = "";
 
 
-bytes.forEach(byte => {
+for (const byte of bytes) {
 
 binary +=
 String.fromCharCode(byte);
 
-});
+}
 
 
 document.getElementById("output")
@@ -168,38 +338,39 @@ document.getElementById("output")
 btoa(binary);
 
 
-document.getElementById("status")
+document.getElementById("message")
 .textContent =
-"✅ Texte encodé !";
+"✓ Texte encodé.";
 
+}
 
-} catch {
+catch {
 
-document.getElementById("status")
+document.getElementById("message")
 .textContent =
-"❌ Impossible d'encoder.";
+"❌ Une erreur est survenue.";
 
 }
 
 }
 
 
-function decodeBase64() {
+function decode() {
 
-const input =
+const text =
 document.getElementById("input").value;
 
 
 try {
 
 const binary =
-atob(input);
+atob(text);
 
 
 const bytes =
 Uint8Array.from(
 binary,
-c => c.charCodeAt(0)
+char => char.charCodeAt(0)
 );
 
 
@@ -208,14 +379,15 @@ document.getElementById("output")
 new TextDecoder().decode(bytes);
 
 
-document.getElementById("status")
+document.getElementById("message")
 .textContent =
-"✅ Base64 décodé !";
+"✓ Texte décodé.";
 
+}
 
-} catch {
+catch {
 
-document.getElementById("status")
+document.getElementById("message")
 .textContent =
 "❌ Base64 invalide.";
 
@@ -226,34 +398,40 @@ document.getElementById("status")
 
 function copyResult() {
 
-const result =
-document.getElementById("output").value;
+const output =
+document.getElementById("output");
 
 
-if (!result) return;
+if (!output.value) return;
 
 
-navigator.clipboard.writeText(result);
+navigator.clipboard.writeText(
+output.value
+);
 
 
-document.getElementById("status")
+document.getElementById("message")
 .textContent =
-"✅ Copié !";
+"✓ Copié !";
 
 }
 
 
-function clearText() {
+function clearAll() {
 
-document.getElementById("input").value = "";
+document.getElementById("input")
+.value = "";
 
-document.getElementById("output").value = "";
+document.getElementById("output")
+.value = "";
 
-document.getElementById("status").textContent = "";
+document.getElementById("message")
+.textContent = "";
 
 }
 
 </script>
 
 </body>
+
 </html>
