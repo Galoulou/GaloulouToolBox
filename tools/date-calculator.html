@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Date Calculator — Galoulou Toolbox</title>
+
+<style>
+*{box-sizing:border-box}
+
+:root{
+    --bg:#0b0d12;
+    --card:#151922;
+    --card2:#1b202b;
+    --text:#fff;
+    --muted:#9299a8;
+    --border:rgba(255,255,255,.09);
+}
+
+body{
+    margin:0;
+    min-height:100vh;
+    padding:25px;
+    background:radial-gradient(circle at 50% -10%,#242b3c 0%,#0b0d12 48%);
+    color:var(--text);
+    font-family:Arial,sans-serif;
+}
+
+.container{
+    width:100%;
+    max-width:850px;
+    margin:auto;
+}
+
+.top{
+    margin-bottom:25px;
+}
+
+.back{
+    color:var(--muted);
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.back:hover{
+    color:white;
+}
+
+.card{
+    background:rgba(21,25,34,.95);
+    border:1px solid var(--border);
+    border-radius:25px;
+    padding:35px;
+    box-shadow:0 25px 80px rgba(0,0,0,.3);
+}
+
+.icon{
+    font-size:50px;
+    margin-bottom:10px;
+}
+
+h1{
+    margin:0;
+    font-size:42px;
+    letter-spacing:-1px;
+}
+
+.subtitle{
+    color:var(--muted);
+    line-height:1.5;
+    margin-bottom:30px;
+}
+
+.tabs{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-bottom:25px;
+}
+
+.tab{
+    border:1px solid var(--border);
+    background:var(--card2);
+    color:var(--muted);
+    padding:14px;
+    border-radius:12px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.tab.active{
+    background:white;
+    color:#0b0d12;
+}
+
+.section{
+    display:none;
+}
+
+.section.active{
+    display:block;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+label{
+    display:block;
+    color:var(--muted);
+    font-size:13px;
+    font-weight:bold;
+    margin-bottom:8px;
+}
+
+input{
+    width:100%;
+    padding:14px;
+    border-radius:12px;
+    border:1px solid var(--border);
+    background:var(--card2);
+    color:white;
+    outline:none;
+    font-size:16px;
+}
+
+input:focus{
+    border-color:rgba(255,255,255,.3);
+}
+
+.actions{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:18px;
+}
+
+button.action{
+    border:1px solid var(--border);
+    background:var(--card2);
+    color:white;
+    padding:13px 18px;
+    border-radius:11px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+button.action.primary{
+    background:white;
+    color:#0b0d12;
+}
+
+button.action:hover{
+    transform:translateY(-1px);
+}
+
+.result{
+    margin-top:20px;
+    padding:25px;
+    background:var(--card2);
+    border:1px solid var(--border);
+    border-radius:16px;
+    text-align:center;
+}
+
+.big{
+    font-size:38px;
+    font-weight:900;
+}
+
+.details{
+    margin-top:8px;
+    color:var(--muted);
+    line-height:1.7;
+}
+
+.quick{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:8px;
+    margin-top:15px;
+}
+
+.quick button{
+    border:1px solid var(--border);
+    background:var(--card2);
+    color:var(--muted);
+    padding:10px;
+    border-radius:9px;
+    cursor:pointer;
+}
+
+.info{
+    margin-top:25px;
+    color:var(--muted);
+    font-size:12px;
+    text-align:center;
+}
+
+@media(max-width:650px){
+
+    body{
+        padding:15px;
+    }
+
+    .card{
+        padding:22px;
+    }
+
+    h1{
+        font-size:34px;
+    }
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    .quick{
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="top">
+        <a class="back" href="../index.html">
+            ← Galoulou Toolbox
+        </a>
+    </div>
+
+    <div class="card">
+
+        <div class="icon">📅</div>
+
+        <h1>Date Calculator</h1>
+
+        <p class="subtitle">
+            Calcule des différences entre dates ou trouve une date après un certain nombre de jours.
+        </p>
+
+        <div class="tabs">
+
+            <button class="tab active" data-tab="difference">
+                📊 Différence
+            </button>
+
+            <button class="tab" data-tab="add">
+                ➕ Ajouter des jours
+            </button>
+
+        </div>
+
+
+        <!-- =========================
+             DIFFÉRENCE
+        ========================== -->
+
+        <div id="difference" class="section active">
+
+            <div class="grid">
+
+                <div>
+                    <label for="date1">
+                        Date de début
+                    </label>
+
+                    <input
+                        id="date1"
+                        type="date"
+                    >
+                </div>
+
+                <div>
+                    <label for="date2">
+                        Date de fin
+                    </label>
+
+                    <input
+                        id="date2"
+                        type="date"
+                    >
+                </div>
+
+            </div>
+
+            <div class="actions">
+
+                <button
+                    class="action primary"
+                    id="calculateDifference"
+                >
+                    🧮 Calculer
+                </button>
+
+                <button
+                    class="action"
+                    id="todayDifference"
+                >
+                    📅 Aujourd'hui
+                </button>
+
+            </div>
+
+            <div
+                class="result"
+                id="differenceResult"
+            >
+                <div class="big">—</div>
+
+                <div class="details">
+                    Sélectionne deux dates.
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             AJOUTER DES JOURS
+        ========================== -->
+
+        <div id="add" class="section">
+
+            <div class="grid">
+
+                <div>
+
+                    <label for="baseDate">
+                        Date de départ
+                    </label>
+
+                    <input
+                        id="baseDate"
+                        type="date"
+                    >
+
+                </div>
+
+                <div>
+
+                    <label for="numberDays">
+                        Nombre de jours
+                    </label>
+
+                    <input
+                        id="numberDays"
+                        type="number"
+                        value="7"
+                        step="1"
+                    >
+
+                </div>
+
+            </div>
+
+            <div class="quick">
+
+                <button data-days="1">+1 jour</button>
+                <button data-days="7">+7 jours</button>
+                <button data-days="30">+30 jours</button>
+                <button data-days="365">+365 jours</button>
+
+            </div>
+
+            <div class="actions">
+
+                <button
+                    class="action primary"
+                    id="addDaysButton"
+                >
+                    ➕ Calculer la date
+                </button>
+
+                <button
+                    class="action"
+                    id="todayAdd"
+                >
+                    📅 Aujourd'hui
+                </button>
+
+            </div>
+
+            <div
+                class="result"
+                id="addResult"
+            >
+                <div class="big">—</div>
+
+                <div class="details">
+                    Sélectionne une date.
+                </div>
+            </div>
+
+        </div>
+
+        <div class="info">
+            ⚡ Les calculs sont effectués directement dans ton navigateur.
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================
+   ÉLÉMENTS
+========================= */
+
+const date1 =
+    document.getElementById("date1");
+
+const date2 =
+    document.getElementById("date2");
+
+const baseDate =
+    document.getElementById("baseDate");
+
+const numberDays =
+    document.getElementById("numberDays");
+
+const differenceResult =
+    document.getElementById("differenceResult");
+
+const addResult =
+    document.getElementById("addResult");
+
+
+/* =========================
+   DATE AU FORMAT LOCAL
+========================= */
+
+function today(){
+
+    const d = new Date();
+
+    const year =
+        d.getFullYear();
+
+    const month =
+        String(d.getMonth() + 1)
+        .padStart(2,"0");
+
+    const day =
+        String(d.getDate())
+        .padStart(2,"0");
+
+    return `${year}-${month}-${day}`;
+
+}
+
+
+/* =========================
+   FORMAT FRANÇAIS
+========================= */
+
+function formatDate(date){
+
+    return date.toLocaleDateString(
+        "fr-FR",
+        {
+            weekday:"long",
+            day:"numeric",
+            month:"long",
+            year:"numeric"
+        }
+    );
+
+}
+
+
+/* =========================
+   CRÉER DATE SANS PROBLÈME
+========================= */
+
+function parseDate(value){
+
+    const parts =
+        value.split("-");
+
+    return new Date(
+        Number(parts[0]),
+        Number(parts[1]) - 1,
+        Number(parts[2])
+    );
+
+}
+
+
+/* =========================
+   DIFFÉRENCE
+========================= */
+
+function calculateDifference(){
+
+    if(
+        !date1.value ||
+        !date2.value
+    ){
+
+        differenceResult.innerHTML = `
+            <div class="big">⚠️</div>
+            <div class="details">
+                Sélectionne les deux dates.
+            </div>
+        `;
+
+        return;
+
+    }
+
+    const start =
+        parseDate(date1.value);
+
+    const end =
+        parseDate(date2.value);
+
+    const difference =
+        Math.abs(
+            end.getTime() -
+            start.getTime()
+        );
+
+    const days =
+        Math.round(
+            difference /
+            (1000 * 60 * 60 * 24)
+        );
+
+    const weeks =
+        Math.floor(days / 7);
+
+    const remainingDays =
+        days % 7;
+
+    const months =
+        Math.floor(days / 30.4375);
+
+    const years =
+        Math.floor(days / 365.25);
+
+
+    differenceResult.innerHTML = `
+
+        <div class="big">
+            ${days.toLocaleString("fr-FR")} jour${days > 1 ? "s" : ""}
+        </div>
+
+        <div class="details">
+
+            ${weeks} semaine${weeks > 1 ? "s" : ""}
+            ${remainingDays > 0
+                ? ` et ${remainingDays} jour${remainingDays > 1 ? "s" : ""}`
+                : ""
+            }
+
+            <br>
+
+            ≈ ${months} mois
+
+            <br>
+
+            ≈ ${years} an${years > 1 ? "s" : ""}
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================
+   AJOUTER DES JOURS
+========================= */
+
+function addDays(){
+
+    if(!baseDate.value){
+
+        addResult.innerHTML = `
+            <div class="big">⚠️</div>
+            <div class="details">
+                Sélectionne une date.
+            </div>
+        `;
+
+        return;
+
+    }
+
+    const date =
+        parseDate(baseDate.value);
+
+    const days =
+        Number(numberDays.value);
+
+    if(!Number.isFinite(days)){
+
+        addResult.innerHTML = `
+            <div class="big">⚠️</div>
+            <div class="details">
+                Entre un nombre de jours valide.
+            </div>
+        `;
+
+        return;
+
+    }
+
+    date.setDate(
+        date.getDate() + days
+    );
+
+
+    const formatted =
+        formatDate(date);
+
+
+    addResult.innerHTML = `
+
+        <div class="big">
+            ${formatted}
+        </div>
+
+        <div class="details">
+
+            ${days >= 0 ? "+" : ""}
+            ${days} jour${Math.abs(days) > 1 ? "s" : ""}
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================
+   ONGLETS
+========================= */
+
+document
+    .querySelectorAll(".tab")
+    .forEach(tab => {
+
+        tab.addEventListener(
+            "click",
+            () => {
+
+                document
+                    .querySelectorAll(".tab")
+                    .forEach(t =>
+                        t.classList.remove("active")
+                    );
+
+                document
+                    .querySelectorAll(".section")
+                    .forEach(section =>
+                        section.classList.remove("active")
+                    );
+
+                tab.classList.add("active");
+
+                document
+                    .getElementById(tab.dataset.tab)
+                    .classList.add("active");
+
+            }
+        );
+
+    });
+
+
+/* =========================
+   BOUTONS
+========================= */
+
+document
+    .getElementById("calculateDifference")
+    .addEventListener(
+        "click",
+        calculateDifference
+    );
+
+
+document
+    .getElementById("addDaysButton")
+    .addEventListener(
+        "click",
+        addDays
+    );
+
+
+/* =========================
+   AUJOURD'HUI
+========================= */
+
+document
+    .getElementById("todayDifference")
+    .addEventListener(
+        "click",
+        () => {
+
+            date1.value = today();
+            date2.value = today();
+
+            calculateDifference();
+
+        }
+    );
+
+
+document
+    .getElementById("todayAdd")
+    .addEventListener(
+        "click",
+        () => {
+
+            baseDate.value = today();
+
+            addDays();
+
+        }
+    );
+
+
+/* =========================
+   BOUTONS RAPIDES
+========================= */
+
+document
+    .querySelectorAll("[data-days]")
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                numberDays.value =
+                    button.dataset.days;
+
+                addDays();
+
+            }
+        );
+
+    });
+
+
+/* =========================
+   DATES PAR DÉFAUT
+========================= */
+
+date1.value = today();
+
+date2.value = today();
+
+baseDate.value = today();
+
+</script>
+
+</body>
+</html>
