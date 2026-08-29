@@ -1,114 +1,613 @@
-// =========================================
+// ==========================================
 // GALOULOU TOOLBOX
 // MAIN SCRIPT
-// =========================================
+// ==========================================
 
 
-// =========================================
-// SELECT ELEMENTS
-// =========================================
+// ==========================================
+// TOOLS DATABASE
+// ==========================================
 
-const searchInput = document.getElementById("searchInput");
+const tools = [
 
-const toolCards = document.querySelectorAll(".tool-card");
+    {
+        id: "galoulou-ai",
+        name: "Galoulou AI",
+        description: "Your smart AI shopping assistant.",
+        icon: "fa-wand-magic-sparkles",
+        category: "AI",
+        link: "tools/galoulou-ai.html"
+    },
 
-const noResults = document.getElementById("noResults");
+    {
+        id: "password",
+        name: "Password Generator",
+        description: "Create strong and secure passwords instantly.",
+        icon: "fa-key",
+        category: "Security",
+        link: "tools/password.html"
+    },
 
-const toolsCount = document.getElementById("toolsCount");
+    {
+        id: "qr-code",
+        name: "QR Code Generator",
+        description: "Create QR codes from links or text.",
+        icon: "fa-qrcode",
+        category: "Everyday",
+        link: "tools/qr-code.html"
+    },
 
-const themeToggle = document.getElementById("themeToggle");
+    {
+        id: "timer",
+        name: "Timer",
+        description: "Use a countdown or stopwatch.",
+        icon: "fa-clock",
+        category: "Productivity",
+        link: "tools/timer.html"
+    },
 
-const favoriteButtons = document.querySelectorAll(".favorite");
+    {
+        id: "quick-notes",
+        name: "Quick Notes",
+        description: "Write and save notes directly in your browser.",
+        icon: "fa-note-sticky",
+        category: "Productivity",
+        link: "tools/quick-notes.html"
+    },
+
+    {
+        id: "color-picker",
+        name: "Color Picker",
+        description: "Pick colors and copy their HEX values.",
+        icon: "fa-eye-dropper",
+        category: "Creative",
+        link: "tools/color-picker.html"
+    },
+
+    {
+        id: "todo",
+        name: "To-Do List",
+        description: "Organize your tasks and stay productive.",
+        icon: "fa-list-check",
+        category: "Productivity",
+        link: "tools/todo.html"
+    },
+
+    {
+        id: "calculator",
+        name: "Calculator",
+        description: "A fast and simple everyday calculator.",
+        icon: "fa-calculator",
+        category: "Everyday",
+        link: "tools/calculator.html"
+    },
+
+    {
+        id: "pomodoro",
+        name: "Pomodoro",
+        description: "Focus with customizable work sessions.",
+        icon: "fa-stopwatch",
+        category: "Productivity",
+        link: "tools/pomodoro.html"
+    },
+
+    {
+        id: "converter",
+        name: "Unit Converter",
+        description: "Convert length, weight, temperature and more.",
+        icon: "fa-arrows-rotate",
+        category: "Converters",
+        link: "tools/converter.html"
+    },
+
+    {
+        id: "percentage",
+        name: "Percentage Calculator",
+        description: "Calculate percentages quickly.",
+        icon: "fa-percent",
+        category: "Calculators",
+        link: "tools/percentage.html"
+    },
+
+    {
+        id: "text-counter",
+        name: "Text Counter",
+        description: "Count words, characters and lines.",
+        icon: "fa-font",
+        category: "Text",
+        link: "tools/text-counter.html"
+    },
+
+    {
+        id: "case-converter",
+        name: "Case Converter",
+        description: "Convert text to upper, lower and other cases.",
+        icon: "fa-text-height",
+        category: "Text",
+        link: "tools/case-converter.html"
+    },
+
+    {
+        id: "date-calculator",
+        name: "Date Calculator",
+        description: "Calculate dates and time differences.",
+        icon: "fa-calendar-days",
+        category: "Calculators",
+        link: "tools/date-calculator.html"
+    },
+
+    {
+        id: "random-generator",
+        name: "Random Generator",
+        description: "Generate random numbers, choices and values.",
+        icon: "fa-dice",
+        category: "Everyday",
+        link: "tools/random-generator.html"
+    },
+
+    {
+        id: "color-palette",
+        name: "Color Palette",
+        description: "Create beautiful color combinations.",
+        icon: "fa-palette",
+        category: "Creative",
+        link: "tools/color-palette.html"
+    },
+
+    {
+        id: "image-resizer",
+        name: "Image Resizer",
+        description: "Resize images directly in your browser.",
+        icon: "fa-expand",
+        category: "Images",
+        link: "tools/image-resizer.html"
+    },
+
+    {
+        id: "image-compressor",
+        name: "Image Compressor",
+        description: "Reduce image file size quickly.",
+        icon: "fa-compress",
+        category: "Images",
+        link: "tools/image-compressor.html"
+    },
+
+    {
+        id: "base64",
+        name: "Base64 Encoder",
+        description: "Encode and decode Base64 text.",
+        icon: "fa-code",
+        category: "Developer",
+        link: "tools/base64.html"
+    },
+
+    {
+        id: "url-encoder",
+        name: "URL Encoder",
+        description: "Encode and decode URLs instantly.",
+        icon: "fa-link",
+        category: "Developer",
+        link: "tools/url-encoder.html"
+    }
+
+];
 
 
-// =========================================
-// SEARCH TOOLS
-// =========================================
+// ==========================================
+// ELEMENTS
+// ==========================================
 
-function searchTools() {
+const toolsGrid =
+    document.getElementById("toolsGrid");
 
-    const searchValue =
-        searchInput.value
-        .toLowerCase()
-        .trim();
+const recentGrid =
+    document.getElementById("recentGrid");
+
+const recentSection =
+    document.getElementById("recentSection");
+
+const searchInput =
+    document.getElementById("searchInput");
+
+const toolsCount =
+    document.getElementById("toolsCount");
+
+const noResults =
+    document.getElementById("noResults");
+
+const categoriesContainer =
+    document.getElementById("categories");
+
+const themeToggle =
+    document.getElementById("themeToggle");
 
 
-    let visibleTools = 0;
+// ==========================================
+// STORAGE
+// ==========================================
+
+let favorites =
+    JSON.parse(
+        localStorage.getItem("galoulou_favorites") || "[]"
+    );
+
+let recent =
+    JSON.parse(
+        localStorage.getItem("galoulou_recent") || "[]"
+    );
 
 
-    toolCards.forEach((tool) => {
+// ==========================================
+// CATEGORIES
+// ==========================================
 
-        const toolName =
-            tool.dataset.name || "";
+const categories = [
+    "All",
+    "AI",
+    "Productivity",
+    "Everyday",
+    "Security",
+    "Converters",
+    "Calculators",
+    "Text",
+    "Creative",
+    "Images",
+    "Developer"
+];
+
+let activeCategory = "All";
 
 
-        // Check if the search matches
+// ==========================================
+// CREATE CATEGORY BUTTONS
+// ==========================================
 
-        if (toolName.includes(searchValue)) {
+function renderCategories() {
 
-            tool.style.display = "";
+    categoriesContainer.innerHTML = "";
 
-            visibleTools++;
+    categories.forEach(category => {
 
-        } else {
+        const button =
+            document.createElement("button");
 
-            tool.style.display = "none";
+        button.className = "category-button";
+
+        if (category === activeCategory) {
+            button.classList.add("active");
+        }
+
+        button.textContent = category;
+
+        button.addEventListener("click", () => {
+
+            activeCategory = category;
+
+            renderCategories();
+
+            renderTools();
+
+        });
+
+        categoriesContainer.appendChild(button);
+
+    });
+
+}
+
+
+// ==========================================
+// TOOL CARD
+// ==========================================
+
+function createToolCard(tool) {
+
+    const card =
+        document.createElement("a");
+
+    card.href = tool.link;
+
+    card.className = "tool-card";
+
+    if (tool.id === "galoulou-ai") {
+        card.classList.add("featured-tool");
+    }
+
+    card.dataset.name =
+        (
+            tool.name +
+            " " +
+            tool.description +
+            " " +
+            tool.category
+        ).toLowerCase();
+
+
+    const isFavorite =
+        favorites.includes(tool.id);
+
+
+    card.innerHTML = `
+
+        <div class="tool-card-top">
+
+            <div class="tool-icon">
+
+                <i class="fa-solid ${tool.icon}"></i>
+
+            </div>
+
+
+            <button
+                class="favorite ${isFavorite ? "active" : ""}"
+                data-tool="${tool.id}"
+                aria-label="Favorite ${tool.name}"
+            >
+
+                <i class="${
+                    isFavorite
+                    ? "fa-solid"
+                    : "fa-regular"
+                } fa-heart"></i>
+
+            </button>
+
+        </div>
+
+
+        <div class="tool-content">
+
+            <h3>
+                ${tool.name}
+            </h3>
+
+            <p>
+                ${tool.description}
+            </p>
+
+        </div>
+
+
+        <div class="tool-footer">
+
+            <span class="tool-category">
+
+                ${tool.category}
+
+            </span>
+
+
+            <span class="open-tool">
+
+                Open
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+            </span>
+
+        </div>
+
+    `;
+
+
+    // FAVORITE BUTTON
+
+    const favoriteButton =
+        card.querySelector(".favorite");
+
+    favoriteButton.addEventListener(
+        "click",
+        event => {
+
+            event.preventDefault();
+
+            event.stopPropagation();
+
+            toggleFavorite(tool.id);
 
         }
+    );
+
+
+    // RECENTLY USED
+
+    card.addEventListener("click", () => {
+
+        addRecent(tool.id);
 
     });
 
 
-    // Update tools counter
+    return card;
 
-    if (searchValue === "") {
+}
 
-        toolsCount.textContent =
-            `${toolCards.length} tools`;
+
+// ==========================================
+// RENDER TOOLS
+// ==========================================
+
+function renderTools() {
+
+    const search =
+        searchInput.value
+            .toLowerCase()
+            .trim();
+
+
+    toolsGrid.innerHTML = "";
+
+    let filtered =
+        tools.filter(tool => {
+
+            const matchesSearch =
+                (
+                    tool.name +
+                    " " +
+                    tool.description +
+                    " " +
+                    tool.category
+                )
+                .toLowerCase()
+                .includes(search);
+
+
+            const matchesCategory =
+                activeCategory === "All" ||
+                tool.category === activeCategory;
+
+
+            return matchesSearch && matchesCategory;
+
+        });
+
+
+    filtered.forEach(tool => {
+
+        toolsGrid.appendChild(
+            createToolCard(tool)
+        );
+
+    });
+
+
+    toolsCount.textContent =
+        search || activeCategory !== "All"
+            ? `${filtered.length} found`
+            : `${tools.length} tools`;
+
+
+    if (filtered.length === 0) {
+
+        noResults.classList.remove("hidden");
 
     } else {
 
-        toolsCount.textContent =
-            `${visibleTools} found`;
-
-    }
-
-
-    // Show "No results"
-
-    if (visibleTools === 0) {
-
-        noResults.style.display = "block";
-
-    } else {
-
-        noResults.style.display = "none";
+        noResults.classList.add("hidden");
 
     }
 
 }
 
 
-// Listen for search
+// ==========================================
+// FAVORITES
+// ==========================================
 
-if (searchInput) {
+function toggleFavorite(id) {
 
-    searchInput.addEventListener(
-        "input",
-        searchTools
+    if (favorites.includes(id)) {
+
+        favorites =
+            favorites.filter(
+                item => item !== id
+            );
+
+    } else {
+
+        favorites.push(id);
+
+    }
+
+
+    localStorage.setItem(
+        "galoulou_favorites",
+        JSON.stringify(favorites)
+    );
+
+
+    renderTools();
+
+}
+
+
+// ==========================================
+// RECENT TOOLS
+// ==========================================
+
+function addRecent(id) {
+
+    recent =
+        recent.filter(
+            item => item !== id
+        );
+
+    recent.unshift(id);
+
+    recent =
+        recent.slice(0, 4);
+
+
+    localStorage.setItem(
+        "galoulou_recent",
+        JSON.stringify(recent)
     );
 
 }
 
 
-// =========================================
+// ==========================================
+// RENDER RECENT
+// ==========================================
+
+function renderRecent() {
+
+    if (recent.length === 0) {
+
+        recentSection.classList.add("hidden");
+
+        return;
+
+    }
+
+
+    recentSection.classList.remove("hidden");
+
+    recentGrid.innerHTML = "";
+
+
+    recent.forEach(id => {
+
+        const tool =
+            tools.find(
+                item => item.id === id
+            );
+
+
+        if (tool) {
+
+            recentGrid.appendChild(
+                createToolCard(tool)
+            );
+
+        }
+
+    });
+
+}
+
+
+// ==========================================
+// SEARCH
+// ==========================================
+
+if (searchInput) {
+
+    searchInput.addEventListener(
+        "input",
+        renderTools
+    );
+
+}
+
+
+// ==========================================
 // CTRL + K
-// SEARCH SHORTCUT
-// =========================================
+// ==========================================
 
 document.addEventListener(
     "keydown",
-    (event) => {
+    event => {
 
         if (
             (event.ctrlKey || event.metaKey) &&
@@ -125,14 +624,13 @@ document.addEventListener(
 );
 
 
-// =========================================
-// ESCAPE
-// CLEAR SEARCH
-// =========================================
+// ==========================================
+// ESC
+// ==========================================
 
 document.addEventListener(
     "keydown",
-    (event) => {
+    event => {
 
         if (
             event.key === "Escape" &&
@@ -141,7 +639,7 @@ document.addEventListener(
 
             searchInput.value = "";
 
-            searchTools();
+            renderTools();
 
             searchInput.blur();
 
@@ -151,18 +649,9 @@ document.addEventListener(
 );
 
 
-// =========================================
-// THEME SYSTEM
-// =========================================
-
-
-// Get saved theme
-
-const savedTheme =
-    localStorage.getItem("theme");
-
-
-// Apply theme
+// ==========================================
+// THEME
+// ==========================================
 
 function applyTheme(theme) {
 
@@ -170,345 +659,70 @@ function applyTheme(theme) {
 
         document.body.classList.add("light-mode");
 
-        themeToggle.innerHTML = `
-            <i class="fa-solid fa-sun"></i>
-        `;
+        themeToggle.innerHTML =
+            '<i class="fa-solid fa-sun"></i>';
 
     } else {
 
         document.body.classList.remove("light-mode");
 
-        themeToggle.innerHTML = `
-            <i class="fa-solid fa-moon"></i>
-        `;
+        themeToggle.innerHTML =
+            '<i class="fa-solid fa-moon"></i>';
 
     }
 
 }
 
 
-// Load saved theme
+const savedTheme =
+    localStorage.getItem("galoulou_theme") || "dark";
 
-if (savedTheme === "light") {
+applyTheme(savedTheme);
 
-    applyTheme("light");
 
-} else {
+themeToggle.addEventListener(
+    "click",
+    () => {
 
-    applyTheme("dark");
-
-}
-
-
-// Toggle theme
-
-if (themeToggle) {
-
-    themeToggle.addEventListener(
-        "click",
-        () => {
-
-            const isLightMode =
-                document.body.classList.contains(
-                    "light-mode"
-                );
-
-
-            if (isLightMode) {
-
-                applyTheme("dark");
-
-                localStorage.setItem(
-                    "theme",
-                    "dark"
-                );
-
-            } else {
-
-                applyTheme("light");
-
-                localStorage.setItem(
-                    "theme",
-                    "light"
-                );
-
-            }
-
-        }
-    );
-
-}
-
-
-// =========================================
-// FAVORITES SYSTEM
-// =========================================
-
-
-// Get favorites from localStorage
-
-let favorites;
-
-try {
-
-    favorites = JSON.parse(
-        localStorage.getItem("favorites")
-    ) || [];
-
-} catch {
-
-    favorites = [];
-
-}
-
-
-// =========================================
-// UPDATE FAVORITE BUTTONS
-// =========================================
-
-function updateFavoriteButtons() {
-
-    favoriteButtons.forEach((button) => {
-
-        const toolName =
-            button.dataset.tool;
-
-
-        const icon =
-            button.querySelector("i");
-
-
-        if (
-            favorites.includes(toolName)
-        ) {
-
-            button.classList.add("active");
-
-            icon.className =
-                "fa-solid fa-heart";
-
-
-        } else {
-
-            button.classList.remove("active");
-
-            icon.className =
-                "fa-regular fa-heart";
-
-        }
-
-    });
-
-}
-
-
-// =========================================
-// SAVE FAVORITES
-// =========================================
-
-function saveFavorites() {
-
-    localStorage.setItem(
-        "favorites",
-        JSON.stringify(favorites)
-    );
-
-}
-
-
-// =========================================
-// TOGGLE FAVORITE
-// =========================================
-
-favoriteButtons.forEach((button) => {
-
-    button.addEventListener(
-        "click",
-        (event) => {
-
-            // Prevent opening the tool
-
-            event.preventDefault();
-
-            event.stopPropagation();
-
-
-            const toolName =
-                button.dataset.tool;
-
-
-            // Remove favorite
-
-            if (
-                favorites.includes(toolName)
-            ) {
-
-                favorites =
-                    favorites.filter(
-                        (favorite) =>
-                            favorite !== toolName
-                    );
-
-
-            // Add favorite
-
-            } else {
-
-                favorites.push(toolName);
-
-            }
-
-
-            // Save
-
-            saveFavorites();
-
-
-            // Update UI
-
-            updateFavoriteButtons();
-
-        }
-    );
-
-});
-
-
-// Load favorites
-
-updateFavoriteButtons();
-
-
-// =========================================
-// FAVORITE ANIMATION
-// =========================================
-
-favoriteButtons.forEach((button) => {
-
-    button.addEventListener(
-        "click",
-        () => {
-
-            button.animate(
-
-                [
-
-                    {
-                        transform: "scale(1)"
-                    },
-
-                    {
-                        transform: "scale(1.25)"
-                    },
-
-                    {
-                        transform: "scale(1)"
-                    }
-
-                ],
-
-                {
-
-                    duration: 250,
-
-                    easing: "ease-out"
-
-                }
-
+        const isLight =
+            document.body.classList.contains(
+                "light-mode"
             );
 
-        }
-    );
 
-});
-
-
-// =========================================
-// CARD KEYBOARD ACCESSIBILITY
-// =========================================
-
-toolCards.forEach((tool) => {
-
-    tool.addEventListener(
-        "keydown",
-        (event) => {
-
-            if (
-                event.key === "Enter"
-            ) {
-
-                tool.click();
-
-            }
-
-        }
-    );
-
-});
+        const newTheme =
+            isLight ? "dark" : "light";
 
 
-// =========================================
-// SMOOTH NAVIGATION
-// =========================================
-
-document
-    .querySelectorAll(
-        'a[href^="#"]'
-    )
-    .forEach((link) => {
-
-        link.addEventListener(
-            "click",
-            (event) => {
-
-                const targetId =
-                    link.getAttribute("href");
-
-
-                const target =
-                    document.querySelector(
-                        targetId
-                    );
-
-
-                if (target) {
-
-                    event.preventDefault();
-
-
-                    target.scrollIntoView({
-
-                        behavior: "smooth",
-
-                        block: "start"
-
-                    });
-
-                }
-
-            }
+        localStorage.setItem(
+            "galoulou_theme",
+            newTheme
         );
 
-    });
 
+        applyTheme(newTheme);
 
-// =========================================
-// CONSOLE MESSAGE 😎
-// =========================================
-
-console.log(
-    "%c🧰 Welcome to Galoulou Toolbox!",
-    "font-size: 20px; font-weight: bold;"
+    }
 );
 
 
+// ==========================================
+// INITIALIZE
+// ==========================================
+
+renderCategories();
+
+renderTools();
+
+renderRecent();
+
+
 console.log(
-    "%cSimple tools. One place.",
-    "font-size: 14px;"
+    "%c🧰 Galoulou Toolbox",
+    "font-size:20px;font-weight:bold;"
 );
 
-
 console.log(
-    "%cMade with HTML, CSS & JavaScript.",
-    "font-size: 12px;"
+    "%c20 tools. One place.",
+    "font-size:14px;"
 );
