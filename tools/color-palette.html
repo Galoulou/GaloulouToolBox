@@ -4,17 +4,191 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Color Palette - Galoulou Toolbox</title>
 
 <link rel="stylesheet" href="../style.css">
 
 <link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+.tool-page {
+    min-height: 100vh;
+    padding: 80px 20px;
+}
+
+.tool-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    color: var(--text-secondary);
+
+    margin-bottom: 50px;
+
+    transition: color .2s ease;
+}
+
+.back-button:hover {
+    color: var(--text);
+}
+
+.tool-header {
+    text-align: center;
+    margin-bottom: 45px;
+}
+
+.tool-header h1 {
+    font-size: clamp(40px, 7vw, 70px);
+    letter-spacing: -3px;
+    margin-bottom: 12px;
+}
+
+.tool-header p {
+    color: var(--text-secondary);
+    font-size: 17px;
+}
+
+.palette-card {
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    border-radius: 20px;
+
+    padding: 35px;
+}
+
+.generate-button {
+    width: 100%;
+
+    padding: 16px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    background: var(--button);
+    color: var(--button-text);
+
+    border: none;
+    border-radius: 11px;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform .2s ease,
+        opacity .2s ease;
+}
+
+.generate-button:hover {
+    transform: translateY(-2px);
+    opacity: .9;
+}
+
+.palette {
+    display: grid;
+
+    grid-template-columns:
+        repeat(5, 1fr);
+
+    gap: 10px;
+
+    margin-top: 25px;
+}
+
+.color {
+    height: 190px;
+
+    border-radius: 14px;
+
+    border: 1px solid var(--border);
+
+    display: flex;
+
+    align-items: flex-end;
+
+    padding: 10px;
+
+    cursor: pointer;
+
+    transition:
+        transform .2s ease;
+}
+
+.color:hover {
+    transform: translateY(-5px);
+}
+
+.hex {
+    width: 100%;
+
+    text-align: center;
+
+    padding: 9px 5px;
+
+    background: rgba(0,0,0,.65);
+
+    color: white;
+
+    border-radius: 9px;
+
+    font-family: monospace;
+
+    font-size: 12px;
+
+}
+
+.message {
+    min-height: 20px;
+
+    text-align: center;
+
+    color: var(--text-secondary);
+
+    font-size: 13px;
+
+    margin-top: 15px;
+}
+
+@media (max-width: 650px) {
+
+    .palette {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .tool-page {
+        padding: 55px 16px;
+    }
+
+    .palette-card {
+        padding: 22px;
+    }
+
+}
+
+</style>
 
 </head>
+
 
 <body>
 
@@ -22,15 +196,14 @@
 
 <a href="../index.html" class="logo">
 
-<img src="../assets/galouloutoolbox.png"
-     alt="Galoulou Toolbox Logo">
+<img src="../assets/galouloutoolbox.png">
 
-<span>Galoulou Toolbox</span>
+<span>Boîte à outils Galoulou</span>
 
 </a>
 
 <a href="../index.html#tools"
-   class="discord-button">
+class="discord-button">
 
 <i class="fa-solid fa-arrow-left"></i>
 
@@ -46,7 +219,7 @@ Tous les outils
 <div class="tool-container">
 
 <a href="../index.html"
-   class="back-button">
+class="back-button">
 
 <i class="fa-solid fa-arrow-left"></i>
 
@@ -60,30 +233,34 @@ Retour à la boîte à outils
 <h1>🎨 Color Palette</h1>
 
 <p>
-Créez de magnifiques palettes de couleurs aléatoires.
+Créez une palette de cinq couleurs en un clic.
 </p>
 
 </div>
 
 
-<div class="tool-card">
+<div class="palette-card">
 
-<button class="tool-button"
-        onclick="generatePalette()">
+<button
+class="generate-button"
+onclick="generatePalette()">
 
-<i class="fa-solid fa-palette"></i>
+<i class="fa-solid fa-wand-magic-sparkles"></i>
 
 Générer une palette
 
 </button>
 
 
-<div id="palette"
-     class="palette"></div>
+<div class="palette"
+id="palette"></div>
 
 
-<p class="status">
-Clique sur une couleur pour copier son code.
+<p class="message"
+id="message">
+
+Cliquez sur une couleur pour copier son HEX.
+
 </p>
 
 </div>
@@ -98,7 +275,9 @@ Clique sur une couleur pour copier son code.
 function randomColor() {
 
 return "#" +
-Math.floor(Math.random() * 16777215)
+Math.floor(
+Math.random() * 16777215
+)
 .toString(16)
 .padStart(6, "0");
 
@@ -115,38 +294,39 @@ palette.innerHTML = "";
 
 for (let i = 0; i < 5; i++) {
 
-const color = randomColor();
+const color =
+randomColor();
 
-const card =
+
+const element =
 document.createElement("div");
 
-card.className = "color-card";
 
-card.style.background = color;
+element.className = "color";
 
-card.innerHTML =
-`<span class="color-code">${color}</span>`;
+element.style.background =
+color;
 
 
-card.onclick = () => {
+element.innerHTML =
+`
+<span class="hex">${color}</span>
+`;
+
+
+element.onclick = function() {
 
 navigator.clipboard.writeText(color);
 
-card.querySelector(".color-code")
-.textContent = "✓ Copié !";
 
-
-setTimeout(() => {
-
-card.querySelector(".color-code")
-.textContent = color;
-
-}, 1000);
+document.getElementById("message")
+.textContent =
+"✓ " + color + " copié !";
 
 };
 
 
-palette.appendChild(card);
+palette.appendChild(element);
 
 }
 
@@ -158,4 +338,5 @@ generatePalette();
 </script>
 
 </body>
+
 </html>
