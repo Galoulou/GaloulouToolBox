@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL Encoder - GaloulouToolBox</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+<main class="tool-page">
+  <a href="../index.html" class="back-btn">← Retour</a>
+
+  <div class="tool-container">
+
+    <h1>🔗 URL Encoder</h1>
+    <p>Encode ou décode facilement une URL.</p>
+
+    <div class="tool-box">
+
+      <textarea
+        id="input"
+        rows="8"
+        placeholder="https://example.com/hello world?test=oui"
+      ></textarea>
+
+      <br><br>
+
+      <button onclick="encodeURL()">
+        🔒 Encoder
+      </button>
+
+      <button onclick="decodeURL()">
+        🔓 Décoder
+      </button>
+
+      <button onclick="copyResult()">
+        📋 Copier
+      </button>
+
+      <button onclick="clearAll()">
+        🗑️ Effacer
+      </button>
+
+      <br><br>
+
+      <textarea
+        id="output"
+        rows="8"
+        readonly
+        placeholder="Résultat..."
+      ></textarea>
+
+      <p id="status"></p>
+
+    </div>
+
+  </div>
+</main>
+
+<script>
+function encodeURL() {
+
+  const input = document.getElementById("input").value;
+
+  if (!input) {
+    document.getElementById("status").textContent =
+      "❌ Écris quelque chose.";
+    return;
+  }
+
+  try {
+
+    document.getElementById("output").value =
+      encodeURIComponent(input);
+
+    document.getElementById("status").textContent =
+      "✅ URL encodée !";
+
+  } catch (error) {
+
+    document.getElementById("status").textContent =
+      "❌ Erreur.";
+  }
+}
+
+function decodeURL() {
+
+  const input = document.getElementById("input").value;
+
+  if (!input) {
+    document.getElementById("status").textContent =
+      "❌ Écris quelque chose.";
+    return;
+  }
+
+  try {
+
+    document.getElementById("output").value =
+      decodeURIComponent(input);
+
+    document.getElementById("status").textContent =
+      "✅ URL décodée !";
+
+  } catch (error) {
+
+    document.getElementById("status").textContent =
+      "❌ URL invalide.";
+  }
+}
+
+function copyResult() {
+
+  const result = document.getElementById("output").value;
+
+  if (!result) return;
+
+  navigator.clipboard.writeText(result);
+
+  document.getElementById("status").textContent =
+    "✅ Copié !";
+}
+
+function clearAll() {
+
+  document.getElementById("input").value = "";
+  document.getElementById("output").value = "";
+  document.getElementById("status").textContent = "";
+}
+</script>
+
+</body>
+</html>
