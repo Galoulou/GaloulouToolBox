@@ -1,271 +1,558 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Pomodoro - Galoulou Toolbox</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-*{box-sizing:border-box}
+    <title>Pomodoro — Galoulou Toolbox</title>
 
-body{
-    margin:0;
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:#0f1117;
-    color:white;
-    font-family:Arial,sans-serif;
-    padding:20px;
-}
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
-.container{
-    width:100%;
-    max-width:500px;
-    text-align:center;
-    background:#181b24;
-    padding:35px;
-    border-radius:25px;
-    box-shadow:0 20px 60px rgba(0,0,0,.4);
-}
+        :root {
+            --bg: #0b0d12;
+            --card: #151922;
+            --card2: #1b202b;
+            --text: #ffffff;
+            --muted: #9299a8;
+            --border: rgba(255,255,255,0.09);
+        }
 
-h1{
-    margin-top:0;
-}
+        body {
+            margin: 0;
+            min-height: 100vh;
+            padding: 25px;
+            background:
+                radial-gradient(circle at 50% -10%, #242b3c 0%, #0b0d12 48%);
+            color: var(--text);
+            font-family: Arial, sans-serif;
+        }
 
-.mode{
-    display:flex;
-    gap:10px;
-    justify-content:center;
-    margin:20px 0;
-}
+        .container {
+            width: 100%;
+            max-width: 700px;
+            margin: auto;
+        }
 
-.mode button{
-    border:0;
-    border-radius:10px;
-    padding:10px 15px;
-    background:#252936;
-    color:white;
-    cursor:pointer;
-}
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
 
-.mode button.active{
-    background:#5865f2;
-}
+        .back {
+            color: var(--muted);
+            text-decoration: none;
+            font-weight: bold;
+        }
 
-#timer{
-    font-size:80px;
-    font-weight:bold;
-    margin:25px 0;
-    letter-spacing:3px;
-}
+        .back:hover {
+            color: white;
+        }
 
-.controls{
-    display:flex;
-    justify-content:center;
-    gap:12px;
-}
+        .card {
+            background: rgba(21,25,34,0.95);
+            border: 1px solid var(--border);
+            border-radius: 25px;
+            padding: 35px;
+            text-align: center;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.3);
+        }
 
-.controls button{
-    border:0;
-    border-radius:12px;
-    padding:14px 22px;
-    font-size:17px;
-    font-weight:bold;
-    cursor:pointer;
-    color:white;
-    background:#5865f2;
-}
+        .icon {
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
 
-.controls button:hover{
-    opacity:.85;
-}
+        h1 {
+            margin: 0;
+            font-size: 42px;
+        }
 
-.sessions{
-    margin-top:25px;
-    opacity:.7;
-}
-</style>
+        .subtitle {
+            color: var(--muted);
+            margin-bottom: 35px;
+        }
+
+        .mode {
+            display: inline-flex;
+            gap: 8px;
+            background: var(--card2);
+            padding: 6px;
+            border-radius: 14px;
+            margin-bottom: 30px;
+        }
+
+        .mode button {
+            border: none;
+            background: transparent;
+            color: var(--muted);
+            padding: 10px 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .mode button.active {
+            background: white;
+            color: #0b0d12;
+        }
+
+        .timer {
+            font-size: 100px;
+            font-weight: 900;
+            letter-spacing: -5px;
+            margin: 20px 0;
+        }
+
+        .status {
+            color: var(--muted);
+            font-size: 16px;
+            margin-bottom: 25px;
+        }
+
+        .progress {
+            width: 100%;
+            height: 8px;
+            background: var(--card2);
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: white;
+            transition: width 0.3s linear;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .buttons button {
+            border: 1px solid var(--border);
+            background: var(--card2);
+            color: white;
+            padding: 13px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .buttons button.primary {
+            background: white;
+            color: #0b0d12;
+        }
+
+        .buttons button:hover {
+            transform: translateY(-1px);
+        }
+
+        .settings {
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px solid var(--border);
+        }
+
+        .settings h2 {
+            font-size: 18px;
+            margin-bottom: 18px;
+        }
+
+        .settings-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            color: var(--muted);
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--card2);
+            color: white;
+            outline: none;
+        }
+
+        .sessions {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .stat strong {
+            display: block;
+            font-size: 25px;
+        }
+
+        .stat span {
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 15px;
+            }
+
+            .card {
+                padding: 25px 18px;
+            }
+
+            h1 {
+                font-size: 34px;
+            }
+
+            .timer {
+                font-size: 70px;
+            }
+
+            .settings-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
 <div class="container">
 
-<h1>🍅 Pomodoro</h1>
+    <div class="top">
+        <a class="back" href="../index.html">
+            ← Galoulou Toolbox
+        </a>
+    </div>
 
-<p id="status">Prêt à travailler</p>
+    <div class="card">
 
-<div class="mode">
+        <div class="icon">🍅</div>
 
-<button id="workBtn" class="active" onclick="setMode('work')">
-25 min
-</button>
+        <h1>Pomodoro</h1>
 
-<button id="shortBtn" onclick="setMode('short')">
-5 min
-</button>
+        <p class="subtitle">
+            Concentre-toi, travaille, puis prends une pause.
+        </p>
 
-<button id="longBtn" onclick="setMode('long')">
-15 min
-</button>
+        <div class="mode">
+            <button id="workMode" class="active">
+                Travail
+            </button>
 
-</div>
+            <button id="breakMode">
+                Pause
+            </button>
+        </div>
 
-<div id="timer">25:00</div>
+        <div id="timer" class="timer">
+            25:00
+        </div>
 
-<div class="controls">
+        <div id="status" class="status">
+            Prêt à travailler 🚀
+        </div>
 
-<button onclick="startTimer()">▶ Démarrer</button>
+        <div class="progress">
+            <div id="progressBar" class="progress-bar"></div>
+        </div>
 
-<button onclick="pauseTimer()">⏸ Pause</button>
+        <div class="buttons">
 
-<button onclick="resetTimer()">↻ Reset</button>
+            <button id="start" class="primary">
+                ▶ Démarrer
+            </button>
 
-</div>
+            <button id="pause">
+                ⏸ Pause
+            </button>
 
-<div class="sessions">
-🍅 Sessions terminées : <strong id="sessions">0</strong>
-</div>
+            <button id="reset">
+                🔄 Réinitialiser
+            </button>
+
+        </div>
+
+        <div class="settings">
+
+            <h2>⚙️ Durées</h2>
+
+            <div class="settings-grid">
+
+                <div>
+                    <label for="workTime">
+                        Travail (minutes)
+                    </label>
+
+                    <input
+                        id="workTime"
+                        type="number"
+                        min="1"
+                        max="180"
+                        value="25"
+                    >
+                </div>
+
+                <div>
+                    <label for="breakTime">
+                        Pause (minutes)
+                    </label>
+
+                    <input
+                        id="breakTime"
+                        type="number"
+                        min="1"
+                        max="60"
+                        value="5"
+                    >
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="sessions">
+
+            <div class="stat">
+                <strong id="sessionCount">0</strong>
+                <span>sessions terminées</span>
+            </div>
+
+            <div class="stat">
+                <strong id="totalMinutes">0</strong>
+                <span>minutes travaillées</span>
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 
 <script>
 
-let durations = {
-    work:25*60,
-    short:5*60,
-    long:15*60
-};
+const timerDisplay = document.getElementById("timer");
+const statusDisplay = document.getElementById("status");
+const progressBar = document.getElementById("progressBar");
 
-let currentMode = "work";
-let remaining = durations.work;
-let interval = null;
+const startButton = document.getElementById("start");
+const pauseButton = document.getElementById("pause");
+const resetButton = document.getElementById("reset");
 
-let sessions =
-    Number(localStorage.getItem("galoulou_pomodoro_sessions") || 0);
+const workMode = document.getElementById("workMode");
+const breakMode = document.getElementById("breakMode");
 
-const timer = document.getElementById("timer");
-const statusText = document.getElementById("status");
+const workInput = document.getElementById("workTime");
+const breakInput = document.getElementById("breakTime");
 
-function updateDisplay(){
+const sessionCountDisplay = document.getElementById("sessionCount");
+const totalMinutesDisplay = document.getElementById("totalMinutes");
 
-    let minutes = Math.floor(remaining / 60);
-    let seconds = remaining % 60;
+let mode = "work";
+let timer = null;
+let remainingSeconds = 25 * 60;
+let totalSeconds = 25 * 60;
 
-    timer.textContent =
-        String(minutes).padStart(2,"0") +
-        ":" +
-        String(seconds).padStart(2,"0");
+let sessions = Number(
+    localStorage.getItem("galoulou_pomodoro_sessions") || 0
+);
+
+let totalMinutes = Number(
+    localStorage.getItem("galoulou_pomodoro_minutes") || 0
+);
+
+function updateStats() {
+
+    sessionCountDisplay.textContent = sessions;
+    totalMinutesDisplay.textContent = totalMinutes;
+
 }
 
-function startTimer(){
+function updateDisplay() {
 
-    if(interval) return;
+    const minutes = Math.floor(remainingSeconds / 60);
+    const seconds = remainingSeconds % 60;
 
-    statusText.textContent =
-        currentMode === "work"
-        ? "💪 Concentration en cours..."
-        : "☕ Pause en cours...";
+    timerDisplay.textContent =
+        `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
 
-    interval = setInterval(()=>{
+    const progress =
+        ((totalSeconds - remainingSeconds) / totalSeconds) * 100;
 
-        remaining--;
+    progressBar.style.width = `${progress}%`;
 
-        updateDisplay();
-
-        if(remaining <= 0){
-
-            clearInterval(interval);
-            interval = null;
-
-            if(currentMode === "work"){
-
-                sessions++;
-
-                localStorage.setItem(
-                    "galoulou_pomodoro_sessions",
-                    sessions
-                );
-
-                document.getElementById("sessions")
-                    .textContent = sessions;
-
-                statusText.textContent =
-                    "🎉 Session terminée ! Fais une pause.";
-
-            }else{
-
-                statusText.textContent =
-                    "🔥 La pause est terminée !";
-            }
-
-            playSound();
-        }
-
-    },1000);
 }
 
-function pauseTimer(){
+function setMode(newMode) {
 
-    clearInterval(interval);
-    interval = null;
+    mode = newMode;
 
-    statusText.textContent = "⏸ En pause";
-}
+    clearInterval(timer);
+    timer = null;
 
-function resetTimer(){
+    if (mode === "work") {
 
-    pauseTimer();
+        totalSeconds = Number(workInput.value) * 60;
+        remainingSeconds = totalSeconds;
 
-    remaining = durations[currentMode];
+        workMode.classList.add("active");
+        breakMode.classList.remove("active");
 
-    statusText.textContent = "Prêt à travailler";
+        statusDisplay.textContent =
+            "Prêt à travailler 🚀";
+
+    } else {
+
+        totalSeconds = Number(breakInput.value) * 60;
+        remainingSeconds = totalSeconds;
+
+        breakMode.classList.add("active");
+        workMode.classList.remove("active");
+
+        statusDisplay.textContent =
+            "Profite de ta pause ☕";
+
+    }
+
+    startButton.textContent = "▶ Démarrer";
 
     updateDisplay();
+
 }
 
-function setMode(mode){
+function startTimer() {
 
-    currentMode = mode;
+    if (timer) return;
 
-    document.querySelectorAll(".mode button")
-        .forEach(btn=>btn.classList.remove("active"));
+    statusDisplay.textContent =
+        mode === "work"
+        ? "Concentration maximale 💪"
+        : "Pause bien méritée ☕";
 
-    if(mode === "work")
-        document.getElementById("workBtn").classList.add("active");
+    startButton.textContent = "▶ En cours...";
 
-    if(mode === "short")
-        document.getElementById("shortBtn").classList.add("active");
+    timer = setInterval(() => {
 
-    if(mode === "long")
-        document.getElementById("longBtn").classList.add("active");
+        if (remainingSeconds > 0) {
 
-    resetTimer();
+            remainingSeconds--;
+
+            updateDisplay();
+
+        } else {
+
+            clearInterval(timer);
+            timer = null;
+
+            finishSession();
+
+        }
+
+    }, 1000);
+
 }
 
-function playSound(){
+function pauseTimer() {
 
-    const audioContext =
-        new (window.AudioContext || window.webkitAudioContext)();
+    clearInterval(timer);
+    timer = null;
 
-    const oscillator =
-        audioContext.createOscillator();
+    startButton.textContent = "▶ Reprendre";
 
-    oscillator.frequency.value = 800;
+    statusDisplay.textContent = "En pause ⏸️";
 
-    oscillator.connect(audioContext.destination);
-
-    oscillator.start();
-
-    oscillator.stop(
-        audioContext.currentTime + .4
-    );
 }
 
-document.getElementById("sessions").textContent = sessions;
+function resetTimer() {
 
+    clearInterval(timer);
+    timer = null;
+
+    setMode(mode);
+
+}
+
+function finishSession() {
+
+    if (mode === "work") {
+
+        sessions++;
+        totalMinutes += Number(workInput.value);
+
+        localStorage.setItem(
+            "galoulou_pomodoro_sessions",
+            sessions
+        );
+
+        localStorage.setItem(
+            "galoulou_pomodoro_minutes",
+            totalMinutes
+        );
+
+        updateStats();
+
+        statusDisplay.textContent =
+            "Session terminée ! 🎉 Passe en pause.";
+
+        alert("🍅 Session terminée !\n\nPlace à une petite pause ☕");
+
+        setMode("break");
+
+    } else {
+
+        statusDisplay.textContent =
+            "Pause terminée ! 🚀 Retour au travail.";
+
+        alert("☕ Pause terminée !\n\nC'est reparti 🚀");
+
+        setMode("work");
+
+    }
+
+}
+
+startButton.addEventListener("click", startTimer);
+pauseButton.addEventListener("click", pauseTimer);
+resetButton.addEventListener("click", resetTimer);
+
+workMode.addEventListener("click", () => setMode("work"));
+breakMode.addEventListener("click", () => setMode("break"));
+
+workInput.addEventListener("change", () => {
+
+    if (!timer && mode === "work") {
+        setMode("work");
+    }
+
+});
+
+breakInput.addEventListener("change", () => {
+
+    if (!timer && mode === "break") {
+        setMode("break");
+    }
+
+});
+
+updateStats();
 updateDisplay();
 
 </script>
