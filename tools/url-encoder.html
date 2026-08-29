@@ -4,17 +4,191 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>URL Encoder - Galoulou Toolbox</title>
 
 <link rel="stylesheet" href="../style.css">
 
 <link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+.tool-page {
+    min-height: 100vh;
+    padding: 80px 20px;
+}
+
+.tool-container {
+    max-width: 800px;
+    margin: auto;
+}
+
+.back-button {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    color: var(--text-secondary);
+
+    margin-bottom: 50px;
+}
+
+.tool-header {
+
+    text-align: center;
+
+    margin-bottom: 45px;
+}
+
+.tool-header h1 {
+
+    font-size: clamp(40px, 7vw, 70px);
+
+    letter-spacing: -3px;
+
+    margin-bottom: 12px;
+}
+
+.tool-header p {
+
+    color: var(--text-secondary);
+
+    font-size: 17px;
+}
+
+.url-card {
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    border-radius: 20px;
+
+    padding: 35px;
+}
+
+.section-title {
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    color: var(--text-secondary);
+
+    letter-spacing: 1px;
+
+    margin-bottom: 12px;
+}
+
+.url-input {
+
+    width: 100%;
+
+    min-height: 170px;
+
+    resize: vertical;
+
+    padding: 15px;
+
+    background: var(--bg-secondary);
+
+    color: var(--text);
+
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+
+    outline: none;
+
+    font-family: monospace;
+
+    font-size: 14px;
+
+    margin-bottom: 15px;
+}
+
+.url-input:focus {
+
+    border-color:
+        var(--border-hover);
+}
+
+.actions {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 10px;
+
+    margin-bottom: 30px;
+}
+
+.button {
+
+    padding: 15px;
+
+    border: none;
+
+    border-radius: 11px;
+
+    background: var(--button);
+
+    color: var(--button-text);
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.button.secondary {
+
+    background: var(--bg-secondary);
+
+    color: var(--text);
+
+    border: 1px solid var(--border);
+}
+
+.message {
+
+    text-align: center;
+
+    color: var(--text-secondary);
+
+    font-size: 13px;
+
+    min-height: 20px;
+
+    margin-top: 15px;
+}
+
+@media (max-width:600px) {
+
+    .tool-page {
+        padding: 55px 16px;
+    }
+
+    .url-card {
+        padding: 22px;
+    }
+
+    .actions {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+</style>
 
 </head>
+
 
 <body>
 
@@ -22,15 +196,14 @@
 
 <a href="../index.html" class="logo">
 
-<img src="../assets/galouloutoolbox.png"
-     alt="Galoulou Toolbox Logo">
+<img src="../assets/galouloutoolbox.png">
 
-<span>Galoulou Toolbox</span>
+<span>Boîte à outils Galoulou</span>
 
 </a>
 
 <a href="../index.html#tools"
-   class="discord-button">
+class="discord-button">
 
 <i class="fa-solid fa-arrow-left"></i>
 
@@ -46,7 +219,7 @@ Tous les outils
 <div class="tool-container">
 
 <a href="../index.html"
-   class="back-button">
+class="back-button">
 
 <i class="fa-solid fa-arrow-left"></i>
 
@@ -60,45 +233,75 @@ Retour à la boîte à outils
 <h1>🔗 URL Encoder</h1>
 
 <p>
-Encodez et décodez vos URLs rapidement.
+Encodez et décodez facilement vos URLs.
 </p>
 
 </div>
 
 
-<div class="tool-card">
+<div class="url-card">
 
-<div class="tool-section">
+<p class="section-title">
+URL À TRAITER
+</p>
 
-<h2>🔗 URL</h2>
 
 <textarea
 id="input"
+class="url-input"
 placeholder="https://example.com/hello world?test=oui"></textarea>
 
-</div>
 
+<div class="actions">
 
-<div class="tool-button-row three">
-
-<button class="tool-button"
-        onclick="encodeURL()">
+<button
+class="button"
+onclick="encodeURL()">
 
 🔒 Encoder
 
 </button>
 
 
-<button class="tool-button"
-        onclick="decodeURL()">
+<button
+class="button"
+onclick="decodeURL()">
 
 🔓 Décoder
 
 </button>
 
+</div>
 
-<button class="tool-button secondary"
-        onclick="clearAll()">
+
+<p class="section-title">
+RÉSULTAT
+</p>
+
+
+<textarea
+id="output"
+class="url-input"
+readonly
+placeholder="Le résultat apparaîtra ici..."></textarea>
+
+
+<div class="actions">
+
+<button
+class="button secondary"
+onclick="copyResult()">
+
+<i class="fa-regular fa-copy"></i>
+
+&nbsp; Copier
+
+</button>
+
+
+<button
+class="button secondary"
+onclick="clearAll()">
 
 🗑️ Effacer
 
@@ -107,29 +310,11 @@ placeholder="https://example.com/hello world?test=oui"></textarea>
 </div>
 
 
-<div class="tool-section"
-     style="margin-top:25px;">
+<p
+id="message"
+class="message">
 
-<h2>📤 Résultat</h2>
-
-<textarea
-id="output"
-readonly
-placeholder="Résultat..."></textarea>
-
-</div>
-
-
-<button class="tool-button secondary"
-        onclick="copyResult()">
-
-📋 Copier le résultat
-
-</button>
-
-
-<p id="status"
-   class="status"></p>
+</p>
 
 </div>
 
@@ -148,33 +333,23 @@ document.getElementById("input").value;
 
 if (!input) {
 
-document.getElementById("status")
+document.getElementById("message")
 .textContent =
-"❌ Écris quelque chose.";
+"❌ Écrivez quelque chose.";
 
 return;
 
 }
 
 
-try {
-
 document.getElementById("output")
 .value =
 encodeURIComponent(input);
 
 
-document.getElementById("status")
+document.getElementById("message")
 .textContent =
-"✅ URL encodée !";
-
-} catch {
-
-document.getElementById("status")
-.textContent =
-"❌ Erreur.";
-
-}
+"✓ URL encodée.";
 
 }
 
@@ -187,9 +362,9 @@ document.getElementById("input").value;
 
 if (!input) {
 
-document.getElementById("status")
+document.getElementById("message")
 .textContent =
-"❌ Écris quelque chose.";
+"❌ Écrivez quelque chose.";
 
 return;
 
@@ -203,13 +378,15 @@ document.getElementById("output")
 decodeURIComponent(input);
 
 
-document.getElementById("status")
+document.getElementById("message")
 .textContent =
-"✅ URL décodée !";
+"✓ URL décodée.";
 
-} catch {
+}
 
-document.getElementById("status")
+catch {
+
+document.getElementById("message")
 .textContent =
 "❌ URL invalide.";
 
@@ -220,34 +397,40 @@ document.getElementById("status")
 
 function copyResult() {
 
-const result =
-document.getElementById("output").value;
+const output =
+document.getElementById("output");
 
 
-if (!result) return;
+if (!output.value) return;
 
 
-navigator.clipboard.writeText(result);
+navigator.clipboard.writeText(
+output.value
+);
 
 
-document.getElementById("status")
+document.getElementById("message")
 .textContent =
-"✅ Copié !";
+"✓ Copié !";
 
 }
 
 
 function clearAll() {
 
-document.getElementById("input").value = "";
+document.getElementById("input")
+.value = "";
 
-document.getElementById("output").value = "";
+document.getElementById("output")
+.value = "";
 
-document.getElementById("status").textContent = "";
+document.getElementById("message")
+.textContent = "";
 
 }
 
 </script>
 
 </body>
+
 </html>
