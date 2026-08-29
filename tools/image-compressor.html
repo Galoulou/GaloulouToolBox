@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Compressor - GaloulouToolBox</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+<main class="tool-page">
+  <a href="../index.html" class="back-btn">← Retour</a>
+
+  <div class="tool-container">
+
+    <h1>🗜️ Image Compressor</h1>
+    <p>Réduis le poids de tes images directement dans ton navigateur.</p>
+
+    <div class="tool-box">
+
+      <input type="file" id="imageInput" accept="image/*">
+
+      <br><br>
+
+      <label>
+        Qualité :
+        <strong id="qualityValue">70%</strong>
+      </label>
+
+      <br>
+
+      <input
+        type="range"
+        id="quality"
+        min="10"
+        max="100"
+        value="70"
+      >
+
+      <br><br>
+
+      <button onclick="compressImage()">
+        🗜️ Compresser
+      </button>
+
+      <p id="info"></p>
+
+      <a
+        id="download"
+        style="display:none;"
+        class="button">
+        ⬇️ Télécharger
+      </a>
+
+    </div>
+
+  </div>
+</main>
+
+<script>
+const quality = document.getElementById("quality");
+
+quality.addEventListener("input", function() {
+  document.getElementById("qualityValue").textContent =
+    this.value + "%";
+});
+
+function compressImage() {
+
+  const input = document.getElementById("imageInput");
+
+  if (!input.files.length) {
+    document.getElementById("info").textContent =
+      "❌ Choisis une image.";
+    return;
+  }
+
+  const file = input.files[0];
+
+  const reader = new FileReader();
+
+  reader.onload = function(e) {
+
+    const img = new Image();
+
+    img.onload = function() {
+
+      const canvas = document.createElement("canvas");
+
+      canvas.width = img.width;
+      canvas.height = img.height;
+
+      const ctx = canvas.getContext("2d");
+
+      ctx.drawImage(img, 0, 0);
+
+      canvas.toBlob(function(blob) {
+
+        const oldSize = file.size;
+        const newSize = blob.size;
+
+        const reduction =
+          ((oldSize - newSize) / oldSize) * 100;
+
+        const oldKB = (oldSize / 1024).toFixed(1);
+        const newKB = (newSize / 1024).toFixed(1);
+
+        document.getElementById("info").textContent =
+          `✅ ${oldKB} KB → ${newKB} KB (${reduction.toFixed(1)}% économisé)`;
+
+        const url = URL.createObjectURL(blob);
+
+        const download = document.getElementById("download");
+
+        download.href = url;
+        download.download = "galoulou-compressed.jpg";
+        download.style.display = "inline-block";
+
+      }, "image/jpeg", quality.value / 100);
+
+    };
+
+    img.src = e.target.result;
+  };
+
+  reader.readAsDataURL(file);
+}
+</script>
+
+</body>
+</html>
