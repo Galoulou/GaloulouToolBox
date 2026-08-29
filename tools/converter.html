@@ -1,126 +1,337 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Unit Converter - Galoulou Toolbox</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-*{box-sizing:border-box}
+    <title>Unit Converter — Galoulou Toolbox</title>
 
-body{
-    margin:0;
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:#0f1117;
-    color:white;
-    font-family:Arial,sans-serif;
-    padding:20px;
-}
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
-.container{
-    width:100%;
-    max-width:600px;
-    background:#181b24;
-    padding:30px;
-    border-radius:22px;
-    box-shadow:0 20px 60px rgba(0,0,0,.4);
-}
+        :root {
+            --bg: #0b0d12;
+            --card: #151922;
+            --card2: #1b202b;
+            --text: #ffffff;
+            --muted: #9299a8;
+            --border: rgba(255,255,255,0.09);
+        }
 
-h1{
-    text-align:center;
-}
+        body {
+            margin: 0;
+            min-height: 100vh;
+            padding: 25px;
+            background:
+                radial-gradient(circle at 50% -10%, #242b3c 0%, #0b0d12 48%);
+            color: var(--text);
+            font-family: Arial, sans-serif;
+        }
 
-select,input{
-    width:100%;
-    padding:14px;
-    margin:8px 0;
-    border:0;
-    border-radius:10px;
-    background:#252936;
-    color:white;
-    font-size:16px;
-}
+        .container {
+            width: 100%;
+            max-width: 760px;
+            margin: auto;
+        }
 
-.row{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:15px;
-}
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
 
-.result{
-    margin-top:20px;
-    padding:20px;
-    border-radius:12px;
-    background:#252936;
-    text-align:center;
-    font-size:25px;
-    font-weight:bold;
-}
+        .back {
+            color: var(--muted);
+            text-decoration: none;
+            font-weight: bold;
+        }
 
-.swap{
-    display:block;
-    margin:15px auto;
-    border:0;
-    border-radius:10px;
-    padding:10px 20px;
-    background:#5865f2;
-    color:white;
-    cursor:pointer;
-}
-</style>
+        .back:hover {
+            color: white;
+        }
+
+        .card {
+            background: rgba(21,25,34,0.95);
+            border: 1px solid var(--border);
+            border-radius: 25px;
+            padding: 35px;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.3);
+        }
+
+        .icon {
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 42px;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            color: var(--muted);
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .category {
+            border: 1px solid var(--border);
+            background: var(--card2);
+            color: var(--muted);
+            padding: 13px 10px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .category:hover {
+            color: white;
+        }
+
+        .category.active {
+            background: white;
+            color: #0b0d12;
+        }
+
+        .conversion {
+            display: grid;
+            grid-template-columns: 1fr 70px 1fr;
+            gap: 12px;
+            align-items: end;
+        }
+
+        .field label {
+            display: block;
+            color: var(--muted);
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: var(--card2);
+            color: white;
+            outline: none;
+            font-size: 16px;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        .swap {
+            height: 48px;
+            border: 1px solid var(--border);
+            background: var(--card2);
+            color: white;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .swap:hover {
+            transform: rotate(180deg);
+            transition: 0.25s;
+        }
+
+        .result {
+            margin-top: 25px;
+            padding: 25px;
+            border-radius: 16px;
+            background: var(--card2);
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .result-value {
+            font-size: 36px;
+            font-weight: 900;
+            word-break: break-word;
+        }
+
+        .result-unit {
+            color: var(--muted);
+            margin-top: 5px;
+        }
+
+        .info {
+            margin-top: 20px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        @media (max-width: 650px) {
+            body {
+                padding: 15px;
+            }
+
+            .card {
+                padding: 22px;
+            }
+
+            h1 {
+                font-size: 34px;
+            }
+
+            .categories {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .conversion {
+                grid-template-columns: 1fr;
+            }
+
+            .swap {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
 <div class="container">
 
-<h1>🔄 Unit Converter</h1>
+    <div class="top">
+        <a class="back" href="../index.html">
+            ← Galoulou Toolbox
+        </a>
+    </div>
 
-<select id="category" onchange="changeCategory()">
+    <div class="card">
 
-<option value="length">📏 Longueur</option>
-<option value="weight">⚖️ Poids</option>
-<option value="temperature">🌡️ Température</option>
-<option value="volume">🧪 Volume</option>
-<option value="time">⏰ Temps</option>
+        <div class="icon">🔄</div>
 
-</select>
+        <h1>Unit Converter</h1>
 
-<div class="row">
+        <p class="subtitle">
+            Convertis rapidement tes unités du quotidien.
+        </p>
 
-<div>
+        <div class="categories">
 
-<label>De</label>
+            <button class="category active" data-category="length">
+                📏 Longueur
+            </button>
 
-<select id="from" onchange="convert()"></select>
+            <button class="category" data-category="weight">
+                ⚖️ Poids
+            </button>
 
-<input
-id="value"
-type="number"
-value="1"
-oninput="convert()"
->
+            <button class="category" data-category="temperature">
+                🌡️ Température
+            </button>
 
-</div>
+            <button class="category" data-category="volume">
+                💧 Volume
+            </button>
 
-<div>
+            <button class="category" data-category="time">
+                🕐 Temps
+            </button>
 
-<label>Vers</label>
+            <button class="category" data-category="data">
+                💾 Données
+            </button>
 
-<select id="to" onchange="convert()"></select>
+        </div>
 
-<div class="result" id="result">—</div>
+        <div class="conversion">
 
-</div>
+            <div class="field">
 
-</div>
+                <label>Valeur</label>
 
-<button class="swap" onclick="swapUnits()">
-⇄ Inverser
-</button>
+                <input
+                    id="value"
+                    type="number"
+                    value="1"
+                    step="any"
+                >
+
+            </div>
+
+            <button
+                class="swap"
+                id="swap"
+                title="Inverser les unités"
+            >
+                ⇄
+            </button>
+
+            <div class="field">
+
+                <label>Résultat</label>
+
+                <input
+                    id="resultInput"
+                    type="text"
+                    readonly
+                >
+
+            </div>
+
+        </div>
+
+        <div class="conversion" style="margin-top: 12px;">
+
+            <div class="field">
+
+                <select id="from"></select>
+
+            </div>
+
+            <div></div>
+
+            <div class="field">
+
+                <select id="to"></select>
+
+            </div>
+
+        </div>
+
+        <div class="result">
+
+            <div
+                class="result-value"
+                id="result"
+            >
+                1
+            </div>
+
+            <div
+                class="result-unit"
+                id="resultUnit"
+            >
+                mètre
+            </div>
+
+        </div>
+
+        <div class="info">
+            ⚡ Conversion instantanée — tout fonctionne directement dans ton navigateur.
+        </div>
+
+    </div>
 
 </div>
 
@@ -128,206 +339,471 @@ oninput="convert()"
 
 const units = {
 
-length:{
-    "Mètres":"m",
-    "Kilomètres":"km",
-    "Centimètres":"cm",
-    "Millimètres":"mm",
-    "Miles":"mi",
-    "Yards":"yd",
-    "Pieds":"ft",
-    "Pouces":"in"
-},
+    length: {
+        name: "Longueur",
 
-weight:{
-    "Kilogrammes":"kg",
-    "Grammes":"g",
-    "Milligrammes":"mg",
-    "Tonnes":"t",
-    "Livres":"lb",
-    "Onces":"oz"
-},
+        units: {
+            mm: {
+                name: "Millimètre (mm)",
+                factor: 0.001
+            },
 
-temperature:{
-    "Celsius":"c",
-    "Fahrenheit":"f",
-    "Kelvin":"k"
-},
+            cm: {
+                name: "Centimètre (cm)",
+                factor: 0.01
+            },
 
-volume:{
-    "Litres":"l",
-    "Millilitres":"ml",
-    "Gallons":"gal",
-    "Quarts":"qt",
-    "Pintes":"pt",
-    "Tasses":"cup"
-},
+            m: {
+                name: "Mètre (m)",
+                factor: 1
+            },
 
-time:{
-    "Secondes":"s",
-    "Minutes":"min",
-    "Heures":"h",
-    "Jours":"d"
-}
+            km: {
+                name: "Kilomètre (km)",
+                factor: 1000
+            },
+
+            inch: {
+                name: "Pouce (in)",
+                factor: 0.0254
+            },
+
+            ft: {
+                name: "Pied (ft)",
+                factor: 0.3048
+            },
+
+            yd: {
+                name: "Yard (yd)",
+                factor: 0.9144
+            },
+
+            mile: {
+                name: "Mile (mi)",
+                factor: 1609.344
+            }
+        }
+    },
+
+    weight: {
+        name: "Poids",
+
+        units: {
+            mg: {
+                name: "Milligramme (mg)",
+                factor: 0.000001
+            },
+
+            g: {
+                name: "Gramme (g)",
+                factor: 0.001
+            },
+
+            kg: {
+                name: "Kilogramme (kg)",
+                factor: 1
+            },
+
+            t: {
+                name: "Tonne (t)",
+                factor: 1000
+            },
+
+            oz: {
+                name: "Once (oz)",
+                factor: 0.0283495
+            },
+
+            lb: {
+                name: "Livre (lb)",
+                factor: 0.453592
+            }
+        }
+    },
+
+    temperature: {
+        name: "Température",
+
+        units: {
+            c: {
+                name: "Celsius (°C)"
+            },
+
+            f: {
+                name: "Fahrenheit (°F)"
+            },
+
+            k: {
+                name: "Kelvin (K)"
+            }
+        }
+    },
+
+    volume: {
+        name: "Volume",
+
+        units: {
+            ml: {
+                name: "Millilitre (mL)",
+                factor: 0.001
+            },
+
+            cl: {
+                name: "Centilitre (cL)",
+                factor: 0.01
+            },
+
+            l: {
+                name: "Litre (L)",
+                factor: 1
+            },
+
+            m3: {
+                name: "Mètre cube (m³)",
+                factor: 1000
+            },
+
+            gallon: {
+                name: "Gallon US",
+                factor: 3.78541
+            }
+        }
+    },
+
+    time: {
+        name: "Temps",
+
+        units: {
+            second: {
+                name: "Seconde",
+                factor: 1
+            },
+
+            minute: {
+                name: "Minute",
+                factor: 60
+            },
+
+            hour: {
+                name: "Heure",
+                factor: 3600
+            },
+
+            day: {
+                name: "Jour",
+                factor: 86400
+            },
+
+            week: {
+                name: "Semaine",
+                factor: 604800
+            }
+        }
+    },
+
+    data: {
+        name: "Données",
+
+        units: {
+            bit: {
+                name: "Bit",
+                factor: 0.125
+            },
+
+            byte: {
+                name: "Octet (B)",
+                factor: 1
+            },
+
+            kb: {
+                name: "Kilooctet (KB)",
+                factor: 1024
+            },
+
+            mb: {
+                name: "Mégaoctet (MB)",
+                factor: 1024 ** 2
+            },
+
+            gb: {
+                name: "Gigaoctet (GB)",
+                factor: 1024 ** 3
+            },
+
+            tb: {
+                name: "Téraoctet (TB)",
+                factor: 1024 ** 4
+            }
+        }
+    }
 
 };
 
-const factors = {
+let currentCategory = "length";
 
-length:{
-    m:1,
-    km:1000,
-    cm:.01,
-    mm:.001,
-    mi:1609.344,
-    yd:.9144,
-    ft:.3048,
-    in:.0254
-},
+const valueInput =
+    document.getElementById("value");
 
-weight:{
-    kg:1,
-    g:.001,
-    mg:.000001,
-    t:1000,
-    lb:.45359237,
-    oz:.0283495
-},
+const resultInput =
+    document.getElementById("resultInput");
 
-volume:{
-    l:1,
-    ml:.001,
-    gal:3.785411784,
-    qt:.946352946,
-    pt:.473176473,
-    cup:.2365882365
-},
+const fromSelect =
+    document.getElementById("from");
 
-time:{
-    s:1,
-    min:60,
-    h:3600,
-    d:86400
-}
+const toSelect =
+    document.getElementById("to");
 
-};
+const resultDisplay =
+    document.getElementById("result");
 
-function changeCategory(){
+const resultUnit =
+    document.getElementById("resultUnit");
+
+const swapButton =
+    document.getElementById("swap");
+
+
+function populateUnits() {
+
+    fromSelect.innerHTML = "";
+    toSelect.innerHTML = "";
 
     const category =
-        document.getElementById("category").value;
+        units[currentCategory].units;
 
-    const from =
-        document.getElementById("from");
+    Object.entries(category).forEach(
+        ([key, unit]) => {
 
-    const to =
-        document.getElementById("to");
+            const optionFrom =
+                document.createElement("option");
 
-    from.innerHTML = "";
-    to.innerHTML = "";
+            optionFrom.value = key;
+            optionFrom.textContent = unit.name;
 
-    Object.entries(units[category])
-        .forEach(([name,value])=>{
+            const optionTo =
+                document.createElement("option");
 
-            from.innerHTML +=
-                `<option value="${value}">${name}</option>`;
+            optionTo.value = key;
+            optionTo.textContent = unit.name;
 
-            to.innerHTML +=
-                `<option value="${value}">${name}</option>`;
-        });
+            fromSelect.appendChild(optionFrom);
+            toSelect.appendChild(optionTo);
 
-    if(to.options.length > 1){
-        to.selectedIndex = 1;
+        }
+    );
+
+    const keys = Object.keys(category);
+
+    if (currentCategory === "length") {
+
+        fromSelect.value = "m";
+        toSelect.value = "km";
+
+    } else if (currentCategory === "weight") {
+
+        fromSelect.value = "kg";
+        toSelect.value = "g";
+
+    } else if (currentCategory === "temperature") {
+
+        fromSelect.value = "c";
+        toSelect.value = "f";
+
+    } else if (currentCategory === "volume") {
+
+        fromSelect.value = "l";
+        toSelect.value = "ml";
+
+    } else if (currentCategory === "time") {
+
+        fromSelect.value = "hour";
+        toSelect.value = "minute";
+
+    } else if (currentCategory === "data") {
+
+        fromSelect.value = "gb";
+        toSelect.value = "mb";
+
+    } else {
+
+        fromSelect.value = keys[0];
+        toSelect.value = keys[1] || keys[0];
+
     }
 
     convert();
+
 }
 
-function convert(){
 
-    const category =
-        document.getElementById("category").value;
-
-    const from =
-        document.getElementById("from").value;
-
-    const to =
-        document.getElementById("to").value;
-
-    const value =
-        Number(document.getElementById("value").value);
-
-    let result;
-
-    if(category === "temperature"){
-
-        result = convertTemperature(
-            value,
-            from,
-            to
-        );
-
-    }else{
-
-        const base =
-            value * factors[category][from];
-
-        result =
-            base / factors[category][to];
-    }
-
-    document.getElementById("result")
-        .textContent = formatNumber(result);
-}
-
-function convertTemperature(value,from,to){
+function convertTemperature(
+    value,
+    from,
+    to
+) {
 
     let celsius;
 
-    if(from === "c") celsius = value;
+    if (from === "c") {
+        celsius = value;
+    }
 
-    if(from === "f")
-        celsius = (value - 32) * 5/9;
+    else if (from === "f") {
+        celsius = (value - 32) * 5 / 9;
+    }
 
-    if(from === "k")
+    else if (from === "k") {
         celsius = value - 273.15;
+    }
 
-    if(to === "c") return celsius;
+    if (to === "c") {
+        return celsius;
+    }
 
-    if(to === "f")
-        return celsius * 9/5 + 32;
+    if (to === "f") {
+        return celsius * 9 / 5 + 32;
+    }
 
-    if(to === "k")
+    if (to === "k") {
         return celsius + 273.15;
+    }
+
 }
 
-function formatNumber(number){
 
-    if(!Number.isFinite(number))
-        return "Erreur";
+function convert() {
 
-    return Number(
-        number.toFixed(8)
-    ).toLocaleString("fr-FR");
-}
+    const value =
+        Number(valueInput.value);
 
-function swapUnits(){
+    if (isNaN(value)) {
+
+        resultDisplay.textContent = "—";
+        resultInput.value = "";
+
+        return;
+    }
 
     const from =
-        document.getElementById("from");
+        fromSelect.value;
 
     const to =
-        document.getElementById("to");
+        toSelect.value;
 
-    const temp = from.value;
+    let result;
 
-    from.value = to.value;
-    to.value = temp;
+    if (currentCategory === "temperature") {
 
-    convert();
+        result =
+            convertTemperature(
+                value,
+                from,
+                to
+            );
+
+    } else {
+
+        const category =
+            units[currentCategory].units;
+
+        const baseValue =
+            value * category[from].factor;
+
+        result =
+            baseValue / category[to].factor;
+
+    }
+
+    const rounded =
+        Number(
+            result.toPrecision(12)
+        );
+
+    resultDisplay.textContent =
+        rounded.toLocaleString("fr-FR");
+
+    resultInput.value =
+        rounded;
+
+    resultUnit.textContent =
+        units[currentCategory].units[to].name;
+
 }
 
-changeCategory();
+
+document
+    .querySelectorAll(".category")
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                document
+                    .querySelectorAll(".category")
+                    .forEach(b =>
+                        b.classList.remove("active")
+                    );
+
+                button.classList.add("active");
+
+                currentCategory =
+                    button.dataset.category;
+
+                populateUnits();
+
+            }
+        );
+
+    });
+
+
+valueInput.addEventListener(
+    "input",
+    convert
+);
+
+fromSelect.addEventListener(
+    "change",
+    convert
+);
+
+toSelect.addEventListener(
+    "change",
+    convert
+);
+
+
+swapButton.addEventListener(
+    "click",
+    () => {
+
+        const oldFrom =
+            fromSelect.value;
+
+        fromSelect.value =
+            toSelect.value;
+
+        toSelect.value =
+            oldFrom;
+
+        convert();
+
+    }
+);
+
+
+resultInput.addEventListener(
+    "click",
+    () => {
+
+        resultInput.select();
+
+    }
+);
+
+
+populateUnits();
 
 </script>
 
