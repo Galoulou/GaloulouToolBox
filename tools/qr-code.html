@@ -1,1 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>QR Code Generator - Galoulou Toolbox</title>
+
+    <meta name="description"
+        content="Create QR codes instantly for links, text and more.">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="../style.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- QR Code Library -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+
+    <style>
+
+        .tool-page {
+            min-height: 100vh;
+            padding: 80px 20px;
+        }
+
+
+        .tool-container {
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+
+        /* BACK BUTTON */
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            color: var(--text-secondary);
+
+            margin-bottom: 50px;
+
+            transition: color 0.2s ease;
+        }
+
+
+        .back-button:hover {
+            color: var(--text);
+        }
+
+
+        /* HEADER */
+
+        .tool-header {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+
+        .tool-header h1 {
+            font-size: clamp(40px, 7vw, 70px);
+
+            letter-spacing: -3px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .tool-header p {
+            color: var(--text-secondary);
+            font-size: 17px;
+        }
+
+
+        /* QR CARD */
+
+        .qr-card {
+            background: var(--card);
+
+            border: 1px solid var(--border);
+
+            border-radius: 20px;
+
+            padding: 35px;
+        }
+
+
+        /* INPUT */
+
+        .input-label {
+            display: block;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            margin-bottom: 10px;
+        }
+
+
+        .input-wrapper {
+            display: flex;
+            gap: 10px;
+        }
+
+
+        .qr-input {
+            flex: 1;
+
+            padding: 16px;
+
+            background: var(--bg-secondary);
+
+            color: var(--text);
+
+            border: 1px solid var(--border);
+
+            border-radius: 11px;
+
+            outline: none;
+
+            font-size: 15px;
+
+            transition: border-color 0.2s ease;
+        }
+
+
+        .qr-input:focus {
+            border-color: var(--border-hover);
+        }
+
+
+        .generate-button {
+            border: none;
+
+            padding: 0 22px;
+
+            background: var(--button);
+
+            color: var(--button-text);
+
+            border-radius: 11px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.2s ease,
+                opacity 0.2s ease;
+        }
+
+
+        .generate-button:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+
+        /* QR RESULT */
+
+        .qr-result {
+            display: none;
+
+            margin-top: 35px;
+
+            padding-top: 35px;
+
+            border-top: 1px solid var(--border);
+
+            text-align: center;
+        }
+
+
+        .qr-result.show {
+            display: block;
+        }
+
+
+        .qr-code-container {
+            width: 260px;
+            height: 260px;
+
+            margin: 0 auto 25px;
+
+            padding: 15px;
+
+            background: white;
+
+            border-radius: 16px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            box-shadow: 0 15px 40px var(--shadow);
+        }
+
+
+        #qrcode {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+        #qrcode img,
+        #qrcode canvas {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+
+        /* RESULT TEXT */
+
+        .result-text {
+            color: var(--text-secondary);
+
+            font-size: 14px;
+
+            margin-bottom: 20px;
+
+            word-break: break-word;
+        }
+
+
+        /* BUTTONS */
+
+        .qr-actions {
+            display: flex;
+
+            justify-content: center;
+
+            gap: 10px;
+        }
+
+
+        .action-button {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            padding: 12px 18px;
+
+            background: var(--bg-secondary);
+
+            color: var(--text);
+
+            border: 1px solid var(--border);
+
+            border-radius: 10px;
+
+            cursor: pointer;
+
+            font-weight: 600;
+
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease;
+        }
+
+
+        .action-button:hover {
+            transform: translateY(-2px);
+            background: var(--card);
+        }
+
+
+        .download-button {
+            background: var(--button);
+            color: var(--button-text);
+        }
+
+
+        /* EXAMPLES */
+
+        .examples {
+            margin-top: 30px;
+
+            padding-top: 25px;
+
+            border-top: 1px solid var(--border);
+        }
+
+
+        .examples-title {
+            color: var(--text-secondary);
+
+            text-align: center;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 15px;
+        }
+
+
+        .example-buttons {
+            display: flex;
+
+            justify-content: center;
+
+            flex-wrap: wrap;
+
+            gap: 8px;
+        }
+
+
+        .example-button {
+            padding: 8px 14px;
+
+            background: transparent;
+
+            color: var(--text-secondary);
+
+            border: 1px solid var(--border);
+
+            border-radius: 100px;
+
+            cursor: pointer;
+
+            transition:
+                background 0.2s ease,
+                color 0.2s ease;
+        }
+
+
+        .example-button:hover {
+            background: var(--bg-secondary);
+            color: var(--text);
+        }
+
+
+        /* ERROR */
+
+        .error-message {
+            display: none;
+
+            margin-top: 12px;
+
+            color: #e05d5d;
+
+            font-size: 13px;
+        }
+
+
+        .error-message.show {
+            display: block;
+        }
+
+
+        /* MOBILE */
+
+        @media (max-width: 600px) {
+
+            .tool-page {
+                padding: 55px 16px;
+            }
+
+
+            .qr-card {
+                padding: 22px;
+            }
+
+
+            .input-wrapper {
+                flex-direction: column;
+            }
+
+
+            .generate-button {
+                height: 52px;
+            }
+
+
+            .qr-code-container {
+                width: 230px;
+                height: 230px;
+            }
+
+
+            .qr-actions {
+                flex-direction: column;
+            }
+
+
+            .action-button {
+                justify-content: center;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- NAVBAR -->
+
+    <header class="navbar">
+
+        <a href="../index.html" class="logo">
+
+            <img src="../assets/galouloutoolbox.png"
+                alt="Galoulou Toolbox Logo">
+
+            <span>Galoulou Toolbox</span>
+
+        </a>
+
+
+        <a href="../index.html#tools"
+            class="discord-button">
+
+            <i class="fa-solid fa-arrow-left"></i>
+
+            All Tools
+
+        </a>
+
+    </header>
+
+
+    <!-- MAIN -->
+
+    <main class="tool-page">
+
+        <div class="tool-container">
+
+
+            <!-- BACK -->
+
+            <a href="../index.html"
+                class="back-button">
+
+                <i class="fa-solid fa-arrow-left"></i>
+
+                Back to Toolbox
+
+            </a>
+
+
+            <!-- HEADER -->
+
+            <div class="tool-header">
+
+                <h1>QR Code Generator</h1>
+
+                <p>
+                    Turn any link or text into a QR code instantly.
+                </p>
+
+            </div>
+
+
+            <!-- QR CARD -->
+
+            <div class="qr-card">
+
+
+                <label class="input-label"
+                    for="qrInput">
+
+                    Enter a link or text
+
+                </label>
+
+
+                <div class="input-wrapper">
+
+                    <input
+                        type="text"
+                        id="qrInput"
+                        class="qr-input"
+                        placeholder="https://example.com"
+                        autocomplete="off"
+                    >
+
+
+                    <button
+                        class="generate-button"
+                        id="generateButton"
+                    >
+
+                        <i class="fa-solid fa-qrcode"></i>
+
+                        Generate
+
+                    </button>
+
+                </div>
+
+
+                <!-- ERROR -->
+
+                <p
+                    class="error-message"
+                    id="errorMessage"
+                >
+                    Please enter something first.
+                </p>
+
+
+                <!-- RESULT -->
+
+                <div
+                    class="qr-result"
+                    id="qrResult"
+                >
+
+
+                    <div
+                        class="qr-code-container"
+                    >
+
+                        <div id="qrcode"></div>
+
+                    </div>
+
+
+                    <p
+                        class="result-text"
+                        id="resultText"
+                    ></p>
+
+
+                    <div class="qr-actions">
+
+
+                        <button
+                            class="action-button download-button"
+                            id="downloadButton"
+                        >
+
+                            <i class="fa-solid fa-download"></i>
+
+                            Download PNG
+
+                        </button>
+
+
+                        <button
+                            class="action-button"
+                            id="clearButton"
+                        >
+
+                            <i class="fa-solid fa-trash"></i>
+
+                            Clear
+
+                        </button>
+
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- EXAMPLES -->
+
+                <div class="examples">
+
+                    <p class="examples-title">
+                        TRY AN EXAMPLE
+                    </p>
+
+
+                    <div class="example-buttons">
+
+
+                        <button
+                            class="example-button"
+                            data-example="https://google.com"
+                        >
+                            Website
+                        </button>
+
+
+                        <button
+                            class="example-button"
+                            data-example="Hello from Galoulou Toolbox!"
+                        >
+                            Text
+                        </button>
+
+
+                        <button
+                            class="example-button"
+                            data-example="https://discord.gg/M738CRfkPt"
+                        >
+                            Discord
+                        </button>
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <script>
+
+        // ==============================
+        // ELEMENTS
+        // ==============================
+
+        const qrInput = document.getElementById("qrInput");
+        const generateButton = document.getElementById("generateButton");
+
+        const qrResult = document.getElementById("qrResult");
+        const qrCodeContainer = document.getElementById("qrcode");
+
+        const errorMessage = document.getElementById("errorMessage");
+
+        const resultText = document.getElementById("resultText");
+
+        const downloadButton = document.getElementById("downloadButton");
+        const clearButton = document.getElementById("clearButton");
+
+
+        // ==============================
+        // GENERATE QR CODE
+        // ==============================
+
+        function generateQRCode() {
+
+            const value = qrInput.value.trim();
+
+
+            // Check empty input
+
+            if (value === "") {
+
+                errorMessage.classList.add("show");
+
+                qrResult.classList.remove("show");
+
+                return;
+
+            }
+
+
+            errorMessage.classList.remove("show");
+
+
+            // Clear previous QR Code
+
+            qrCodeContainer.innerHTML = "";
+
+
+            // Generate new QR Code
+
+            new QRCode(qrCodeContainer, {
+
+                text: value,
+
+                width: 230,
+
+                height: 230,
+
+                colorDark: "#000000",
+
+                colorLight: "#ffffff",
+
+                correctLevel: QRCode.CorrectLevel.H
+
+            });
+
+
+            // Show result
+
+            qrResult.classList.add("show");
+
+            resultText.textContent = value;
+
+        }
+
+
+        // Generate button
+
+        generateButton.addEventListener(
+            "click",
+            generateQRCode
+        );
+
+
+        // Enter key
+
+        qrInput.addEventListener(
+            "keydown",
+            (event) => {
+
+                if (event.key === "Enter") {
+
+                    generateQRCode();
+
+                }
+
+            }
+        );
+
+
+        // ==============================
+        // DOWNLOAD QR CODE
+        // ==============================
+
+        downloadButton.addEventListener(
+            "click",
+            () => {
+
+                const qrImage =
+                    qrCodeContainer.querySelector("img");
+
+
+                const qrCanvas =
+                    qrCodeContainer.querySelector("canvas");
+
+
+                let imageSource;
+
+
+                if (qrImage) {
+
+                    imageSource = qrImage.src;
+
+                } else if (qrCanvas) {
+
+                    imageSource =
+                        qrCanvas.toDataURL("image/png");
+
+                }
+
+
+                if (!imageSource) return;
+
+
+                const link =
+                    document.createElement("a");
+
+
+                link.href = imageSource;
+
+                link.download =
+                    "galoulou-toolbox-qrcode.png";
+
+
+                document.body.appendChild(link);
+
+                link.click();
+
+                document.body.removeChild(link);
+
+            }
+        );
+
+
+        // ==============================
+        // CLEAR
+        // ==============================
+
+        clearButton.addEventListener(
+            "click",
+            () => {
+
+                qrInput.value = "";
+
+                qrCodeContainer.innerHTML = "";
+
+                qrResult.classList.remove("show");
+
+                errorMessage.classList.remove("show");
+
+                qrInput.focus();
+
+            }
+        );
+
+
+        // ==============================
+        // EXAMPLES
+        // ==============================
+
+        document
+            .querySelectorAll(".example-button")
+            .forEach((button) => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        qrInput.value =
+                            button.dataset.example;
+
+
+                        generateQRCode();
+
+                    }
+                );
+
+            });
+
+
+        // ==============================
+        // AUTO FOCUS
+        // ==============================
+
+        qrInput.focus();
+
+    </script>
+
+
+</body>
+</html>
