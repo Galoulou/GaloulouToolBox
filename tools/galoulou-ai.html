@@ -14,7 +14,7 @@
 
     <meta
         name="description"
-        content="Galoulou AI helps you make smarter shopping decisions."
+        content="Search the web and make smarter shopping decisions with Galoulou AI."
     >
 
 
@@ -50,7 +50,7 @@
 
         .tool-container {
 
-            max-width: 950px;
+            max-width: 1000px;
             margin: 0 auto;
 
         }
@@ -164,7 +164,7 @@
 
 
         /* =========================================
-           INPUT
+           SEARCH BOX
         ========================================= */
 
         .search-box {
@@ -259,7 +259,6 @@
         .ask-button:disabled {
 
             opacity: 0.6;
-
             cursor: not-allowed;
 
         }
@@ -294,9 +293,7 @@
         .suggestion-buttons {
 
             display: flex;
-
             flex-wrap: wrap;
-
             gap: 8px;
 
         }
@@ -344,7 +341,7 @@
 
             display: none;
 
-            padding: 45px 20px;
+            padding: 50px 20px;
 
             text-align: center;
 
@@ -360,9 +357,8 @@
 
         .loading i {
 
-            margin-bottom: 15px;
-
-            font-size: 28px;
+            font-size: 30px;
+            margin-bottom: 16px;
 
         }
 
@@ -457,7 +453,6 @@
             display: flex;
 
             align-items: center;
-
             justify-content: center;
 
             border-radius: 11px;
@@ -490,7 +485,7 @@
 
 
         /* =========================================
-           RECOMMENDATION CARDS
+           RECOMMENDATIONS
         ========================================= */
 
         .recommendations {
@@ -500,6 +495,8 @@
             grid-template-columns: repeat(3, 1fr);
 
             gap: 14px;
+
+            margin-bottom: 25px;
 
         }
 
@@ -536,7 +533,6 @@
             display: flex;
 
             align-items: center;
-
             justify-content: center;
 
             margin-bottom: 15px;
@@ -567,7 +563,127 @@
 
             font-size: 13px;
 
+            line-height: 1.6;
+
+        }
+
+
+        /* =========================================
+           WEB RESULTS
+        ========================================= */
+
+        .results-section {
+
+            margin-top: 25px;
+
+        }
+
+
+        .results-title {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin-bottom: 14px;
+
+            font-size: 15px;
+
+        }
+
+
+        .web-results {
+
+            display: grid;
+
+            gap: 12px;
+
+        }
+
+
+        .web-result {
+
+            display: block;
+
+            padding: 18px;
+
+            background: var(--bg-secondary);
+
+            border: 1px solid var(--border);
+
+            border-radius: 16px;
+
+            text-decoration: none;
+
+            color: inherit;
+
+            transition: 0.2s ease;
+
+        }
+
+
+        .web-result:hover {
+
+            transform: translateY(-3px);
+
+            border-color: var(--border-hover);
+
+        }
+
+
+        .web-result-top {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 15px;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .web-result h3 {
+
+            margin: 0;
+
+            font-size: 15px;
+
+        }
+
+
+        .web-result-icon {
+
+            color: var(--text-secondary);
+
+        }
+
+
+        .web-result p {
+
+            margin: 0 0 10px;
+
+            color: var(--text-secondary);
+
+            font-size: 13px;
+
             line-height: 1.5;
+
+        }
+
+
+        .result-domain {
+
+            color: var(--text-secondary);
+
+            font-size: 12px;
+
+            opacity: 0.8;
 
         }
 
@@ -586,7 +702,7 @@
 
             gap: 8px;
 
-            margin-top: 25px;
+            margin-top: 30px;
 
             color: var(--text-secondary);
 
@@ -677,9 +793,7 @@
 <body>
 
 
-    <!-- =========================================
-         NAVBAR
-    ========================================= -->
+    <!-- NAVBAR -->
 
     <header class="navbar">
 
@@ -712,16 +826,12 @@
     </header>
 
 
-    <!-- =========================================
-         MAIN
-    ========================================= -->
+    <!-- MAIN -->
 
     <main class="tool-page">
 
         <div class="tool-container">
 
-
-            <!-- BACK BUTTON -->
 
             <a
                 href="../index.html"
@@ -757,8 +867,7 @@
 
                 <p>
 
-                    Your smart shopping assistant.
-                    Ask me anything before you buy.
+                    Search the web and make smarter shopping decisions.
 
                 </p>
 
@@ -770,7 +879,7 @@
             <section class="ai-card">
 
 
-                <!-- INPUT -->
+                <!-- SEARCH -->
 
                 <div class="search-box">
 
@@ -807,27 +916,17 @@
 
                     <div class="suggestion-buttons">
 
-
                         <button class="suggestion">
-
                             Where can I buy a Wooting 60HE?
-
                         </button>
 
-
                         <button class="suggestion">
-
                             Find the best gaming mouse under €100
-
                         </button>
-
 
                         <button class="suggestion">
-
                             Where should I buy a PS5?
-
                         </button>
-
 
                     </div>
 
@@ -841,11 +940,11 @@
                     id="loading"
                 >
 
-                    <i class="fa-solid fa-spinner fa-spin"></i>
+                    <i class="fa-solid fa-magnifying-glass fa-bounce"></i>
 
-                    <p>
+                    <p id="loadingText">
 
-                        Galoulou AI is thinking...
+                        Searching the web...
 
                     </p>
 
@@ -860,13 +959,11 @@
                 >
 
 
-                    <!-- MAIN RESPONSE -->
+                    <!-- AI ANSWER -->
 
                     <div class="ai-message">
 
-
                         <div class="message-top">
-
 
                             <div class="message-avatar">
 
@@ -881,7 +978,6 @@
 
                             </span>
 
-
                         </div>
 
 
@@ -890,106 +986,75 @@
                             id="responseText"
                         ></p>
 
-
                     </div>
 
 
-                    <!-- SMART CARDS -->
+                    <!-- RECOMMENDATIONS -->
 
                     <div class="recommendations">
 
 
-                        <!-- BEST CHOICE -->
-
                         <div class="recommendation">
 
                             <div class="recommendation-icon">
-
                                 🏆
-
                             </div>
 
+                            <h3>Best Choice</h3>
 
-                            <h3>
-
-                                Best Choice
-
-                            </h3>
-
-
-                            <p
-                                id="bestChoice"
-                            >
-
-                                Waiting for your question...
-
-                            </p>
-
+                            <p id="bestChoice"></p>
 
                         </div>
 
 
-                        <!-- BEST PRICE -->
-
                         <div class="recommendation">
 
                             <div class="recommendation-icon">
-
                                 💰
-
                             </div>
 
+                            <h3>Best Price</h3>
 
-                            <h3>
-
-                                Best Price
-
-                            </h3>
-
-
-                            <p
-                                id="bestPrice"
-                            >
-
-                                Waiting for your question...
-
-                            </p>
-
+                            <p id="bestPrice"></p>
 
                         </div>
 
 
-                        <!-- SAFEST OPTION -->
-
                         <div class="recommendation">
 
                             <div class="recommendation-icon">
-
                                 🛡️
-
                             </div>
 
+                            <h3>Safest Option</h3>
 
-                            <h3>
-
-                                Safest Option
-
-                            </h3>
-
-
-                            <p
-                                id="safeChoice"
-                            >
-
-                                Waiting for your question...
-
-                            </p>
-
+                            <p id="safeChoice"></p>
 
                         </div>
 
 
                     </div>
+
+
+                    <!-- REAL WEB RESULTS -->
+
+                    <section class="results-section">
+
+                        <h2 class="results-title">
+
+                            <i class="fa-solid fa-globe"></i>
+
+                            Web results
+
+                        </h2>
+
+
+                        <div
+                            class="web-results"
+                            id="webResults"
+                        ></div>
+
+                    </section>
 
 
                 </div>
@@ -1001,7 +1066,7 @@
 
                     <span class="status-dot"></span>
 
-                    Galoulou AI • Online
+                    Live web search • Galoulou AI
 
                 </div>
 
@@ -1013,10 +1078,6 @@
 
     </main>
 
-
-    <!-- =========================================
-         JAVASCRIPT
-    ========================================= -->
 
     <script>
 
@@ -1035,37 +1096,93 @@
         const aiInput =
             document.getElementById("aiInput");
 
-
         const askButton =
             document.getElementById("askButton");
-
 
         const loading =
             document.getElementById("loading");
 
+        const loadingText =
+            document.getElementById("loadingText");
 
         const aiResponse =
             document.getElementById("aiResponse");
 
-
         const responseText =
             document.getElementById("responseText");
-
 
         const bestChoice =
             document.getElementById("bestChoice");
 
-
         const bestPrice =
             document.getElementById("bestPrice");
-
 
         const safeChoice =
             document.getElementById("safeChoice");
 
+        const webResults =
+            document.getElementById("webResults");
+
 
         // =========================================
-        // ASK GALOU LOU AI
+        // LOADING MESSAGES
+        // =========================================
+
+        const loadingMessages = [
+
+            "Searching the web... 🔎",
+
+            "Finding the best options... 🛒",
+
+            "Comparing results... 💰",
+
+            "Checking trusted sources... 🛡️"
+
+        ];
+
+        let loadingInterval;
+
+
+        function startLoadingMessages() {
+
+            let index = 0;
+
+            loadingText.textContent =
+                loadingMessages[index];
+
+
+            loadingInterval = setInterval(
+
+                () => {
+
+                    index =
+                        (index + 1) %
+                        loadingMessages.length;
+
+
+                    loadingText.textContent =
+                        loadingMessages[index];
+
+                },
+
+                1200
+
+            );
+
+        }
+
+
+        function stopLoadingMessages() {
+
+            clearInterval(
+                loadingInterval
+            );
+
+        }
+
+
+        // =========================================
+        // ASK AI
         // =========================================
 
         async function askAI() {
@@ -1073,8 +1190,6 @@
             const question =
                 aiInput.value.trim();
 
-
-            // Empty question
 
             if (!question) {
 
@@ -1085,34 +1200,36 @@
             }
 
 
-            // Disable while AI is thinking
+            // Reset UI
+
+            aiResponse.classList.remove("show");
+
+            webResults.innerHTML = "";
+
+
+            // Disable input
 
             askButton.disabled = true;
 
             aiInput.disabled = true;
 
 
-            // Hide old answer
-
-            aiResponse.classList.remove("show");
+            askButton.innerHTML =
+                `<i class="fa-solid fa-spinner fa-spin"></i>`;
 
 
             // Show loading
 
             loading.classList.add("show");
 
-
-            // Change button
-
-            askButton.innerHTML =
-                `<i class="fa-solid fa-spinner fa-spin"></i>`;
+            startLoadingMessages();
 
 
             try {
 
 
                 // =========================================
-                // SEND QUESTION TO CLOUDFLARE
+                // CALL WORKER
                 // =========================================
 
                 const response = await fetch(
@@ -1130,9 +1247,12 @@
 
                         },
 
+                        // IMPORTANT:
+                        // Worker expects "question"
+
                         body: JSON.stringify({
 
-                            message: question
+                            question: question
 
                         })
 
@@ -1140,10 +1260,6 @@
 
                 );
 
-
-                // =========================================
-                // GET DATA
-                // =========================================
 
                 const data =
                     await response.json();
@@ -1166,13 +1282,13 @@
                 }
 
 
-                if (!data.success) {
+                if (data.success === false) {
 
                     throw new Error(
 
                         data.error ||
 
-                        "Galoulou AI couldn't respond."
+                        "Galoulou AI couldn't complete the search."
 
                     );
 
@@ -1180,43 +1296,167 @@
 
 
                 // =========================================
-                // DISPLAY MAIN RESPONSE
+                // MAIN ANSWER
                 // =========================================
 
                 responseText.textContent =
-                    data.response ||
-                    "No response received.";
+
+                    data.answer ||
+
+                    "I found some results for your search.";
 
 
                 // =========================================
-                // DISPLAY SMART CARDS 🧠
+                // SMART RECOMMENDATIONS
                 // =========================================
 
                 bestChoice.textContent =
+
                     data.bestChoice ||
-                    "No recommendation available.";
+
+                    "Check the first recommended result.";
 
 
                 bestPrice.textContent =
+
                     data.bestPrice ||
-                    "No price advice available.";
+
+                    "Compare the available prices in the results.";
 
 
                 safeChoice.textContent =
+
                     data.safeChoice ||
-                    "No safety advice available.";
+
+                    "Prefer official stores and trusted retailers.";
 
 
                 // =========================================
-                // SHOW RESPONSE
+                // WEB RESULTS
+                // =========================================
+
+                if (
+
+                    Array.isArray(data.results) &&
+
+                    data.results.length > 0
+
+                ) {
+
+                    data.results.forEach(
+
+                        result => {
+
+                            const link =
+                                document.createElement("a");
+
+
+                            link.className =
+                                "web-result";
+
+
+                            link.href =
+                                result.url;
+
+
+                            link.target =
+                                "_blank";
+
+
+                            link.rel =
+                                "noopener noreferrer";
+
+
+                            // Get domain safely
+
+                            let domain =
+                                result.url;
+
+
+                            try {
+
+                                domain =
+                                    new URL(
+                                        result.url
+                                    ).hostname;
+
+                            } catch {
+
+                                // Keep original value
+
+                            }
+
+
+                            link.innerHTML = `
+
+                                <div class="web-result-top">
+
+                                    <h3>
+                                        ${escapeHTML(
+                                            result.title ||
+                                            "Web result"
+                                        )}
+                                    </h3>
+
+                                    <i class="fa-solid fa-arrow-up-right-from-square web-result-icon"></i>
+
+                                </div>
+
+                                <p>
+                                    ${escapeHTML(
+                                        shortenText(
+                                            result.content ||
+                                            "No description available.",
+                                            240
+                                        )
+                                    )}
+                                </p>
+
+                                <span class="result-domain">
+                                    ${escapeHTML(domain)}
+                                </span>
+
+                            `;
+
+
+                            webResults.appendChild(
+                                link
+                            );
+
+                        }
+
+                    );
+
+
+                } else {
+
+                    webResults.innerHTML = `
+
+                        <div class="web-result">
+
+                            <p>
+                                No web results were found for this search.
+                            </p>
+
+                        </div>
+
+                    `;
+
+                }
+
+
+                // =========================================
+                // SHOW ANSWER
                 // =========================================
 
                 aiResponse.classList.add("show");
 
 
-                // Clear question
+                // Clear input
 
                 aiInput.value = "";
+
+                aiInput.style.height = "auto";
 
 
                 // Scroll to answer
@@ -1243,10 +1483,6 @@
             } catch (error) {
 
 
-                // =========================================
-                // ERROR
-                // =========================================
-
                 console.error(
                     "Galoulou AI Error:",
                     error
@@ -1255,19 +1491,20 @@
 
                 responseText.textContent =
 
-                    "⚠️ Galoulou AI couldn't connect right now. Please try again in a moment.";
+                    "⚠️ Galoulou AI couldn't complete the web search right now. Please try again.";
 
 
                 bestChoice.textContent =
-                    "Connection error";
-
+                    "Search unavailable";
 
                 bestPrice.textContent =
                     "Please try again";
 
-
                 safeChoice.textContent =
-                    "Check your internet connection";
+                    "Check your connection";
+
+
+                webResults.innerHTML = "";
 
 
                 aiResponse.classList.add("show");
@@ -1276,12 +1513,15 @@
             } finally {
 
 
-                // =========================================
-                // RESET UI
-                // =========================================
+                // Stop loading
+
+                stopLoadingMessages();
+
 
                 loading.classList.remove("show");
 
+
+                // Re-enable
 
                 askButton.disabled = false;
 
@@ -1296,6 +1536,42 @@
                 aiInput.focus();
 
             }
+
+        }
+
+
+        // =========================================
+        // HELPERS
+        // =========================================
+
+        function shortenText(text, maxLength) {
+
+            if (text.length <= maxLength) {
+
+                return text;
+
+            }
+
+            return (
+                text.substring(
+                    0,
+                    maxLength
+                ) + "..."
+            );
+
+        }
+
+
+        function escapeHTML(text) {
+
+            const div =
+                document.createElement("div");
+
+
+            div.textContent = text;
+
+
+            return div.innerHTML;
 
         }
 
@@ -1388,9 +1664,13 @@
 
 
                 aiInput.style.height =
+
                     Math.min(
+
                         aiInput.scrollHeight,
+
                         160
+
                     ) + "px";
 
             }
@@ -1411,14 +1691,13 @@
 
         console.log(
 
-            "%c🤖 Galoulou AI is connected!",
+            "%c🤖 Galoulou AI • Live Web Search Connected!",
 
             "font-size: 16px; font-weight: bold;"
 
         );
 
     </script>
-
 
 </body>
 
