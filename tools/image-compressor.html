@@ -4,17 +4,203 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Image Compressor - Galoulou Toolbox</title>
 
 <link rel="stylesheet" href="../style.css">
 
 <link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+.tool-page {
+    min-height: 100vh;
+    padding: 80px 20px;
+}
+
+.tool-container {
+    max-width: 800px;
+    margin: auto;
+}
+
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    color: var(--text-secondary);
+
+    margin-bottom: 50px;
+}
+
+.tool-header {
+    text-align: center;
+    margin-bottom: 45px;
+}
+
+.tool-header h1 {
+    font-size: clamp(40px, 7vw, 70px);
+    letter-spacing: -3px;
+    margin-bottom: 12px;
+}
+
+.tool-header p {
+    color: var(--text-secondary);
+    font-size: 17px;
+}
+
+.compressor-card {
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    border-radius: 20px;
+
+    padding: 35px;
+}
+
+.file-zone {
+
+    background: var(--bg-secondary);
+
+    border: 1px dashed var(--border-hover);
+
+    border-radius: 14px;
+
+    padding: 32px;
+
+    text-align: center;
+
+    cursor: pointer;
+
+    margin-bottom: 30px;
+}
+
+.file-zone i {
+
+    font-size: 30px;
+
+    margin-bottom: 10px;
+}
+
+.file-zone p {
+
+    color: var(--text-secondary);
+
+    font-size: 13px;
+}
+
+.file-zone input {
+    display: none;
+}
+
+.quality-head {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-bottom: 12px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+}
+
+.quality-value {
+    color: var(--text-secondary);
+}
+
+#quality {
+
+    width: 100%;
+
+    accent-color: var(--text);
+
+    margin-bottom: 30px;
+}
+
+.compress-button {
+
+    width: 100%;
+
+    padding: 16px;
+
+    border: none;
+
+    border-radius: 11px;
+
+    background: var(--button);
+
+    color: var(--button-text);
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.stats {
+
+    margin-top: 20px;
+
+    padding: 20px;
+
+    background: var(--bg-secondary);
+
+    border: 1px solid var(--border);
+
+    border-radius: 14px;
+
+    text-align: center;
+}
+
+.stats strong {
+
+    font-size: 20px;
+}
+
+.download {
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin-top: 12px;
+
+    padding: 15px;
+
+    border-radius: 11px;
+
+    background: var(--bg-secondary);
+
+    border: 1px solid var(--border);
+
+    font-weight: 700;
+}
+
+@media (max-width:600px) {
+
+    .tool-page {
+        padding: 55px 16px;
+    }
+
+    .compressor-card {
+        padding: 22px;
+    }
+
+}
+
+</style>
 
 </head>
+
 
 <body>
 
@@ -22,15 +208,14 @@
 
 <a href="../index.html" class="logo">
 
-<img src="../assets/galouloutoolbox.png"
-     alt="Galoulou Toolbox Logo">
+<img src="../assets/galouloutoolbox.png">
 
-<span>Galoulou Toolbox</span>
+<span>Boîte à outils Galoulou</span>
 
 </a>
 
 <a href="../index.html#tools"
-   class="discord-button">
+class="discord-button">
 
 <i class="fa-solid fa-arrow-left"></i>
 
@@ -46,7 +231,7 @@ Tous les outils
 <div class="tool-container">
 
 <a href="../index.html"
-   class="back-button">
+class="back-button">
 
 <i class="fa-solid fa-arrow-left"></i>
 
@@ -60,36 +245,41 @@ Retour à la boîte à outils
 <h1>🗜️ Image Compressor</h1>
 
 <p>
-Réduisez le poids de vos images sans serveur.
+Réduisez le poids de vos images directement dans votre navigateur.
 </p>
 
 </div>
 
 
-<div class="tool-card">
+<div class="compressor-card">
 
-<div class="tool-section">
+<label class="file-zone">
 
-<h2>📁 Image</h2>
+<i class="fa-regular fa-image"></i>
+
+<p>
+Cliquez ici pour choisir une image
+</p>
 
 <input
 type="file"
-id="imageInput"
-accept="image/*"
-class="file-input">
+id="file"
+accept="image/*">
 
-</div>
+</label>
 
 
-<div class="tool-section">
+<div class="quality-head">
 
-<div class="tool-label">
+<span>
+Qualité
+</span>
 
-<span>Qualité</span>
-
-<strong id="qualityValue">
-70%
-</strong>
+<span
+class="quality-value"
+id="qualityValue">
+75%
+</span>
 
 </div>
 
@@ -99,36 +289,36 @@ type="range"
 id="quality"
 min="10"
 max="100"
-value="70">
-
-</div>
+value="75">
 
 
-<button class="tool-button"
-        onclick="compressImage()">
+<button
+class="compress-button"
+onclick="compress()">
 
 <i class="fa-solid fa-compress"></i>
 
-Compresser l'image
+&nbsp; Compresser l'image
 
 </button>
 
 
-<div id="info"
-     class="result-box">
+<div
+class="stats"
+id="stats">
 
-En attente d'une image...
+Choisissez une image pour commencer.
 
 </div>
 
 
-<a id="download"
-   class="download-button"
-   style="display:none;">
+<a
+id="download"
+class="download">
 
 <i class="fa-solid fa-download"></i>
-&nbsp;
-Télécharger l'image
+
+&nbsp; Télécharger l'image
 
 </a>
 
@@ -154,55 +344,56 @@ this.value + "%";
 });
 
 
-function compressImage() {
+function compress() {
 
-const input =
-document.getElementById("imageInput");
+const file =
+document.getElementById("file")
+.files[0];
 
 
-if (!input.files.length) {
+if (!file) {
 
-document.getElementById("info")
+document.getElementById("stats")
 .textContent =
-"❌ Choisis une image.";
+"❌ Choisissez une image.";
 
 return;
 
 }
 
 
-const file =
-input.files[0];
-
-
 const reader =
 new FileReader();
 
 
-reader.onload = function(e) {
+reader.onload = function(event) {
 
-const img =
+const image =
 new Image();
 
 
-img.onload = function() {
+image.onload = function() {
 
 const canvas =
 document.createElement("canvas");
 
 
 canvas.width =
-img.width;
+image.width;
 
 canvas.height =
-img.height;
+image.height;
 
 
 const ctx =
 canvas.getContext("2d");
 
 
-ctx.drawImage(img, 0, 0);
+ctx.drawImage(
+image,
+0,
+0
+);
 
 
 canvas.toBlob(function(blob) {
@@ -214,21 +405,30 @@ const newSize =
 blob.size;
 
 
-const reduction =
-((oldSize - newSize) / oldSize) * 100;
+const percent =
+Math.max(
+0,
+((oldSize - newSize) /
+oldSize) * 100
+);
 
 
-const oldKB =
-(oldSize / 1024).toFixed(1);
+document.getElementById("stats")
+.innerHTML = `
 
-const newKB =
-(newSize / 1024).toFixed(1);
+<strong>
+${(newSize / 1024).toFixed(1)} KB
+</strong>
 
+<br>
 
-document.getElementById("info")
-.textContent =
-`✅ ${oldKB} KB → ${newKB} KB
-(${reduction.toFixed(1)}% économisé)`;
+<small>
+Avant : ${(oldSize / 1024).toFixed(1)} KB
+<br>
+Économie : ${percent.toFixed(1)}%
+</small>
+
+`;
 
 
 const url =
@@ -254,8 +454,8 @@ quality.value / 100);
 };
 
 
-img.src =
-e.target.result;
+image.src =
+event.target.result;
 
 };
 
@@ -267,4 +467,5 @@ reader.readAsDataURL(file);
 </script>
 
 </body>
+
 </html>
