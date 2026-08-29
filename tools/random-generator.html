@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Random Generator - GaloulouToolBox</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+  <main class="tool-page">
+    <a href="../index.html" class="back-btn">← Retour</a>
+
+    <div class="tool-container">
+      <h1>🎲 Random Generator</h1>
+      <p>Génère un nombre ou un choix aléatoire.</p>
+
+      <div class="tool-box">
+
+        <h2>🔢 Nombre aléatoire</h2>
+
+        <input type="number" id="min" placeholder="Minimum" value="1">
+        <input type="number" id="max" placeholder="Maximum" value="100">
+
+        <button onclick="randomNumber()">🎲 Générer</button>
+
+        <div id="numberResult" class="result">
+          Résultat : —
+        </div>
+
+      </div>
+
+      <div class="tool-box">
+
+        <h2>📝 Choix aléatoire</h2>
+
+        <textarea id="choices" rows="6"
+          placeholder="Un choix par ligne&#10;Pizza&#10;Burger&#10;Tacos"></textarea>
+
+        <button onclick="randomChoice()">🎲 Choisir</button>
+
+        <div id="choiceResult" class="result">
+          Résultat : —
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+<script>
+function randomNumber() {
+  const min = Number(document.getElementById("min").value);
+  const max = Number(document.getElementById("max").value);
+
+  if (isNaN(min) || isNaN(max) || min > max) {
+    document.getElementById("numberResult").textContent =
+      "❌ Vérifie les valeurs.";
+    return;
+  }
+
+  const result = Math.floor(Math.random() * (max - min + 1)) + min;
+
+  document.getElementById("numberResult").textContent =
+    "Résultat : " + result;
+}
+
+function randomChoice() {
+  const text = document.getElementById("choices").value;
+
+  const choices = text
+    .split("\n")
+    .map(x => x.trim())
+    .filter(x => x !== "");
+
+  if (choices.length === 0) {
+    document.getElementById("choiceResult").textContent =
+      "❌ Ajoute au moins un choix.";
+    return;
+  }
+
+  const result = choices[Math.floor(Math.random() * choices.length)];
+
+  document.getElementById("choiceResult").textContent =
+    "🎉 " + result;
+}
+</script>
+
+</body>
+</html>
