@@ -1,1 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>Timer - Galoulou Toolbox</title>
+
+    <!-- Main stylesheet -->
+    <link rel="stylesheet" href="../style.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        .tool-page {
+            min-height: 100vh;
+            padding: 80px 20px;
+        }
+
+        .tool-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            margin-bottom: 50px;
+            transition: color 0.2s ease;
+        }
+
+        .back-button:hover {
+            color: var(--text);
+        }
+
+        .tool-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .tool-header h1 {
+            font-size: clamp(40px, 7vw, 70px);
+            letter-spacing: -3px;
+            margin-bottom: 12px;
+        }
+
+        .tool-header p {
+            color: var(--text-secondary);
+            font-size: 17px;
+        }
+
+        .timer-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            background: var(--bg-secondary);
+            padding: 5px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+        }
+
+        .tab {
+            flex: 1;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .tab.active {
+            background: var(--button);
+            color: var(--button-text);
+        }
+
+        .time-display {
+            text-align: center;
+            font-size: clamp(55px, 13vw, 110px);
+            font-weight: 700;
+            letter-spacing: -5px;
+            font-variant-numeric: tabular-nums;
+            margin: 35px 0;
+        }
+
+        .time-inputs {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .time-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .time-input-group label {
+            color: var(--text-secondary);
+            font-size: 12px;
+            text-align: center;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .time-input-group input {
+            width: 100px;
+            padding: 14px;
+            background: var(--bg-secondary);
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            text-align: center;
+            font-size: 20px;
+            outline: none;
+        }
+
+        .time-input-group input:focus {
+            border-color: var(--border-hover);
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .control-button {
+            border: 1px solid var(--border);
+            background: var(--bg-secondary);
+            color: var(--text);
+            padding: 14px 22px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .control-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .primary-button {
+            background: var(--button);
+            color: var(--button-text);
+        }
+
+        .presets {
+            margin-top: 35px;
+            padding-top: 30px;
+            border-top: 1px solid var(--border);
+        }
+
+        .presets p {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            font-size: 13px;
+        }
+
+        .preset-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .preset {
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-secondary);
+            padding: 8px 14px;
+            border-radius: 100px;
+            cursor: pointer;
+        }
+
+        .preset:hover {
+            color: var(--text);
+            background: var(--bg-secondary);
+        }
+
+        #stopwatchContent {
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            .timer-card {
+                padding: 25px 16px;
+            }
+
+            .time-input-group input {
+                width: 80px;
+            }
+
+            .controls {
+                flex-wrap: wrap;
+            }
+
+            .control-button {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <header class="navbar">
+
+        <a href="../index.html" class="logo">
+            <img src="../assets/galouloutoolbox.png" alt="Galoulou Toolbox Logo">
+            <span>Galoulou Toolbox</span>
+        </a>
+
+        <a href="../index.html#tools" class="discord-button">
+            <i class="fa-solid fa-arrow-left"></i>
+            All Tools
+        </a>
+
+    </header>
+
+
+    <main class="tool-page">
+
+        <div class="tool-container">
+
+            <a href="../index.html" class="back-button">
+                <i class="fa-solid fa-arrow-left"></i>
+                Back to Toolbox
+            </a>
+
+
+            <div class="tool-header">
+
+                <h1>Timer</h1>
+
+                <p>Stay focused. Keep track of your time.</p>
+
+            </div>
+
+
+            <div class="timer-card">
+
+
+                <!-- TABS -->
+
+                <div class="tabs">
+
+                    <button class="tab active" id="timerTab">
+                        <i class="fa-solid fa-hourglass-half"></i>
+                        Timer
+                    </button>
+
+                    <button class="tab" id="stopwatchTab">
+                        <i class="fa-solid fa-stopwatch"></i>
+                        Stopwatch
+                    </button>
+
+                </div>
+
+
+                <!-- COUNTDOWN TIMER -->
+
+                <div id="timerContent">
+
+                    <div class="time-inputs">
+
+                        <div class="time-input-group">
+                            <label>Hours</label>
+                            <input type="number" id="hours" min="0" max="99" value="0">
+                        </div>
+
+                        <div class="time-input-group">
+                            <label>Minutes</label>
+                            <input type="number" id="minutes" min="0" max="59" value="5">
+                        </div>
+
+                        <div class="time-input-group">
+                            <label>Seconds</label>
+                            <input type="number" id="seconds" min="0" max="59" value="0">
+                        </div>
+
+                    </div>
+
+
+                    <div class="time-display" id="timerDisplay">
+                        05:00
+                    </div>
+
+
+                    <div class="controls">
+
+                        <button class="control-button primary-button" id="startTimer">
+                            <i class="fa-solid fa-play"></i>
+                            Start
+                        </button>
+
+                        <button class="control-button" id="pauseTimer">
+                            <i class="fa-solid fa-pause"></i>
+                            Pause
+                        </button>
+
+                        <button class="control-button" id="resetTimer">
+                            <i class="fa-solid fa-rotate-left"></i>
+                            Reset
+                        </button>
+
+                    </div>
+
+
+                    <div class="presets">
+
+                        <p>QUICK PRESETS</p>
+
+                        <div class="preset-buttons">
+
+                            <button class="preset" data-time="60">1 min</button>
+                            <button class="preset" data-time="300">5 min</button>
+                            <button class="preset" data-time="600">10 min</button>
+                            <button class="preset" data-time="1500">25 min</button>
+                            <button class="preset" data-time="3600">1 hour</button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- STOPWATCH -->
+
+                <div id="stopwatchContent">
+
+                    <div class="time-display" id="stopwatchDisplay">
+                        00:00:00
+                    </div>
+
+
+                    <div class="controls">
+
+                        <button class="control-button primary-button" id="startStopwatch">
+                            <i class="fa-solid fa-play"></i>
+                            Start
+                        </button>
+
+                        <button class="control-button" id="pauseStopwatch">
+                            <i class="fa-solid fa-pause"></i>
+                            Pause
+                        </button>
+
+                        <button class="control-button" id="resetStopwatch">
+                            <i class="fa-solid fa-rotate-left"></i>
+                            Reset
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <script>
+
+        // ==============================
+        // TABS
+        // ==============================
+
+        const timerTab = document.getElementById("timerTab");
+        const stopwatchTab = document.getElementById("stopwatchTab");
+
+        const timerContent = document.getElementById("timerContent");
+        const stopwatchContent = document.getElementById("stopwatchContent");
+
+
+        timerTab.addEventListener("click", () => {
+
+            timerTab.classList.add("active");
+            stopwatchTab.classList.remove("active");
+
+            timerContent.style.display = "block";
+            stopwatchContent.style.display = "none";
+
+        });
+
+
+        stopwatchTab.addEventListener("click", () => {
+
+            stopwatchTab.classList.add("active");
+            timerTab.classList.remove("active");
+
+            stopwatchContent.style.display = "block";
+            timerContent.style.display = "none";
+
+        });
+
+
+        // ==============================
+        // COUNTDOWN TIMER
+        // ==============================
+
+        const hoursInput = document.getElementById("hours");
+        const minutesInput = document.getElementById("minutes");
+        const secondsInput = document.getElementById("seconds");
+
+        const timerDisplay = document.getElementById("timerDisplay");
+
+        let timerInterval = null;
+        let remainingSeconds = 300;
+
+
+        function formatTimer(seconds) {
+
+            const hours = Math.floor(seconds / 3600);
+
+            const minutes = Math.floor(
+                (seconds % 3600) / 60
+            );
+
+            const secs = seconds % 60;
+
+
+            if (hours > 0) {
+
+                return (
+                    String(hours).padStart(2, "0") +
+                    ":" +
+                    String(minutes).padStart(2, "0") +
+                    ":" +
+                    String(secs).padStart(2, "0")
+                );
+
+            }
+
+
+            return (
+                String(minutes).padStart(2, "0") +
+                ":" +
+                String(secs).padStart(2, "0")
+            );
+
+        }
+
+
+        function updateTimerFromInputs() {
+
+            if (timerInterval) return;
+
+
+            const hours = Number(hoursInput.value) || 0;
+            const minutes = Number(minutesInput.value) || 0;
+            const seconds = Number(secondsInput.value) || 0;
+
+
+            remainingSeconds =
+                hours * 3600 +
+                minutes * 60 +
+                seconds;
+
+
+            timerDisplay.textContent =
+                formatTimer(remainingSeconds);
+
+        }
+
+
+        hoursInput.addEventListener("input", updateTimerFromInputs);
+        minutesInput.addEventListener("input", updateTimerFromInputs);
+        secondsInput.addEventListener("input", updateTimerFromInputs);
+
+
+        document.getElementById("startTimer").addEventListener("click", () => {
+
+            if (timerInterval) return;
+
+            if (remainingSeconds <= 0) {
+                updateTimerFromInputs();
+            }
+
+            if (remainingSeconds <= 0) return;
+
+
+            timerInterval = setInterval(() => {
+
+                remainingSeconds--;
+
+                timerDisplay.textContent =
+                    formatTimer(remainingSeconds);
+
+
+                if (remainingSeconds <= 0) {
+
+                    clearInterval(timerInterval);
+
+                    timerInterval = null;
+
+                    timerDisplay.textContent = "00:00";
+
+                    alert("⏰ Time's up!");
+
+                }
+
+            }, 1000);
+
+        });
+
+
+        document.getElementById("pauseTimer").addEventListener("click", () => {
+
+            clearInterval(timerInterval);
+
+            timerInterval = null;
+
+        });
+
+
+        document.getElementById("resetTimer").addEventListener("click", () => {
+
+            clearInterval(timerInterval);
+
+            timerInterval = null;
+
+            updateTimerFromInputs();
+
+        });
+
+
+        // PRESETS
+
+        document.querySelectorAll(".preset").forEach((button) => {
+
+            button.addEventListener("click", () => {
+
+                clearInterval(timerInterval);
+
+                timerInterval = null;
+
+                remainingSeconds =
+                    Number(button.dataset.time);
+
+
+                hoursInput.value =
+                    Math.floor(remainingSeconds / 3600);
+
+                minutesInput.value =
+                    Math.floor(
+                        (remainingSeconds % 3600) / 60
+                    );
+
+                secondsInput.value =
+                    remainingSeconds % 60;
+
+
+                timerDisplay.textContent =
+                    formatTimer(remainingSeconds);
+
+            });
+
+        });
+
+
+        // ==============================
+        // STOPWATCH
+        // ==============================
+
+        const stopwatchDisplay =
+            document.getElementById("stopwatchDisplay");
+
+        let stopwatchInterval = null;
+        let stopwatchSeconds = 0;
+
+
+        function updateStopwatch() {
+
+            const hours = Math.floor(
+                stopwatchSeconds / 3600
+            );
+
+            const minutes = Math.floor(
+                (stopwatchSeconds % 3600) / 60
+            );
+
+            const seconds =
+                stopwatchSeconds % 60;
+
+
+            stopwatchDisplay.textContent =
+                String(hours).padStart(2, "0") +
+                ":" +
+                String(minutes).padStart(2, "0") +
+                ":" +
+                String(seconds).padStart(2, "0");
+
+        }
+
+
+        document.getElementById("startStopwatch").addEventListener("click", () => {
+
+            if (stopwatchInterval) return;
+
+
+            stopwatchInterval = setInterval(() => {
+
+                stopwatchSeconds++;
+
+                updateStopwatch();
+
+            }, 1000);
+
+        });
+
+
+        document.getElementById("pauseStopwatch").addEventListener("click", () => {
+
+            clearInterval(stopwatchInterval);
+
+            stopwatchInterval = null;
+
+        });
+
+
+        document.getElementById("resetStopwatch").addEventListener("click", () => {
+
+            clearInterval(stopwatchInterval);
+
+            stopwatchInterval = null;
+
+            stopwatchSeconds = 0;
+
+            updateStopwatch();
+
+        });
+
+    </script>
+
+</body>
+</html>
