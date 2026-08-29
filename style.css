@@ -1545,3 +1545,298 @@ kbd {
     }
 
 }
+/* ==========================================
+   TOOL PAGES - GALLOULOU TOOLBOX
+========================================== */
+
+.tool-page {
+    min-height: 100vh;
+    padding: 80px 20px;
+}
+
+.tool-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    color: var(--text-secondary);
+
+    margin-bottom: 50px;
+
+    transition: color .2s ease;
+}
+
+.back-button:hover {
+    color: var(--text);
+}
+
+.tool-header {
+    text-align: center;
+    margin-bottom: 45px;
+}
+
+.tool-header h1 {
+    font-size: clamp(40px, 7vw, 70px);
+    letter-spacing: -3px;
+    margin-bottom: 12px;
+}
+
+.tool-header p {
+    color: var(--text-secondary);
+    font-size: 17px;
+}
+
+.tool-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 35px;
+
+    box-shadow: var(--shadow);
+}
+
+.tool-card h2 {
+    font-size: 16px;
+    margin-bottom: 18px;
+}
+
+.tool-card textarea,
+.tool-card input[type="text"],
+.tool-card input[type="number"] {
+    width: 100%;
+
+    background: var(--bg-secondary);
+    color: var(--text);
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    padding: 14px;
+
+    outline: none;
+
+    transition: border-color .2s ease;
+}
+
+.tool-card textarea:focus,
+.tool-card input:focus {
+    border-color: var(--border-hover);
+}
+
+.tool-card textarea {
+    resize: vertical;
+    min-height: 150px;
+}
+
+.tool-button {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    padding: 16px;
+
+    background: var(--button);
+    color: var(--button-text);
+
+    border: none;
+    border-radius: 11px;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform .2s ease,
+        opacity .2s ease;
+}
+
+.tool-button:hover {
+    transform: translateY(-2px);
+    opacity: .9;
+}
+
+.tool-button.secondary {
+    background: var(--bg-secondary);
+    color: var(--text);
+    border: 1px solid var(--border);
+}
+
+.tool-button-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.tool-button-row.three {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.result-box {
+    margin-top: 20px;
+
+    padding: 20px;
+
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+
+    border-radius: 14px;
+
+    font-size: 18px;
+    font-weight: 600;
+
+    word-break: break-word;
+}
+
+.tool-section {
+    margin-bottom: 20px;
+}
+
+.tool-label {
+    display: flex;
+    justify-content: space-between;
+
+    margin-bottom: 10px;
+
+    color: var(--text-secondary);
+
+    font-size: 13px;
+}
+
+.tool-card input[type="range"] {
+    width: 100%;
+    accent-color: var(--text);
+    cursor: pointer;
+}
+
+.file-input {
+    width: 100%;
+
+    padding: 15px;
+
+    background: var(--bg-secondary);
+
+    border: 1px dashed var(--border-hover);
+
+    border-radius: 12px;
+
+    color: var(--text);
+
+    cursor: pointer;
+}
+
+.tool-card small {
+    color: var(--text-secondary);
+}
+
+.palette {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.color-card {
+    height: 130px;
+
+    border-radius: 14px;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+
+    padding: 8px;
+
+    cursor: pointer;
+
+    transition:
+        transform .2s ease,
+        border-color .2s ease;
+
+    border: 1px solid var(--border);
+}
+
+.color-card:hover {
+    transform: translateY(-4px);
+}
+
+.color-code {
+    width: 100%;
+
+    text-align: center;
+
+    padding: 7px 4px;
+
+    background: rgba(0,0,0,.65);
+
+    color: white;
+
+    border-radius: 8px;
+
+    font-family: monospace;
+    font-size: 12px;
+}
+
+.download-button {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 15px;
+
+    padding: 16px;
+
+    background: var(--button);
+    color: var(--button-text);
+
+    border-radius: 11px;
+
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.status {
+    text-align: center;
+
+    color: var(--text-secondary);
+
+    font-size: 13px;
+
+    margin-top: 15px;
+
+    min-height: 20px;
+}
+
+@media (max-width: 600px) {
+
+    .tool-page {
+        padding: 55px 16px;
+    }
+
+    .tool-card {
+        padding: 22px;
+    }
+
+    .tool-button-row,
+    .tool-button-row.three {
+        grid-template-columns: 1fr;
+    }
+
+    .palette {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .tool-header h1 {
+        letter-spacing: -2px;
+    }
+}
