@@ -1,3 +1,4 @@
+```javascript
 // ==========================================
 // GALOULOU TOOLBOX
 // MAIN SCRIPT
@@ -264,6 +265,8 @@ let activeCategory = "All";
 
 function renderCategories() {
 
+    if (!categoriesContainer) return;
+
     categoriesContainer.innerHTML = "";
 
     categories.forEach(category => {
@@ -274,7 +277,9 @@ function renderCategories() {
         button.className = "category-button";
 
         if (category === activeCategory) {
+
             button.classList.add("active");
+
         }
 
         button.textContent = category;
@@ -310,7 +315,9 @@ function createToolCard(tool) {
     card.className = "tool-card";
 
     if (tool.id === "galoulou-ai") {
+
         card.classList.add("featured-tool");
+
     }
 
     card.dataset.name =
@@ -395,18 +402,22 @@ function createToolCard(tool) {
     const favoriteButton =
         card.querySelector(".favorite");
 
-    favoriteButton.addEventListener(
-        "click",
-        event => {
+    if (favoriteButton) {
 
-            event.preventDefault();
+        favoriteButton.addEventListener(
+            "click",
+            event => {
 
-            event.stopPropagation();
+                event.preventDefault();
 
-            toggleFavorite(tool.id);
+                event.stopPropagation();
 
-        }
-    );
+                toggleFavorite(tool.id);
+
+            }
+        );
+
+    }
 
 
     // RECENTLY USED
@@ -429,15 +440,21 @@ function createToolCard(tool) {
 
 function renderTools() {
 
+    if (!toolsGrid) return;
+
+
     const search =
-        searchInput.value
-            .toLowerCase()
-            .trim();
+        searchInput
+            ? searchInput.value
+                .toLowerCase()
+                .trim()
+            : "";
 
 
     toolsGrid.innerHTML = "";
 
-    let filtered =
+
+    const filtered =
         tools.filter(tool => {
 
             const matchesSearch =
@@ -471,19 +488,27 @@ function renderTools() {
     });
 
 
-    toolsCount.textContent =
-        search || activeCategory !== "All"
-            ? `${filtered.length} found`
-            : `${tools.length} tools`;
+    if (toolsCount) {
+
+        toolsCount.textContent =
+            search || activeCategory !== "All"
+                ? `${filtered.length} found`
+                : `${tools.length} tools`;
+
+    }
 
 
-    if (filtered.length === 0) {
+    if (noResults) {
 
-        noResults.classList.remove("hidden");
+        if (filtered.length === 0) {
 
-    } else {
+            noResults.classList.remove("hidden");
 
-        noResults.classList.add("hidden");
+        } else {
+
+            noResults.classList.add("hidden");
+
+        }
 
     }
 
@@ -532,7 +557,9 @@ function addRecent(id) {
             item => item !== id
         );
 
+
     recent.unshift(id);
+
 
     recent =
         recent.slice(0, 4);
@@ -543,6 +570,9 @@ function addRecent(id) {
         JSON.stringify(recent)
     );
 
+
+    renderRecent();
+
 }
 
 
@@ -551,6 +581,9 @@ function addRecent(id) {
 // ==========================================
 
 function renderRecent() {
+
+    if (!recentSection || !recentGrid) return;
+
 
     if (recent.length === 0) {
 
@@ -616,7 +649,11 @@ document.addEventListener(
 
             event.preventDefault();
 
-            searchInput.focus();
+            if (searchInput) {
+
+                searchInput.focus();
+
+            }
 
         }
 
@@ -634,6 +671,7 @@ document.addEventListener(
 
         if (
             event.key === "Escape" &&
+            searchInput &&
             document.activeElement === searchInput
         ) {
 
@@ -654,6 +692,9 @@ document.addEventListener(
 // ==========================================
 
 function applyTheme(theme) {
+
+    if (!themeToggle) return;
+
 
     if (theme === "light") {
 
@@ -677,33 +718,331 @@ function applyTheme(theme) {
 const savedTheme =
     localStorage.getItem("galoulou_theme") || "dark";
 
+
 applyTheme(savedTheme);
 
 
-themeToggle.addEventListener(
-    "click",
-    () => {
+if (themeToggle) {
 
-        const isLight =
-            document.body.classList.contains(
-                "light-mode"
+    themeToggle.addEventListener(
+        "click",
+        () => {
+
+            const isLight =
+                document.body.classList.contains(
+                    "light-mode"
+                );
+
+
+            const newTheme =
+                isLight ? "dark" : "light";
+
+
+            localStorage.setItem(
+                "galoulou_theme",
+                newTheme
             );
 
 
-        const newTheme =
-            isLight ? "dark" : "light";
+            applyTheme(newTheme);
+
+        }
+    );
+
+}
 
 
-        localStorage.setItem(
-            "galoulou_theme",
-            newTheme
-        );
+// ==========================================
+// APK DOWNLOAD
+// ==========================================
+
+const apkButtons =
+    document.querySelectorAll(
+        ".download-apk-button"
+    );
 
 
-        applyTheme(newTheme);
+apkButtons.forEach(button => {
 
-    }
-);
+    button.addEventListener(
+        "click",
+        () => {
+
+            const originalContent =
+                button.innerHTML;
+
+
+            button.classList.add(
+                "download-started"
+            );
+
+
+            button.innerHTML = `
+                <i class="fa-solid fa-check"></i>
+                Download started
+            `;
+
+
+            setTimeout(() => {
+
+                button.innerHTML =
+                    originalContent;
+
+                button.classList.remove(
+                    "download-started"
+                );
+
+            }, 1800);
+
+        }
+    );
+
+});
+
+
+// ==========================================
+// COOKIE CONSENT
+// ==========================================
+
+const cookieBanner =
+    document.getElementById("cookieBanner");
+
+const cookieModal =
+    document.getElementById("cookieModal");
+
+const cookieAccept =
+    document.getElementById("cookieAccept");
+
+const cookieReject =
+    document.getElementById("cookieReject");
+
+const cookieSettings =
+    document.getElementById("cookieSettings");
+
+const closeCookieModal =
+    document.getElementById("closeCookieModal");
+
+const saveCookieSettings =
+    document.getElementById("saveCookieSettings");
+
+const preferenceCookies =
+    document.getElementById("preferenceCookies");
+
+const analyticsCookies =
+    document.getElementById("analyticsCookies");
+
+
+// ==========================================
+// CHECK SAVED CONSENT
+// ==========================================
+
+const savedConsent =
+    localStorage.getItem(
+        "galoulouCookieConsent"
+    );
+
+
+if (
+    savedConsent &&
+    cookieBanner
+) {
+
+    cookieBanner.classList.add(
+        "hidden"
+    );
+
+}
+
+
+// ==========================================
+// ACCEPT
+// ==========================================
+
+if (cookieAccept) {
+
+    cookieAccept.addEventListener(
+        "click",
+        () => {
+
+            localStorage.setItem(
+                "galoulouCookieConsent",
+                JSON.stringify({
+                    necessary: true,
+                    preferences: true,
+                    analytics: true
+                })
+            );
+
+
+            if (cookieBanner) {
+
+                cookieBanner.classList.add(
+                    "hidden"
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+// ==========================================
+// REJECT
+// ==========================================
+
+if (cookieReject) {
+
+    cookieReject.addEventListener(
+        "click",
+        () => {
+
+            localStorage.setItem(
+                "galoulouCookieConsent",
+                JSON.stringify({
+                    necessary: true,
+                    preferences: false,
+                    analytics: false
+                })
+            );
+
+
+            if (cookieBanner) {
+
+                cookieBanner.classList.add(
+                    "hidden"
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+// ==========================================
+// OPEN COOKIE SETTINGS
+// ==========================================
+
+if (cookieSettings) {
+
+    cookieSettings.addEventListener(
+        "click",
+        () => {
+
+            if (cookieModal) {
+
+                cookieModal.classList.remove(
+                    "hidden"
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+// ==========================================
+// CLOSE COOKIE SETTINGS
+// ==========================================
+
+if (closeCookieModal) {
+
+    closeCookieModal.addEventListener(
+        "click",
+        () => {
+
+            if (cookieModal) {
+
+                cookieModal.classList.add(
+                    "hidden"
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+// ==========================================
+// SAVE COOKIE SETTINGS
+// ==========================================
+
+if (saveCookieSettings) {
+
+    saveCookieSettings.addEventListener(
+        "click",
+        () => {
+
+            localStorage.setItem(
+                "galoulouCookieConsent",
+                JSON.stringify({
+                    necessary: true,
+                    preferences:
+                        preferenceCookies
+                            ? preferenceCookies.checked
+                            : false,
+                    analytics:
+                        analyticsCookies
+                            ? analyticsCookies.checked
+                            : false
+                })
+            );
+
+
+            if (cookieModal) {
+
+                cookieModal.classList.add(
+                    "hidden"
+                );
+
+            }
+
+
+            if (cookieBanner) {
+
+                cookieBanner.classList.add(
+                    "hidden"
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+// ==========================================
+// CLOSE MODAL BY CLICKING OUTSIDE
+// ==========================================
+
+if (cookieModal) {
+
+    cookieModal.addEventListener(
+        "click",
+        event => {
+
+            if (
+                event.target === cookieModal
+            ) {
+
+                cookieModal.classList.add(
+                    "hidden"
+                );
+
+            }
+
+        }
+    );
+
+}
 
 
 // ==========================================
@@ -717,6 +1056,10 @@ renderTools();
 renderRecent();
 
 
+// ==========================================
+// CONSOLE
+// ==========================================
+
 console.log(
     "%c🧰 Galoulou Toolbox",
     "font-size:20px;font-weight:bold;"
@@ -726,116 +1069,9 @@ console.log(
     "%c20 tools. One place.",
     "font-size:14px;"
 );
-/* =========================
-   COOKIE CONSENT
-========================= */
 
-const cookieBanner = document.getElementById("cookieBanner");
-const cookieModal = document.getElementById("cookieModal");
-
-const cookieAccept = document.getElementById("cookieAccept");
-const cookieReject = document.getElementById("cookieReject");
-
-const cookieSettings = document.getElementById("cookieSettings");
-const closeCookieModal = document.getElementById("closeCookieModal");
-const saveCookieSettings = document.getElementById("saveCookieSettings");
-
-const preferenceCookies = document.getElementById("preferenceCookies");
-const analyticsCookies = document.getElementById("analyticsCookies");
-
-
-/* Vérifier si l'utilisateur a déjà choisi */
-
-const savedConsent = localStorage.getItem("galoulouCookieConsent");
-
-if (savedConsent) {
-
-    cookieBanner.classList.add("hidden");
-
-}
-
-
-/* Accepter */
-
-cookieAccept.addEventListener("click", () => {
-
-    localStorage.setItem(
-        "galoulouCookieConsent",
-        JSON.stringify({
-            necessary: true,
-            preferences: true,
-            analytics: true
-        })
-    );
-
-    cookieBanner.classList.add("hidden");
-
-});
-
-
-/* Refuser */
-
-cookieReject.addEventListener("click", () => {
-
-    localStorage.setItem(
-        "galoulouCookieConsent",
-        JSON.stringify({
-            necessary: true,
-            preferences: false,
-            analytics: false
-        })
-    );
-
-    cookieBanner.classList.add("hidden");
-
-});
-
-
-/* Ouvrir personnalisation */
-
-cookieSettings.addEventListener("click", () => {
-
-    cookieModal.classList.remove("hidden");
-
-});
-
-
-/* Fermer */
-
-closeCookieModal.addEventListener("click", () => {
-
-    cookieModal.classList.add("hidden");
-
-});
-
-
-/* Enregistrer les préférences */
-
-saveCookieSettings.addEventListener("click", () => {
-
-    localStorage.setItem(
-        "galoulouCookieConsent",
-        JSON.stringify({
-            necessary: true,
-            preferences: preferenceCookies.checked,
-            analytics: analyticsCookies.checked
-        })
-    );
-
-    cookieModal.classList.add("hidden");
-    cookieBanner.classList.add("hidden");
-
-});
-
-
-/* Fermer en cliquant autour de la fenêtre */
-
-cookieModal.addEventListener("click", (event) => {
-
-    if (event.target === cookieModal) {
-
-        cookieModal.classList.add("hidden");
-
-    }
-
-});
+console.log(
+    "%c📱 Android APK ready.",
+    "font-size:14px;"
+);
+```
