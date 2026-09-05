@@ -799,137 +799,187 @@ apkButtons.forEach(button => {
 });
 
 
-// ==========================================
-// COOKIE CONSENT
-// ==========================================
+/* =========================
+   COOKIE CONSENT
+========================= */
 
-const cookieBanner =
-    document.getElementById("cookieBanner");
+const cookieBanner = document.getElementById("cookieBanner");
+const cookieModal = document.getElementById("cookieModal");
 
-const cookieModal =
-    document.getElementById("cookieModal");
+const cookieAccept = document.getElementById("cookieAccept");
+const cookieReject = document.getElementById("cookieReject");
+const cookieSettings = document.getElementById("cookieSettings");
 
-const cookieAccept =
-    document.getElementById("cookieAccept");
+const closeCookieModal = document.getElementById("closeCookieModal");
+const saveCookieSettings = document.getElementById("saveCookieSettings");
 
-const cookieReject =
-    document.getElementById("cookieReject");
-
-const cookieSettings =
-    document.getElementById("cookieSettings");
-
-const closeCookieModal =
-    document.getElementById("closeCookieModal");
-
-const saveCookieSettings =
-    document.getElementById("saveCookieSettings");
-
-const preferenceCookies =
-    document.getElementById("preferenceCookies");
-
-const analyticsCookies =
-    document.getElementById("analyticsCookies");
+const preferenceCookies = document.getElementById("preferenceCookies");
+const analyticsCookies = document.getElementById("analyticsCookies");
 
 
-// ==========================================
-// CHECK SAVED CONSENT
-// ==========================================
+/* ==========================================
+   COOKIE HELPERS
+========================================== */
 
-const savedConsent =
-    localStorage.getItem(
+function saveCookieConsent(preferences, analytics) {
+
+    try {
+
+        const consent = {
+            necessary: true,
+            preferences: Boolean(preferences),
+            analytics: Boolean(analytics)
+        };
+
+        localStorage.setItem(
+            "galoulouCookieConsent",
+            JSON.stringify(consent)
+        );
+
+        return true;
+
+    } catch (error) {
+
+        console.error(
+            "Erreur lors de l'enregistrement des cookies :",
+            error
+        );
+
+        return false;
+
+    }
+
+}
+
+
+function hideCookieBanner() {
+
+    if (cookieBanner) {
+
+        cookieBanner.classList.add("hidden");
+
+    }
+
+}
+
+
+function closeCookiePreferences() {
+
+    if (cookieModal) {
+
+        cookieModal.classList.add("hidden");
+
+    }
+
+}
+
+
+/* ==========================================
+   LOAD SAVED CONSENT
+========================================== */
+
+let savedConsent = null;
+
+try {
+
+    const saved =
+        localStorage.getItem("galoulouCookieConsent");
+
+    if (saved) {
+
+        savedConsent = JSON.parse(saved);
+
+    }
+
+} catch (error) {
+
+    console.warn(
+        "Anciennes préférences cookies invalides."
+    );
+
+    localStorage.removeItem(
         "galoulouCookieConsent"
     );
 
+}
 
-if (
-    savedConsent &&
-    cookieBanner
-) {
 
-    cookieBanner.classList.add(
-        "hidden"
-    );
+/* Si un choix existe déjà */
+
+if (savedConsent) {
+
+    hideCookieBanner();
 
 }
 
 
-// ==========================================
-// ACCEPT
-// ==========================================
+/* ==========================================
+   ACCEPT
+========================================== */
 
 if (cookieAccept) {
 
-    cookieAccept.addEventListener(
-        "click",
-        () => {
+    cookieAccept.addEventListener("click", () => {
 
-            localStorage.setItem(
-                "galoulouCookieConsent",
-                JSON.stringify({
-                    necessary: true,
-                    preferences: true,
-                    analytics: true
-                })
-            );
+        if (
+            saveCookieConsent(true, true)
+        ) {
 
-
-            if (cookieBanner) {
-
-                cookieBanner.classList.add(
-                    "hidden"
-                );
-
-            }
+            hideCookieBanner();
 
         }
-    );
+
+    });
 
 }
 
 
-// ==========================================
-// REJECT
-// ==========================================
+/* ==========================================
+   REJECT
+========================================== */
 
 if (cookieReject) {
 
-    cookieReject.addEventListener(
-        "click",
-        () => {
+    cookieReject.addEventListener("click", () => {
 
-            localStorage.setItem(
-                "galoulouCookieConsent",
-                JSON.stringify({
-                    necessary: true,
-                    preferences: false,
-                    analytics: false
-                })
-            );
+        if (
+            saveCookieConsent(false, false)
+        ) {
 
-
-            if (cookieBanner) {
-
-                cookieBanner.classList.add(
-                    "hidden"
-                );
-
-            }
+            hideCookieBanner();
 
         }
-    );
+
+    });
 
 }
 
 
-// ==========================================
-// OPEN COOKIE SETTINGS
-// ==========================================
+/* ==========================================
+   OPEN SETTINGS
+========================================== */
 
 if (cookieSettings) {
 
     cookieSettings.addEventListener(
         "click",
-        () => {
+        (event) => {
+
+            event.preventDefault();
+
+            if (
+                savedConsent &&
+                preferenceCookies &&
+                analyticsCookies
+            ) {
+
+                preferenceCookies.checked =
+                    Boolean(savedConsent.preferences);
+
+                analyticsCookies.checked =
+                    Boolean(savedConsent.analytics);
+
+            }
 
             if (cookieModal) {
 
@@ -945,9 +995,9 @@ if (cookieSettings) {
 }
 
 
-// ==========================================
-// CLOSE COOKIE SETTINGS
-// ==========================================
+/* ==========================================
+   CLOSE SETTINGS
+========================================== */
 
 if (closeCookieModal) {
 
@@ -955,13 +1005,7 @@ if (closeCookieModal) {
         "click",
         () => {
 
-            if (cookieModal) {
-
-                cookieModal.classList.add(
-                    "hidden"
-                );
-
-            }
+            closeCookiePreferences();
 
         }
     );
@@ -969,9 +1013,9 @@ if (closeCookieModal) {
 }
 
 
-// ==========================================
-// SAVE COOKIE SETTINGS
-// ==========================================
+/* ==========================================
+   SAVE SETTINGS
+========================================== */
 
 if (saveCookieSettings) {
 
@@ -979,36 +1023,40 @@ if (saveCookieSettings) {
         "click",
         () => {
 
-            localStorage.setItem(
-                "galoulouCookieConsent",
-                JSON.stringify({
+            const preferences =
+                preferenceCookies
+                    ? preferenceCookies.checked
+                    : false;
+
+            const analytics =
+                analyticsCookies
+                    ? analyticsCookies.checked
+                    : false;
+
+
+            if (
+                saveCookieConsent(
+                    preferences,
+                    analytics
+                )
+            ) {
+
+                savedConsent = {
+
                     necessary: true,
+
                     preferences:
-                        preferenceCookies
-                            ? preferenceCookies.checked
-                            : false,
+                        preferences,
+
                     analytics:
-                        analyticsCookies
-                            ? analyticsCookies.checked
-                            : false
-                })
-            );
+                        analytics
+
+                };
 
 
-            if (cookieModal) {
+                closeCookiePreferences();
 
-                cookieModal.classList.add(
-                    "hidden"
-                );
-
-            }
-
-
-            if (cookieBanner) {
-
-                cookieBanner.classList.add(
-                    "hidden"
-                );
+                hideCookieBanner();
 
             }
 
@@ -1018,23 +1066,21 @@ if (saveCookieSettings) {
 }
 
 
-// ==========================================
-// CLOSE MODAL BY CLICKING OUTSIDE
-// ==========================================
+/* ==========================================
+   CLOSE WHEN CLICKING OUTSIDE
+========================================== */
 
 if (cookieModal) {
 
     cookieModal.addEventListener(
         "click",
-        event => {
+        (event) => {
 
             if (
                 event.target === cookieModal
             ) {
 
-                cookieModal.classList.add(
-                    "hidden"
-                );
+                closeCookiePreferences();
 
             }
 
