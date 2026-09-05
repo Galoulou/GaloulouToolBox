@@ -2,7 +2,6 @@
 <html lang="fr">
 
 <head>
-
     <meta charset="UTF-8">
 
     <meta
@@ -23,9 +22,7 @@
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     >
-
 </head>
-
 
 <body>
 
@@ -55,10 +52,6 @@
 
         <a href="#about">
             About
-        </a>
-
-        <a href="#android">
-            Android
         </a>
 
     </nav>
@@ -130,21 +123,11 @@
 
 
             <a
-                href="tools/galoulou-ai.html"
-                class="secondary-button"
-            >
-
-                <i class="fa-solid fa-wand-magic-sparkles"></i>
-
-                Try Galoulou AI
-
-            </a>
-
-
-            <a
                 href="Galoulou_Toolbox.apk"
-                class="secondary-button download-apk-button"
+                class="secondary-button download-button"
+                id="downloadApkButton"
                 download="Galoulou_Toolbox.apk"
+                aria-label="Download Galoulou Toolbox APK"
             >
 
                 <i class="fa-brands fa-android"></i>
@@ -202,57 +185,74 @@
 
 
 <!-- =========================
+     SEARCH
+========================= -->
+
+<section class="search-section">
+
+    <div class="search-container">
+
+        <i class="fa-solid fa-magnifying-glass"></i>
+
+        <input
+            id="searchInput"
+            type="text"
+            placeholder="Search for a tool..."
+            autocomplete="off"
+        >
+
+        <kbd>Ctrl K</kbd>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
      ANDROID APP
 ========================= -->
 
 <section
-    id="android"
-    class="android-section"
+    id="android-app"
+    class="android-app-section"
 >
 
-    <div class="android-content">
+    <div class="android-app-card">
 
-        <div class="android-icon">
+        <div class="android-app-icon">
 
             <i class="fa-brands fa-android"></i>
 
         </div>
 
 
-        <div class="android-text">
+        <div class="android-app-content">
 
-            <div class="section-badge">
-
-                <i class="fa-solid fa-mobile-screen-button"></i>
-
-                Android App
-
-            </div>
+            <span class="android-app-badge">
+                ANDROID APP
+            </span>
 
 
             <h2>
-
-                Galoulou Toolbox
-
-                <span>on Android.</span>
-
+                Galoulou Toolbox on Android
             </h2>
 
 
             <p>
 
-                Take your favorite Galoulou Toolbox tools with you.
-                Download the official Android APK and use Galoulou Toolbox
-                directly from your phone.
+                Take Galoulou Toolbox with you.
+                Download the APK directly and install it
+                on your Android device.
 
             </p>
 
 
-            <div class="android-actions">
+            <div class="android-app-actions">
 
                 <a
                     href="Galoulou_Toolbox.apk"
-                    class="primary-button download-apk-button"
+                    class="primary-button apk-download-main"
+                    id="downloadApkMain"
                     download="Galoulou_Toolbox.apk"
                 >
 
@@ -263,11 +263,9 @@
                 </a>
 
 
-                <span class="android-note">
+                <span class="android-app-note">
 
-                    <i class="fa-solid fa-shield-halved"></i>
-
-                    Android APK
+                    APK • Direct download
 
                 </span>
 
@@ -285,487 +283,109 @@
 ========================= -->
 
 <section
-    id="tools"
     class="tools-section"
+    id="tools"
 >
 
     <div class="section-header">
 
         <div>
 
-            <div class="section-badge">
-
-                <i class="fa-solid fa-wrench"></i>
-
-                Toolbox
-
-            </div>
+            <p class="section-label">
+                TOOLBOX
+            </p>
 
 
             <h2>
-                Everything you need.
+                All Tools
             </h2>
 
 
             <p>
-                Simple tools designed to make everyday tasks easier.
+                Everything you need, in one place.
             </p>
 
         </div>
 
 
-        <div class="tools-count">
+        <span
+            id="toolsCount"
+            class="tools-count"
+        >
 
-            <strong>20</strong>
+            20 tools
 
-            <span>tools</span>
-
-        </div>
+        </span>
 
     </div>
 
 
-    <div class="tools-grid">
+    <!-- =========================
+         CATEGORIES
+    ========================= -->
 
+    <div
+        class="categories"
+        id="categories"
+    ></div>
 
-        <!-- Calculator -->
 
-        <a
-            href="tools/calculator.html"
-            class="tool-card"
-        >
+    <!-- =========================
+         RECENT TOOLS
+    ========================= -->
 
-            <div class="tool-icon">
+    <div
+        id="recentSection"
+        class="recent-section hidden"
+    >
 
-                <i class="fa-solid fa-calculator"></i>
+        <div class="subsection-title">
 
-            </div>
+            <i class="fa-solid fa-clock-rotate-left"></i>
 
-            <h3>Calculator</h3>
+            Recently used
 
-            <p>
-                Fast and simple calculations.
-            </p>
+        </div>
 
-        </a>
 
+        <div
+            id="recentGrid"
+            class="tools-grid recent-grid"
+        ></div>
 
-        <!-- Converter -->
+    </div>
 
-        <a
-            href="tools/converter.html"
-            class="tool-card"
-        >
 
-            <div class="tool-icon">
+    <!-- =========================
+         TOOLS GRID
+    ========================= -->
 
-                <i class="fa-solid fa-arrows-rotate"></i>
+    <div
+        id="toolsGrid"
+        class="tools-grid"
+    ></div>
 
-            </div>
 
-            <h3>Converter</h3>
+    <!-- =========================
+         NO RESULTS
+    ========================= -->
 
-            <p>
-                Convert units quickly and easily.
-            </p>
+    <div
+        id="noResults"
+        class="no-results hidden"
+    >
 
-        </a>
+        <i class="fa-solid fa-magnifying-glass"></i>
 
 
-        <!-- Percentage -->
+        <h3>
+            No tools found
+        </h3>
 
-        <a
-            href="tools/percentage.html"
-            class="tool-card"
-        >
 
-            <div class="tool-icon">
-
-                <i class="fa-solid fa-percent"></i>
-
-            </div>
-
-            <h3>Percentage</h3>
-
-            <p>
-                Calculate percentages instantly.
-            </p>
-
-        </a>
-
-
-        <!-- Password -->
-
-        <a
-            href="tools/password.html"
-            class="tool-card"
-        >
-
-            <div class="tool-icon">
-
-                <i class="fa-solid fa-key"></i>
-
-            </div>
-
-            <h3>Password Generator</h3>
-
-            <p>
-                Create strong and secure passwords.
-            </p>
-
-        </a>
-
-
-        <!-- QR Code -->
-
-        <a
-            href="tools/qr-code.html"
-            class="tool-card"
-        >
-
-            <div class="tool-icon">
-
-                <i class="fa-solid fa-qrcode"></i>
-
-            </div>
-
-            <h3>QR Code</h3>
-
-            <p>
-                Generate QR codes instantly.
-            </p>
-
-        </a>
-
-
-        <!-- Random -->
-
-        <a
-            href="tools/random-generator.html"
-            class="tool-card"
-        >
-
-            <div class="tool-icon">
-
-                <i class="fa-solid fa-shuffle"></i>
-
-            </div>
-
-            <h3>Random Generator</h3>
-
-            <p>
-                Generate random numbers and choices.
-            </p>
-
-        </a>
-
-
-        <!-- Timer -->
-
-        <a
-            href="tools/timer.html"
-            class="tool-card"
-        >
-
-            <div class="tool-icon">
-
-                <i class="fa-solid fa-stopwatch"></i>
-
-            </div>
-
-            <h3>Timer</h3>
-
-            <p>
-                Simple countdown timer.
-            </p>
-
-        </a>
-
-
-        <!-- Pomodoro -->
-
-        <a
-            href="tools/pomodoro.html"
-            class="tool-card"
-        >
-
-            <div class="tool-icon">
-
-                <i class="fa-solid fa-clock"></i>
-
-            </div>
-
-            <h3>Pomodoro</h3>
-
-            <p>
-                Stay focused with Pomodoro sessions.
-            </p>
-
-        </a>
-
-
-        <!-- Todo -->
-
-        <a
-            href="tools/todo.html"
-            class="tool-card"
-        >
-
-            <div class="tool-icon">
-
-                <i class="fa-solid fa-list-check"></i>
-
-            </div>
-
-            <h3>To-Do List</h3>
-
-            <p>
-                Organize your tasks.
-            </p>
-
-        </a>
-
-
-        <!-- Quick Notes -->
-
-        <a
-            href="tools/quick-notes.html"
-            class="tool-card"
-        >
-
-            <div class="tool-icon">
-
-                <i class="fa-solid fa-note-sticky"></i>
-
-            </div>
-
-            <h3>Quick Notes</h3>
-
-            <p>
-                Write and save quick notes.
-            </p>
-
-        </a>
-
-
-        <!-- Text Counter -->
-
-        <a
-            href="tools/text-counter.html"
-            class="tool-card"
-        >
-
-            <div class="tool-icon">
-
-                <i class="fa-solid fa-align-left"></i>
-
-            </div>
-
-            <h3>Text Counter</h3>
-
-            <p>
-                Count words and characters.
-            </p>
-
-        </a>
-
-
-        <!-- Case Converter -->
-
-        <a
-            href="tools/case-converter.html"
-            class="tool-card"
-        >
-
-            <div class="tool-icon">
-
-                <i class="fa-solid fa-font"></i>
-
-            </div>
-
-            <h3>Case Converter</h3>
-
-            <p>
-                Change text capitalization.
-            </p>
-
-        </a>
-
-
-        <!-- Base64 -->
-
-        <a
-            href="tools/base64.html"
-            class="tool-card"
-        >
-
-            <div class="tool-icon">
-
-                <i class="fa-solid fa-code"></i>
-
-            </div>
-
-            <h3>Base64</h3>
-
-            <p>
-                Encode and decode Base64 text.
-            </p>
-
-        </a>
-
-
-        <!-- URL Encoder -->
-
-        <a
-            href="tools/url-encoder.html"
-            class="tool-card"
-        >
-
-            <div class="tool-icon">
-
-                <i class="fa-solid fa-link"></i>
-
-            </div>
-
-            <h3>URL Encoder</h3>
-
-            <p>
-                Encode and decode URLs.
-            </p>
-
-        </a>
-
-
-        <!-- Color Picker -->
-
-        <a
-            href="tools/color-picker.html"
-            class="tool-card"
-        >
-
-            <div class="tool-icon">
-
-                <i class="fa-solid fa-eye-dropper"></i>
-
-            </div>
-
-            <h3>Color Picker</h3>
-
-            <p>
-                Pick and inspect colors.
-            </p>
-
-        </a>
-
-
-        <!-- Color Palette -->
-
-        <a
-            href="tools/color-palette.html"
-            class="tool-card"
-        >
-
-            <div class="tool-icon">
-
-                <i class="fa-solid fa-palette"></i>
-
-            </div>
-
-            <h3>Color Palette</h3>
-
-            <p>
-                Create beautiful color palettes.
-            </p>
-
-        </a>
-
-
-        <!-- Image Compressor -->
-
-        <a
-            href="tools/image-compressor.html"
-            class="tool-card"
-        >
-
-            <div class="tool-icon">
-
-                <i class="fa-solid fa-compress"></i>
-
-            </div>
-
-            <h3>Image Compressor</h3>
-
-            <p>
-                Reduce image file sizes.
-            </p>
-
-        </a>
-
-
-        <!-- Image Resizer -->
-
-        <a
-            href="tools/image-resizer.html"
-            class="tool-card"
-        >
-
-            <div class="tool-icon">
-
-                <i class="fa-solid fa-expand"></i>
-
-            </div>
-
-            <h3>Image Resizer</h3>
-
-            <p>
-                Resize images quickly.
-            </p>
-
-        </a>
-
-
-        <!-- Date Calculator -->
-
-        <a
-            href="tools/date-calculator.html"
-            class="tool-card"
-        >
-
-            <div class="tool-icon">
-
-                <i class="fa-solid fa-calendar-days"></i>
-
-            </div>
-
-            <h3>Date Calculator</h3>
-
-            <p>
-                Calculate dates and differences.
-            </p>
-
-        </a>
-
-
-        <!-- Galoulou AI -->
-
-        <a
-            href="tools/galoulou-ai.html"
-            class="tool-card featured-tool"
-        >
-
-            <div class="tool-icon">
-
-                <i class="fa-solid fa-wand-magic-sparkles"></i>
-
-            </div>
-
-            <h3>Galoulou AI</h3>
-
-            <p>
-                Your AI assistant inside the toolbox.
-            </p>
-
-        </a>
+        <p>
+            Try another search.
+        </p>
 
     </div>
 
@@ -781,30 +401,36 @@
     class="about-section"
 >
 
-    <div class="section-badge">
+    <div class="about-content">
 
-        <i class="fa-solid fa-circle-info"></i>
+        <div class="about-icon">
 
-        About
+            <i class="fa-solid fa-toolbox"></i>
+
+        </div>
+
+
+        <div>
+
+            <h2>
+                One toolbox.
+            </h2>
+
+
+            <p>
+
+                Galoulou Toolbox brings useful everyday tools
+                together in one fast, simple and free website.
+
+            </p>
+
+        </div>
 
     </div>
 
-
-    <h2>
-        One toolbox. Everything you need.
-    </h2>
-
-
-    <p>
-
-        Galoulou Toolbox is a collection of simple,
-        useful and free tools designed for everyday use.
-
-        Everything is fast, accessible and easy to use.
-
-    </p>
-
 </section>
+
+</main>
 
 
 <!-- =========================
@@ -815,10 +441,7 @@
 
     <div class="footer-content">
 
-        <a
-            href="index.html"
-            class="logo"
-        >
+        <div class="footer-logo">
 
             <img
                 src="assets/galouloutoolbox.png"
@@ -829,36 +452,12 @@
                 Galoulou Toolbox
             </span>
 
-        </a>
+        </div>
 
 
         <p>
-            Simple tools. Zero hassle.
+            Simple tools. One place.
         </p>
-
-
-        <div class="footer-links">
-
-            <a href="#tools">
-                Tools
-            </a>
-
-            <a href="#android">
-                Android
-            </a>
-
-            <a href="#about">
-                About
-            </a>
-
-        </div>
-
-    </div>
-
-
-    <div class="footer-bottom">
-
-        © 2026 Galoulou Toolbox. All rights reserved.
 
     </div>
 
@@ -874,57 +473,70 @@
     class="cookie-banner"
 >
 
+    <div class="cookie-icon">
+
+        <i class="fa-solid fa-cookie-bite"></i>
+
+    </div>
+
+
     <div class="cookie-content">
 
-        <div class="cookie-icon">
-
-            <i class="fa-solid fa-cookie-bite"></i>
-
-        </div>
+        <h3>
+            Cookies & confidentialité
+        </h3>
 
 
-        <div class="cookie-text">
+        <p>
 
-            <strong>
-                Cookies & Privacy
-            </strong>
+            Nous utilisons des cookies pour améliorer votre expérience
+            sur Galoulou Toolbox.
 
-            <p>
-
-                We use cookies to remember your preferences
-                and improve your experience.
-
-            </p>
-
-        </div>
+        </p>
 
 
-        <div class="cookie-actions">
+        <a
+            href="#"
+            class="cookie-link"
+        >
 
-            <button
-                id="acceptCookies"
-                class="cookie-accept"
-            >
-                Accept
-            </button>
+            En savoir plus
 
+        </a>
 
-            <button
-                id="rejectCookies"
-                class="cookie-reject"
-            >
-                Reject
-            </button>
+    </div>
 
 
-            <button
-                id="cookieSettings"
-                class="cookie-settings"
-            >
-                Settings
-            </button>
+    <div class="cookie-actions">
 
-        </div>
+        <button
+            id="cookieReject"
+            class="cookie-button cookie-reject"
+        >
+
+            Refuser
+
+        </button>
+
+
+        <button
+            id="cookieSettings"
+            class="cookie-button cookie-settings"
+        >
+
+            Personnaliser
+
+        </button>
+
+
+        <button
+            id="cookieAccept"
+            class="cookie-button cookie-accept"
+        >
+
+            Accepter
+
+        </button>
 
     </div>
 
@@ -937,40 +549,43 @@
 
 <div
     id="cookieModal"
-    class="cookie-modal"
+    class="cookie-modal hidden"
 >
 
-    <div class="cookie-modal-content">
-
-        <div class="cookie-modal-header">
-
-            <div>
-
-                <h2>
-                    Cookie Settings
-                </h2>
-
-                <p>
-                    Choose which cookies you want to allow.
-                </p>
-
-            </div>
+    <div class="cookie-modal-box">
 
 
-            <button
-                id="closeCookieModal"
-                class="cookie-close"
-                aria-label="Fermer"
-            >
+        <button
+            id="closeCookieModal"
+            class="cookie-close"
+            aria-label="Fermer"
+        >
 
-                <i class="fa-solid fa-xmark"></i>
+            <i class="fa-solid fa-xmark"></i>
 
-            </button>
+        </button>
+
+
+        <div class="cookie-modal-icon">
+
+            <i class="fa-solid fa-cookie-bite"></i>
 
         </div>
 
 
-        <!-- Necessary -->
+        <h2>
+            Préférences des cookies
+        </h2>
+
+
+        <p>
+
+            Choisissez les cookies que vous souhaitez autoriser.
+
+        </p>
+
+
+        <!-- Nécessaires -->
 
         <div class="cookie-option">
 
@@ -980,29 +595,24 @@
                     Cookies nécessaires
                 </strong>
 
+
                 <span>
-                    Nécessaires au bon fonctionnement du site.
+                    Indispensables au fonctionnement du site.
                 </span>
 
             </div>
 
 
-            <label class="switch">
+            <div class="cookie-always">
 
-                <input
-                    type="checkbox"
-                    checked
-                    disabled
-                >
+                Toujours actifs
 
-                <span class="slider"></span>
-
-            </label>
+            </div>
 
         </div>
 
 
-        <!-- Preferences -->
+        <!-- Préférences -->
 
         <div class="cookie-option">
 
@@ -1011,6 +621,7 @@
                 <strong>
                     Cookies de préférences
                 </strong>
+
 
                 <span>
                     Permettent de mémoriser certaines préférences.
@@ -1042,6 +653,7 @@
                 <strong>
                     Cookies analytiques
                 </strong>
+
 
                 <span>
                     Aident à comprendre comment le site est utilisé.
