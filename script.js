@@ -1,4 +1,3 @@
-```javascript
 // ==========================================
 // GALOULOU TOOLBOX
 // MAIN SCRIPT
@@ -1074,4 +1073,3 @@ console.log(
     "%c📱 Android APK ready.",
     "font-size:14px;"
 );
-```
