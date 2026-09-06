@@ -2312,3 +2312,262 @@ kbd {
         transition-duration: .01ms !important;
     }
 }
+/* ==========================================
+   ANDROID APP — FIX DEFINITIF
+========================================== */
+
+.android-app-section {
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 40px clamp(20px, 5vw, 80px) 80px;
+}
+
+.android-app-card {
+    width: 100%;
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    gap: 35px;
+
+    padding: 50px;
+
+    background: linear-gradient(
+        135deg,
+        var(--card),
+        var(--bg-secondary)
+    );
+
+    border: 1px solid var(--border);
+
+    border-radius: 28px;
+
+    box-shadow: var(--shadow);
+
+    overflow: hidden;
+}
+
+.android-app-card::before {
+    content: "";
+
+    position: absolute;
+
+    width: 300px;
+    height: 300px;
+
+    right: -120px;
+    top: -150px;
+
+    border-radius: 50%;
+
+    background: var(--text);
+
+    opacity: .035;
+
+    pointer-events: none;
+}
+
+.android-app-icon {
+    width: 95px;
+    height: 95px;
+
+    min-width: 95px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--bg);
+
+    border: 1px solid var(--border);
+
+    border-radius: 26px;
+
+    color: var(--text);
+
+    font-size: 42px;
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.2);
+}
+
+.android-app-content {
+    position: relative;
+    z-index: 2;
+
+    flex: 1;
+}
+
+.android-app-badge {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 8px;
+
+    margin-bottom: 12px;
+
+    color: var(--text-secondary);
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: .14em;
+
+    text-transform: uppercase;
+}
+
+.android-app-content h2 {
+    margin: 0 0 15px;
+
+    color: var(--text);
+
+    font-size: clamp(32px, 4vw, 52px);
+
+    line-height: 1;
+
+    letter-spacing: -.055em;
+}
+
+.android-app-content p {
+    max-width: 720px;
+
+    margin: 0;
+
+    color: var(--text-secondary);
+
+    font-size: 14px;
+
+    line-height: 1.75;
+}
+
+.android-app-actions {
+    display: flex;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 15px;
+
+    margin-top: 25px;
+}
+
+.apk-download-main {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    min-height: 48px;
+
+    padding: 0 20px;
+}
+
+.android-app-note {
+    color: var(--text-secondary);
+
+    font-size: 11px;
+
+    font-weight: 700;
+}
+
+
+/* ==========================================
+   ANDROID APP — TABLET
+========================================== */
+
+@media (max-width: 900px) {
+
+    .android-app-card {
+        padding: 40px;
+    }
+
+}
+
+
+/* ==========================================
+   ANDROID APP — MOBILE
+========================================== */
+
+@media (max-width: 700px) {
+
+    .android-app-section {
+        padding:
+            25px
+            20px
+            60px;
+    }
+
+    .android-app-card {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 25px;
+
+        padding: 30px;
+    }
+
+    .android-app-icon {
+        width: 72px;
+        height: 72px;
+
+        min-width: 72px;
+
+        border-radius: 20px;
+
+        font-size: 32px;
+    }
+
+    .android-app-content {
+        width: 100%;
+    }
+
+    .android-app-content h2 {
+        font-size: 36px;
+    }
+
+    .android-app-content p {
+        font-size: 13px;
+    }
+
+    .android-app-actions {
+        width: 100%;
+
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    .apk-download-main {
+        width: 100%;
+    }
+
+}
+
+
+/* ==========================================
+   ANDROID APP — SMALL MOBILE
+========================================== */
+
+@media (max-width: 450px) {
+
+    .android-app-section {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .android-app-card {
+        padding: 25px;
+    }
+
+    .android-app-content h2 {
+        font-size: 31px;
+    }
+
+}
